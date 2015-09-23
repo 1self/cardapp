@@ -12,11 +12,12 @@ module.exports = function (grunt) {
 
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
+    debugPort: process.env.DEBUGPORT,
 
     develop: {
       server: {
         file: 'bin/www',
-        nodeArgs: ['--debug']
+        nodeArgs: ['--debug=<%= debugPort %>']
       }
     },
     watch: {

@@ -3,10 +3,13 @@
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
-var logger = require('morgan');
+var morgan = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var swig = require('swig');
+var winston = require('winston');
+var session = require('express-session');
+var FileStore = require('session-file-store')(session);
 
 var routes = require('./routes/index');
 
@@ -15,6 +18,7 @@ var app = express();
 var env = process.env.NODE_ENV || 'development';
 app.locals.ENV = env;
 app.locals.ENV_DEVELOPMENT = env == 'development';
+app.locals.SESSION_SECRET = process.env.SESSION_SECRET || 'development';
 
 // view engine setup
 app.engine('swig', swig.renderFile)
@@ -22,15 +26,23 @@ app.set('view cache', false);
 swig.setDefaults({ cache: false });
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'swig');
+app.set('trust proxy', true);
+app.locals.logger = winston;
 
 // app.use(favicon(__dirname + '/public/img/favicon.ico'));
-app.use(logger('dev'));
+app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
 }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({
+    store: new FileStore,
+    secret: app.locals.SESSION_SECRET,
+    resave: true,
+    saveUninitialized: true
+}));
 
 app.use('/', routes);
 
