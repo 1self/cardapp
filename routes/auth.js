@@ -1,7 +1,9 @@
 'user strict';
 var express = require('express');
+var request = require('request');
 var router = express.Router();
 var oauth = require('./oauth.js');
+var conceal = require('concealotron');
 
 router.get('/signin', 
 	function(req, res, next){
@@ -17,7 +19,36 @@ router.get('/signin',
 router.get('/callback', 
 	function(req, res, next){
 		req.app.locals.logger.info('auth callback hit, authcode ', req.query.code);
-		res.send(200);
+		var authcode = req.query.code;
+		var url = req.app.locals.AUTH_TOKEN_URL;
+		var port = req.app.settings.port;
+		var redirectUri = req.protocol 
+						+ '://' 
+						+ req.hostname 
+						+ (port ? ':' + port : '')
+						+ '/auth/callback';
+		
+		var form = {
+			redirect_uri: redirectUri,
+			grant_type: 'authorization_code',
+			code: authcode
+		};
+
+		var auth = {
+			user: req.app.locals.AUTH_CLIENT_ID,
+			pass: req.app.locals.AUTH_CLIENT_SECRET,
+		};
+
+		request.post({
+			url: url,
+			form: form,
+			auth: auth,
+			json: true
+		}, function(error, httpResponse, body){
+			req.app.locals.logger.info('token retrieved', conceal(body.access_token));
+			oauth.signIn(req, body.access_token);
+			oauth.redirect(req, res, next);
+		});
 	}
 );
 

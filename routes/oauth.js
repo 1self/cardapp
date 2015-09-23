@@ -14,14 +14,18 @@ var redirect = function(req, res, next){
 		res.redirect(req.session.postSignInRedirect);
 		delete req.session.postSignInRedirect;
 	}
+	else{
+		res.redirect('/');
+	}
 }
 
 var signedIn =function(req){
 	return req.session.signedIn;
 }
 
-var signIn = function(req){
+var signIn = function(req, token){
 	req.session.signedIn = true;
+	req.session.token = token;
 }
 
 var signOut = function(req){
@@ -33,22 +37,18 @@ var storePostLoginRedirect= function(req){
 }
 
 var getAuthCode = function(req, res, next){
-	if(req.session.signedIn === true){
-		next();
-	} else{
-		var port = req.app.settings.port;
-		var redirectUri = req.protocol 
-						+ '://' 
-						+ req.hostname 
-						+ (port ? ':' + port : '')
-						+ '/auth/callback';
-		var authCodeUrl = req.app.locals.AUTH_AUTHCODE_URL
-		+ '?client_id=' + req.app.locals.AUTH_CLIENT_ID
-		+ '&redirect_uri=' + redirectUri
-		+ '&response_type=code';
+	var port = req.app.settings.port;
+	var redirectUri = req.protocol 
+					+ '://' 
+					+ req.hostname 
+					+ (port ? ':' + port : '')
+					+ '/auth/callback';
+	var authCodeUrl = req.app.locals.AUTH_AUTHCODE_URL
+	+ '?client_id=' + req.app.locals.AUTH_CLIENT_ID
+	+ '&redirect_uri=' + redirectUri
+	+ '&response_type=code';
 
-		res.redirect(authCodeUrl);
-	}
+	res.redirect(authCodeUrl);
 }
 
 module.exports.signedInRoute = signedInRoute;
