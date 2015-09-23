@@ -11,7 +11,8 @@ var winston = require('winston');
 var session = require('express-session');
 var FileStore = require('session-file-store')(session);
 
-var routes = require('./routes/index');
+var index = require('./routes/index');
+var auth = require('./routes/auth');
 
 var app = express();
 
@@ -19,6 +20,9 @@ var env = process.env.NODE_ENV || 'development';
 app.locals.ENV = env;
 app.locals.ENV_DEVELOPMENT = env == 'development';
 app.locals.SESSION_SECRET = process.env.SESSION_SECRET || 'development';
+app.locals.AUTH_CLIENT_ID = process.env.AUTH_CLIENT_ID;
+app.locals.AUTH_CLIENT_SECRET = process.env.AUTH_CLIENT_SECRET;
+app.locals.AUTH_AUTHCODE_URL = process.env.AUTH_AUTHCODE_URL;
 
 // view engine setup
 app.engine('swig', swig.renderFile)
@@ -44,7 +48,8 @@ app.use(session({
     saveUninitialized: true
 }));
 
-app.use('/', routes);
+app.use('/', index);
+app.use('/auth', auth)
 
 /// catch 404 and forward to error handler
 app.use(function(req, res, next) {

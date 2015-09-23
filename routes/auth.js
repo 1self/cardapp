@@ -1,7 +1,7 @@
 'user strict';
-var oauth = require('./oauth.js');
-
+var express = require('express');
 var router = express.Router();
+var oauth = require('./oauth.js');
 
 router.get('/signin', 
 	function(req, res, next){
@@ -9,9 +9,9 @@ router.get('/signin',
 			oauth.redirect(req, res, next);
 		} 
 		else{
-			oauth.auth(req, res, next)
+			oauth.storePostLoginRedirect(req);
+			oauth.getAuthCode(req, res, next)
 		}
-	}
 });
 
 router.get('/callback', 
@@ -19,4 +19,6 @@ router.get('/callback',
 		req.app.locals.logger.info('auth callback hit, authcode ', req.query.code);
 		res.send(200);
 	}
-});
+);
+
+module.exports = router;
