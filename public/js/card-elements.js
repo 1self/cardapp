@@ -333,19 +333,26 @@ function stripAtDetail(stringToStrip) {
 }
 
 
-function dateRangetext(startRange, endRange) {
+function dateRangetext(cardType, startRange, endRange) {
     var rangeText;
-    var now = moment();
+    var xd;
 
-    if (startRange === endRange) {
-        // single moment
-        startRange = moment(startRange);
-        rangeText = startRange.calendar(); //'Yesterday';
+    if (cardType === "date") {
+        xd = new XDate(startRange);
+        rangeText = xd.toString("dddd, MMM d");
     } else {
-        // range of time
-        startRange = moment(startRange);
-        endRange = moment(endRange);
-        rangeText = startRange.format('lll') + ' - ' + endRange.format('lll');
+        if (startRange === endRange) {
+            // single moment
+            startRange = moment(startRange);
+            rangeText = startRange.calendar(); //'Yesterday';
+        } else {
+            // range of time
+            startRange = moment(startRange);
+            endRange = moment(endRange);
+            rangeText = startRange.format('lll') + ' - ' + endRange.format('lll');
+        }
+
+        stripAtDetail(rangeText);
     }
 
     return rangeText;

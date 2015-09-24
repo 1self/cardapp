@@ -41,7 +41,7 @@ audio:not([controls]) {
 }
 
 [hidden],
-template {
+template, .template {
     display: none
 }
 
@@ -289,9 +289,13 @@ h5 {
 }
 
 p {
-    margin: 0 0 10px;
+    margin: 5px 0 5px;
     font-family: 'Raleway', sans-serif;
     font-size: 1em
+}
+
+p.small {
+    font-size: 0.8em;
 }
 
 pre {
@@ -356,6 +360,26 @@ a:focus {
     float: left
 }
 
+.glow-border {
+    -webkit-box-shadow:0 0 20px #00B597; 
+    -moz-box-shadow: 0 0 20px #00B597; 
+    box-shadow:0 0 20px #00B597;  
+    -webkit-transition: 500ms linear 0s;
+    -moz-transition: 500ms linear 0s;
+    -o-transition: 500ms linear 0s;
+    transition: 500ms linear 0s;
+}
+
+.glow-border-off {
+    -webkit-box-shadow:0 0 0px #00B597; 
+    -moz-box-shadow: 0 0 0px #00B597; 
+    box-shadow:0 0 0px #00B597;  
+    -webkit-transition: 500ms linear 0s;
+    -moz-transition: 500ms linear 0s;
+    -o-transition: 500ms linear 0s;
+    transition: 500ms linear 0s;
+}
+
 .list-unstyled {
     list-style: none;
     margin-left: 0;
@@ -370,6 +394,10 @@ hr {
     border: 0;
     border-bottom: 1px solid #ddd;
     margin: 40px 0
+}
+
+.overlay hr {
+    margin: 20px 0;
 }
 
 .subtle {
@@ -808,6 +836,21 @@ main {
     padding-left: 10px;
 }
 
+.intro-card .front .card-menu {
+    height: 10%;
+    width: 100%;
+    padding-right: 0px;
+    padding-left: 0px;
+}
+
+img.swipe-helper {
+    width: 20%;
+    float: left;
+    margin-right: 10px;
+    border: solid 1px #999;
+    border-radius: 10px;
+}
+
 .share-fav {
     width: 100%;
     height: 100%;
@@ -946,6 +989,39 @@ footer:before {
     z-index: 5
 }
 
+.overlay.on-top {
+    background: #2f3940;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+    color: white;
+    font-size: 0.8em;
+}
+
+.overlay-content {
+    width: 90%;
+    max-width: 600px;
+    margin: auto;
+    padding-top: 20px;
+    padding-top: 5vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 100%;
+}
+
+.welcome-header {
+    color: #00B597;
+    font-size: 1.4em;
+}
+
+.welcome-sub-header {
+    color: #00B597;
+    font-size: 1.2em;
+}
+
 .menu-wrap {
     width: 100%;
     height: 100%;   
@@ -960,11 +1036,6 @@ footer:before {
 
 .flyout {
     position: relative;
-    /*bottom: 73px;*/
-    /*-webkit-transform: rotate(-34deg);
-    -ms-transform: rotate(-34deg);
-    transform: rotate(-34deg);*/
-    /*left: -98px;*/
     z-index: 5
 }
 
@@ -1872,21 +1943,6 @@ footer:before {
   fill: rgba(255,255,255,0.1);
 }
 
-/*.headline:before {
-    content: "";
-    position: absolute;
-    background-size: contain;
-    opacity: 0.1;
-    width: 100%;
-    height: 50%;
-    left: 0;
-    top: 0
-}*/
-
-/*.card.date-card .front {
-    background-color: gray;
-}*/
-
 .card.date-card .front .gradient-overlay {
     height: 100%;
     width: 100%;
@@ -1894,12 +1950,19 @@ footer:before {
     /*background-color: rgba(60,60,60,0.75);*/
 }
 
-.card.date-card .front .texture-overlay {
+.card.intro-card .gradient-overlay {
     height: 100%;
     width: 100%;
+    background: linear-gradient(to bottom, #fff 0%, #999 100%);
+    /*background-color: rgba(60,60,60,0.75);*/
+}
+
+.card.date-card .front .texture-overlay, .card.intro-card .texture-overlay {
+    height: 100%;
+    width: 90%;
     position: absolute;
     top: 0px;
-    left: 0px;
+    left: 5%;
     /*background-color: rgba(60,60,60,0.75);*/
     background-image: url(../img/texture.svg);
     background-repeat: tile;
@@ -1966,16 +2029,78 @@ footer:before {
     font-size: 2.5vh;
 }
 
-.date-card .event-date {
-    color: #fff;
-    font-size: 2.5em;
-    width: 100%;
+.intro-counter {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    font-size: 0.6em;
+}
+
+.intro-header {
+    font-size: 1.2em;
+    color: #00b197;
+    text-align: left;
+    height: 15%;
+    padding-top: 10px;
+}
+
+.intro-content {
+    font-size: 0.8em;
+    text-align: left;
+    height: 75%;
+}
+
+.intro-card .back .intro-header {
+    height: 12%;
+}
+
+.intro-card .back .intro-content {
+    height: 34%;
+    font-size: 0.7em;
+}
+
+.intro-card .back .chart {
+    height: 33%;
+    top: 47%;
+}
+
+.intro-content p {
+    margin-bottom: 1.5em;
+}
+
+.intro-content.nose {
+    text-align: center;
+}
+
+.intro-card .down-gif {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+}
+
+.date-card .card-content, .intro-card .card-content {
     position: absolute;
     text-align: center;
-    top: 20px;
-    left: 0px;
+    top: 0px;
+    left: 5%;
+    width: 90%;
+    height: 100%;
+    padding: 15px;
+}
+
+.date-card .card-content .event-date {
+    color: #fff;
+    font-size: 2em;
+    font-size: 5vh;
+    width: 100%; 
     padding-left: 6%;
-    padding-right: 6%;
+    padding-right: 6%;   
+}
+
+.intro-card .card-menu .more span {
+    border: solid 1px #00b197;
+    color: #00b197;
+    background-color: #fff;
 }
 
 .headline .service-container {
@@ -2030,6 +2155,12 @@ footer:before {
 }
 
 .headline.googlefit .service {
+    background: url(../img/service-googlefit.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.summary-item-logo.visitcounter {
     background: url(../img/service-googlefit.svg);
     background-repeat: no-repeat;
     background-size: contain;
@@ -2154,6 +2285,12 @@ footer:before {
     background-size: contain;
 }
 
+.summary-item-logo.visitcounter {
+    background: url(../img/service-strava.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
 .card-menu.strava .more span {
     border: solid 1px rgb(242,97,34);
     color: rgb(242,97,34);
@@ -2200,6 +2337,12 @@ footer:before {
 }
 
 .headline.visitcounter .service {
+    background: url(../img/service-visitcounter.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.summary-item-logo.visitcounter {
     background: url(../img/service-visitcounter.svg);
     background-repeat: no-repeat;
     background-size: contain;
@@ -2256,6 +2399,7 @@ footer:before {
     z-index: 6;
     font-size: 0.7em;
     display: table;
+    cursor: pointer;
 }
 
 .card-menu .more div {
@@ -2269,6 +2413,7 @@ footer:before {
 .card-menu .more span {
     padding: 5px;
     border-radius: 10px;
+
 }
 
 .card-menu .more-back {
@@ -2279,7 +2424,8 @@ footer:before {
     background-repeat: no-repeat;
     background-size: 50%;
     background-position: center;
-    z-index: 0
+    z-index: 0;
+    cursor: pointer;
 }
 
 .back .headline {
@@ -2367,126 +2513,468 @@ footer:before {
     box-shadow: 1px 1px 5px #CCC;
 }
 
-.settings main {
-    overflow-y: scroll;
+.integrations main {
+    padding-top: 0px;
+    height: 70%;
+}
+
+.back-button {
+    float: left;
+    font-size: 0.8em;
+    border: 1px solid #999;
+    height: 26px;
+    border-radius: 13px;
+    display: table;
+    padding: 3px;
+    width: 4.5em;
+    margin-right: 1em;
+    cursor: pointer;
+}
+
+.back-button div {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.page-title {
+    float: left;
+}
+
+.integrations .background {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    background: url(../img/logo-background.svg);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: contain    
+}
+
+.integrations .integrations-section {
+    width: 90%;
+    margin: auto;
+    background-color: white; /*rgba(255,255,255,0.7);*/
+    padding: 0.5em;
+    margin-bottom: 1em;
+    box-shadow: 1px 1px 5px #CCC;
+}
+
+.integrations .integrations-section-header {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: white; /*rgba(255,255,255,0.7);*/
+    padding: 0.5em;
+    margin-bottom: 1em;
+    font-size: 0.8em;
+    margin-top: 10px;
+    border: solid 1px #999;
+}
+
+.integrations .section-header {
+    color: #00B597;
+    margin-bottom: 0.3em;
+}
+
+.integrations .section-content-collapse {
+    background-color: #fff;
+    margin: auto;
+    height: 60px;
+/*    border: 1px solid #CCC;*/
+    padding: 5px;
+}
+
+.integrations .section-content-expand {
+    margin: auto;
+    display: none;
+}
+
+.integrations .section-content-collapse .service-container {
+    width: 44px;
+    height: 44px;
+    float: left;
+    margin: 4px;
+    border: solid 1px #ccc;
+    border-radius: 50%;
+    position: relative;
+}
+
+.service-container-inner {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    border-radius: 50%;
+}
+
+.integrations .section-content-collapse .service-container .service {
+    width: 100%;
+    height: 100%;
+}
+
+.integrations .section-content-collapse .service-container .service-tick {
+    color: #00B597;
+    position: absolute;
+    width: 25%;
+    height: 25%;
+    bottom: 13%;
+    right: 10%;
+    display: none;
+}
+
+.integrations .integrations-content {
+    position: absolute;
+    top: 0px;
+    height: 100%;
+    width: 100%;
+    overflow-y: auto;
     overflow-x: hidden;
 }
 
-.settings .service {
-    width: 20%;
-    height: 100%;
-    float: left
+.integrations .integration-card .service, .integrations .integration-detail .service {
+    width: 40px;
+    height: 40px;
+    float: left;
+    margin-right: 0.7em;
 }
 
-.settings .content {
-    width: 60%;
+.integrations .content {
     height: 100%;
     float: left;
-    font-size: 80%;
+    font-size: 0.7em;
     overflow: hidden;
     padding: 0.5em
 }
 
-.settings .button {
-    width: 20%;
+.integration-card-container {
+    background: white;
+    height: 15%;
+    min-height: 100px;
+    border: 1px solid #CCC;
+    margin: 0 auto 1em auto;
+    box-shadow: 1px 1px 5px #CCC;
+}
+
+.integration-card {
+    padding: 5px;
+    width: 100%;
     height: 100%;
-    float: left
 }
 
-.settings .rescuetime {
-    background: url(../img/service-rescuetime.svg);
-    z-index: 6;
-    background-repeat: no-repeat;
-    background-size: 80%;
-    background-position: center center
+.integration-card.flex {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    align-content: stretch;
 }
 
-.settings .sublime {
-    background: url(../img/service-sublime.svg);
-    z-index: 6;
-    background-repeat: no-repeat;
-    background-size: 80%;
-    background-position: center center
+.integration-detail-container {
+    background: white;
+    border: 1px solid #CCC;
+    margin: 1em auto 1em auto;
+    box-shadow: 1px 1px 5px #CCC;
+    width: 90%;
+    max-width: 600px;  
 }
 
-.settings .foursquare {
+.integration-detail {
+    padding: 8px;
+    width: 100%;
+}
+
+.integration-detail-top {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    align-content: stretch;    
+}
+
+.integration-card-left {
+    height: 100%;
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 100%;
+}
+
+.integration-card-right {
+    width: 80px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    padding-right: 0.5em;
+}
+
+.integration-detail-bottom {
+    font-size: 0.8em;
+}
+
+.integration-instructions-container {
+    margin-top: 15px;
+}
+
+.integration-instructions-header {
+    color: #00B597;
+    font-size: 1.2em;
+    margin-bottom: 5px;
+}
+
+.integration-card .service {
+    float: left;
+}
+
+.integration-button {
+    width: 60px;
+    border-radius: 13px;
+    height: 26px;
+    font-size: 0.6em;
+    display: table;
+    background-color: #00B597;
+    color: #fff;
+    box-shadow: 1px 1px 5px #CCC;
+    cursor: pointer;
+}
+
+.integration-button div {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.integration-connected {
+    width: 100%;
+    text-align: center;
+    font-size: 0.7em;
+    display: none;
+}
+
+.integration-connected div {
+    width: 100%;
+    color: #999;
+}
+
+.get-started-button, .large-connect-button {
+    width: 60%;
+    max-width: 150px;
+    border-radius: 13px;
+    height: 26px;
+/*    font-size: 0.6em;*/
+    display: table;
+    background-color: #00B597;
+    color: #fff;
+    margin: auto;
+    cursor: pointer;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.get-started-button div, .large-connect-button div {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.service-name {
+    font-size: 1.2em;
+}
+
+.integrations .service.foursquare {
     background: url(../img/service-foursquare.svg);
-    z-index: 6;
     background-repeat: no-repeat;
-    background-size: 60%;
-    background-position: center center
+    background-size: contain;
 }
 
-.settings .github {
+.integrations .service.github {
     background: url(../img/service-github.svg);
-    z-index: 6;
     background-repeat: no-repeat;
-    background-size: 60%;
-    background-position: center center
+    background-size: contain;
 }
 
-.settings .lastfm {
-    background: url(../img/service-lastfm.svg);
-    z-index: 6;
-    background-repeat: no-repeat;
-    background-size: 80%;
-    background-position: center center
-}
-
-.settings .googlefit {
+.integrations .service.googlefit {
     background: url(../img/service-googlefit.svg);
-    z-index: 6;
     background-repeat: no-repeat;
-    background-size: 80%;
-    background-position: center center
+    background-size: contain;
 }
 
-.settings .strava {
-    background: url(../img/service-strava.svg);
-    z-index: 6;
+.integrations .service.googleplaymusic {
+    background: url(../img/service-googleplaymusic.png);
     background-repeat: no-repeat;
-    background-size: 80%;
-    background-position: center center
+    background-size: contain;
 }
 
-.settings .intellij {
-    background: url(../img/service-intellij.svg);
-    z-index: 6;
-    background-repeat: no-repeat;
-    background-size: 80%;
-    background-position: center center
-}
-
-.settings .stackoverflow {
-    background: url(../img/service-stackoverflow.svg);
-    z-index: 6;
-    background-repeat: no-repeat;
-    background-size: 80%;
-    background-position: center center
-}
-
-.settings .twitter {
-    background: url(../img/service-twitter.svg);
-    z-index: 6;
-    background-repeat: no-repeat;
-    background-size: 80%;
-    background-position: center center
-}
-
-.settings .visitcounter {
-    background: url(../img/service-visitcounter.svg);
-    z-index: 6;
-    background-repeat: no-repeat;
-    background-size: 80%;
-    background-position: center center
-}
-
-.settings .hackernews {
+.integrations .service.hackernews {
     background: url(../img/service-hackernews.svg);
-    z-index: 6;
     background-repeat: no-repeat;
-    background-size: 80%;
-    background-position: center center
+    background-size: contain;
+}
+
+.integrations .service.instagram {
+    background: url(../img/service-instagram.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.integrations .service.intellij {
+    background: url(../img/service-intellij.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.integrations .service.lastfm {
+    background: url(../img/service-lastfm.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.integrations .service.rescuetime {
+    background: url(../img/service-rescuetime.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.integrations .service.spotify {
+    background: url(../img/service-spotify.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.integrations .service.stackoverflow {
+    background: url(../img/service-stackoverflow.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.integrations .service.strava {
+    background: url(../img/service-strava.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.integrations .service.sublime {
+    background: url(../img/service-sublime.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.integrations .service.twitter {
+    background: url(../img/service-twitter.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.integrations .service.visitcounter {
+    background: url(../img/service-visitcounter.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.integrations .service.visualstudio {
+    background: url(../img/service-visualstudio.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.top-border.foursquare {
+    border-top-style: solid;
+    border-color: #fa4778;
+    border-top-width: 5px;
+}
+
+.top-border.github {
+    border-top-style: solid;
+    border-color: #000000;
+    border-top-width: 5px;
+}
+
+.top-border.googlefit {
+    border-top-style: solid;
+    border-color: #DC493C;
+    border-top-width: 5px;
+}
+
+.top-border.googleplaymusic {
+    border-top-style: solid;
+    border-color: #25BBC3;
+    border-top-width: 5px;
+}
+
+.top-border.hackernews {
+    border-top-style: solid;
+    border-color: rgb(244,101,7);
+    border-top-width: 5px;
+}
+
+.top-border.instagram {
+    border-top-style: solid;
+    border-color: rgb(23,90,131);
+    border-top-width: 5px;
+}
+
+.top-border.intellij {
+    border-top-style: solid;
+    border-color: rgb(26,92,171);
+    border-top-width: 5px;
+}
+
+.top-border.lastfm {
+    border-top-style: solid;
+    border-color: rgb(221,38,73);
+    border-top-width: 5px;
+}
+
+.top-border.rescuetime {
+    border-top-style: solid;
+    border-color: #a52011;
+    border-top-width: 5px;
+}
+
+.top-border.spotify {
+    border-top-style: solid;
+    border-color: #1ED760;
+    border-top-width: 5px;
+}
+
+.top-border.stackoverflow {
+    border-top-style: solid;
+    border-color: rgb(244,121,32);
+    border-top-width: 5px;
+}
+
+.top-border.strava {
+    border-top-style: solid;
+    border-color: rgb(242,97,34);
+    border-top-width: 5px;
+}
+
+.top-border.sublime {
+    border-top-style: solid;
+    border-color: #ff8100;
+    border-top-width: 5px;
+}
+
+.top-border.twitter {
+    border-top-style: solid;
+    border-color: rgb(77,151,212);
+    border-top-width: 5px;
+}
+
+.top-border.visitcounter {
+    border-top-style: solid;
+    border-color: rgb(14,182,234);
+    border-top-width: 5px;
+}
+
+.top-border.visualstudio {
+    border-top-style: solid;
+    border-color: rgb(106,32,125);
+    border-top-width: 5px;
+}
+
+.top-border.unknown-data-source {
+    border-top-style: solid;
+    border-color: #0097C4;
+    border-top-width: 5px;
 }
 
 @media screen and (min-width: 780px) {

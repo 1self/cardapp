@@ -35,7 +35,7 @@
     var highlightCondition = getQSParam().highlightCondition;
     var displayTooltips = getQSParam().displayTooltips === "true";
     var dataSrc = decodeURIComponent(getQSParam().dataSrc);
-    var offline = false;
+    var offline = getQSParam().offline === "true";
     var maxValue; // this is set in fn addRankings;
 
     $('.mainContainer').ready(function () {

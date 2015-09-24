@@ -12,7 +12,7 @@ router.get('/',
 	renderCardStack);
 
 router.get('/card-stack', 
-	oauth.signedInRoute,
+	// oauth.signedInRoute,
 	renderCardStack);
 
 router.get('/chart.html', 

@@ -5,10 +5,18 @@ var $loadingDivTop;
 var $noMoreCardsDiv;
 var $noCardsDiv;
 
+$(document).ready(function() {
+    executeOnLoadTasks();
+});
+
 function buildStack (stack) {
     var numberOfCardsToShow = 3;
     var skip = 0;
     deferred.done(function(cardsArray) {
+
+        if (!seenIntroCards())
+            cardsArray = insertIntroCards(cardsArray);
+
     	globalCardsArray = cardsArray;
 
         $('.loading-div-bottom').remove();
@@ -41,6 +49,48 @@ function buildStack (stack) {
         }
 
     });
+}
+
+function seenIntroCards() {
+    if (localStorage.seenIntroCards)
+        return true;
+    else
+        return false;
+}
+
+function insertIntroCards(cardsArray) {
+    cardsArray = getIntroCard(-1).concat(cardsArray);
+    return cardsArray;
+}
+
+function getIntroCard(cardIndex) {
+    var introCards = [];
+
+    introCards.push({
+        introCardId: 0,
+        type: "intro"
+    });
+    introCards.push({
+        introCardId: 1,
+        type: "intro"
+    });
+    introCards.push({
+        introCardId: 2,
+        type: "intro"
+    });
+    introCards.push({
+        introCardId: 3,
+        type: "intro"
+    });
+    introCards.push({
+        introCardId: 4,
+        type: "intro"
+    });
+
+    if (cardIndex === -1)
+        return introCards;
+    else
+        return introCards[cardIndex];
 }
 
 function markCardUnique(cardEl, label) {
@@ -176,7 +226,7 @@ function injectCardData (cardData, $card) {
     }
 
     var $eventDate = $card.find(".event-date");
-    $eventDate.text(stripAtDetail(dateRangetext(cardData.startRange, cardData.endRange)));
+    $eventDate.text(dateRangetext(cardData.type, cardData.startRange, cardData.endRange));
 
     var $headline = $card.find(".headline");
 	$headline.addClass(cardData.dataSource);
@@ -190,14 +240,15 @@ function createCard (cardData) {
 	var $card; 
 
 	if (cardData.type ==="date") {
-        var cardDate = moment(cardData.cardDate);
 		$card = $(".card-template.date-card").clone();
-        $card.find('.event-date').text(stripAtDetail(cardDate.calendar()));
+        $card.find('.event-date').text(dateRangetext(cardData.type, cardData.cardDate));
 
 	} else if (cardData.type === "top10" || cardData.type === "bottom10") {
 		$card = $(".card-template.top-ten-card").clone();
 		injectCardData(cardData, $card);
-	}
+	} else if (cardData.type === "intro") {
+        $card = $(".card-template.intro-card-" + cardData.introCardId).clone();
+    }
 
 	$card.removeClass("card-template");
 
@@ -212,7 +263,9 @@ function createCard (cardData) {
 }
 
 
-$(document).ready(function() { 
+function executeOnLoadTasks() { 
+
+    getCards();
 
     var stack;
     var discardPile = [];
@@ -359,7 +412,7 @@ $(document).ready(function() {
 
 	buildStack(stack);
 
-});
+}
 
 function existsInDiscard(discardPile, targetElem) {
     for (var i = 0; i < discardPile.length; i++) {

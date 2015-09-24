@@ -39,6 +39,7 @@
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
     <script src="js/utils.js"></script>
+    <script src="js/xdate.js"></script>
 
     <script>
 
@@ -56,45 +57,6 @@
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
     <div class="overlay"></div>
-    <!--header role="banner">
-        <div class="share-fav">
-            <div class="share droppable">
-                    <?xml version="1.0" encoding="utf-8"?>
-                        <svg version="1.1" class="share-img-container" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="-29.1 142.9 612 649.2" enable-background="new -29.1 142.9 612 649.2" xml:space="preserve">
-                            <path class="share-img" d="M480.8,587.9c-28.6,0-54.4,11.7-72.9,30.7L172.6,490.1c1.6-7.3,2.5-14.9,2.5-22.6c0-7.8-0.9-15.4-2.5-22.6
-    l235.3-128.5c18.5,18.9,44.4,30.7,73,30.7c56.4,0,102.1-45.7,102.1-102.1c0-56.4-45.7-102.1-102.1-102.1S378.7,188.6,378.7,245
-    c0,7.8,0.9,15.3,2.5,22.6L145.8,396c-18.5-18.9-44.3-30.6-72.8-30.6c-56.4,0-102.1,45.7-102.1,102.1c0,56.4,45.7,102.1,102.1,102.1
-    c28.5,0,54.3-11.7,72.8-30.6l235.4,128.4c-1.6,7.3-2.5,14.8-2.5,22.6c0,56.4,45.7,102.1,102.1,102.1S582.9,746.4,582.9,690
-    S537.2,587.9,480.8,587.9z" />
-                        </svg>
-            </div>
-            <div class="fav droppable">
-                    <?xml version="1.0" encoding="utf-8"?>
-                        <svg version="1.1" class="heart-img-container" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="256 263.3 612 550.9" enable-background="new 256 263.3 612 550.9" xml:space="preserve">
-                            <g>
-                                <path class="heart-img" d="M562,814.2c-3.3,0-6.6-1.2-9-3.7c-27.5-27.5-54.6-53.8-80.9-79.2C351.4,614.2,256,521.8,256,441.6
-        c0-98.2,79.9-178.3,178.3-178.3c48.5,0,94.3,19.5,127.7,54c33.5-34.4,79.2-54,127.7-54c98.2,0,178.3,79.9,178.3,178.3
-        c0,79.9-89.1,166.3-212.3,285.8c-27.3,26.5-55.5,53.8-84.7,83.2C568.6,813,565.3,814.2,562,814.2z M434.3,288.8
-        c-84.2,0-152.7,68.6-152.7,152.7c0,69.3,96.6,163,208.3,271.4c23.5,22.7,47.5,46.2,72.1,70.5c26.2-26.1,51.5-50.5,76.1-74.5
-        c114.2-110.8,204.5-198.4,204.5-267.5c-0.1-84.2-68.6-152.7-152.9-152.7c-45.8,0-88.8,20.4-117.9,55.7c-4.8,5.9-14.9,5.9-19.7,0
-        C523.1,309.2,480,288.8,434.3,288.8z" />
-                            </g>
-                        </svg>
-            </div>
-        </div>
-    </header-->
-    <!-- <div class="share-buttons-wrap">
-
-                    <ul class="share-buttons">
-                        <li><a href="#"><span>Item</span></a></li>
-                        <li><a href="#"><span>Item</span></a></li>
-                        <li><a href="#"><span>Item</span></a></li>
-                        <li><a href="#"><span>Item</span></a></li>
-                        <li><a href="#"><span>Item</span></a></li>
-                    </ul>
-               
-</div>
- -->
 
     <main role="main">
         <div id="viewport">
@@ -198,11 +160,140 @@
             </div>
         </div>
     </div>
+    
     <div class="card-template card date-card card-hide">
         <div class="front">
             <div class="gradient-overlay"></div>
             <div class="texture-overlay"></div>
-            <div class="event-date"></div>
+            <div class="card-content">
+                <div class="event-date"></div>
+<!--                 <div class="summary-list">
+                    <div class="summary-item">
+                        <div class="summary-item-logo strava"></div>
+                        <div class="summary-item-text">Strava - 3 cards</div>
+                    </div>
+                    <div class="summary-item">
+                        <div class="summary-item-logo visitcounter"></div>
+                        <div class="summary-item-text">Visit Counter - 3 cards</div>
+                    </div>
+                    <div class="summary-item">
+                        <div class="summary-item-logo googlefit"></div>
+                        <div class="summary-item-text">Google Fit - 3 cards</div>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+    </div>
+
+    <div class="card-template card intro-card intro-card-0 card-hide">
+        <div class="front">
+            <div class="gradient-overlay"></div>
+            <div class="texture-overlay"></div>
+            <div class="card-content">
+                <div class="intro-counter">Intro card 1 of 5</div>
+                <div class="intro-header">Welcome to your card stack!</div>
+                <div class="intro-content">
+                    <p>This is your card stack. Whenever 1self finds remarkable things about you it&apos;ll drop a card onto the stack.</p>
+                    <p>You can then swipe through the stack to see the remarkable info.</p>
+                    <img class="swipe-helper" src="img/icons/swipe-helper.gif">
+                    <p>Try swiping this card off to the left or right to get to the next card.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-template card intro-card intro-card-1 card-hide">
+        <div class="front">
+            <div class="gradient-overlay"></div>
+            <div class="texture-overlay"></div>
+            <div class="card-content">
+                <div class="intro-counter">Intro card 2 of 5</div>
+                <div class="intro-header">Nice swiping!</div>
+                <div class="intro-content">
+                    <p>You can also navigate through the card stack using the buttons at the bottom of the screen.</p>
+                    <p>Hit &gt; for the next card.</p>
+                    <p>Or &lt; for the previous card.</p>
+                    <p>Give them a try and I'll see you on card 3 :)</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-template card intro-card intro-card-2 card-hide">
+        <div class="front">
+            <div class="gradient-overlay"></div>
+            <div class="texture-overlay"></div>
+            <div class="card-content">
+                <div class="intro-counter">Intro card 3 of 5</div>
+                <div class="intro-header">The fabled &quot;Card 3&quot;</div>
+                <div class="intro-content">
+                    <p>You made it! Nice one.</p>
+                    <p>Talking of &quot;Card 3&quot; down in the bottom right you can see which card you&apos;re on and how many more remarkable insights are in your stack.</p>
+                    <p>Keep swiping for your next card.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-template card intro-card intro-card-3 card-hide">
+        <div class="front">
+            <div class="gradient-overlay"></div>
+            <div class="texture-overlay"></div>
+            <div class="card-content">
+                <div class="intro-counter">Intro card 4 of 5</div>
+                <div class="intro-header">Excellent work <i class="fa fa-thumbs-o-up"></i></div>
+                <div class="intro-content">
+                    <p>Some cards have a front side and a back side</p>
+                    <p>The back side will allow you to explore your remarkable data in more detail.</p>
+                    <p>You can flip over the card to see the back by hitting the &quot;More info&quot; button.</p>
+                    <p>Give it a try below.</p>
+                </div>
+                <div class="card-menu">
+                    <div class="more"><div><span>More info</span></div></div>
+                </div>
+            </div>
+        </div>
+        <div class="back">
+            <div class="card-content">
+                <div class="intro-header">At last! The back of Card 4.</div>
+                <div class="intro-content">
+                    <p>Here on the back of the card you can interact more deeply with your data.</p>
+                    <p>Try zooming and panning the sample data below.</p>
+                    <p>When you&apos;re done, hit the return button in the bottom right corner to flip back to the front of the card.</p>
+                </div>
+            </div>
+            <div class="chart">
+                <iframe src="chart.html?lineColour=00b197&highlightCondition=top10&highlightDates=2015-05-06&vaxis=true&haxis=true&displayTooltips=true&doTransitions=false&offline=true&dataSrc=https%3A%2F%2Fapi.1self.co%2Fv1%2Fusers%2F0%2Frollups%2Fday%2Fstackoverflow%2Fbrowse%2Fsum.times-visited%2F.json" scrolling="no" frameBorder="0" class="chart-iframe"></iframe>
+            </div>
+            <div class="card-menu">
+                <div class="more-back"></div>
+            </div>
+        </div>
+    </div>
+    <div class="card-template card intro-card intro-card-4 card-hide">
+        <div class="front">
+            <div class="gradient-overlay"></div>
+            <div class="texture-overlay"></div>
+            <div class="card-content">
+                <div class="intro-counter">Intro card 5 of 5</div>
+                <div class="intro-header"><i class="fa fa-check-circle"></i> That's it for the intro</div>
+                <div class="intro-content">
+                    <p>We hope you enjoy the remarkable things about you in your card stack</p>
+                    <p>Oh, before you get on with your cards...</p>
+                    <p>What do you call somebody with a nose but no body?</p>
+                </div>
+                <div class="card-menu">
+                    <div class="more"><div><span>More info</span></div></div>
+                </div>
+            </div>
+        </div>
+        <div class="back">
+            <div class="card-content">
+                <div class="intro-header">Nobody Knows!</div>
+                <div class="intro-content nose">
+                    <p><img src="img/icons/nose.png"></p>
+                </div>
+                </div>
+            <div class="card-menu">
+                <div class="more-back"></div>
+            </div>
         </div>
     </div>
 
