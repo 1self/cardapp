@@ -45,7 +45,33 @@ function markCardRead(username, cardElem, cardReloadCount) {
                 console.log('ERROR markCardRead', username, cardId, data);
             });
         }
+    } else {
+            var cardData = $(cardElem).find('.cardData');
+            cardData = decodeURIComponent(cardData.val());
+            cardData = JSON.parse(cardData);
+            if (cardData.type === "intro") {
+                markIntroCardSeen(cardData);
+            }
     }
+}
+
+function getSeenIntroCards() {
+    var seenIntroCards = tryParseJSON(localStorage.introCards);
+    if (!seenIntroCards || !seenIntroCards.seen)
+        seenIntroCards = { seen: [] };
+    return seenIntroCards;
+}
+
+function saveSeenIntroCards(seenIntroCards) {
+    localStorage.introCards = JSON.stringify(seenIntroCards);
+}
+
+function markIntroCardSeen(cardData) {
+    var seenIntroCards = getSeenIntroCards();
+    if (seenIntroCards.seen.indexOf(cardData.introCardId) < 0) {
+        seenIntroCards.seen.push(cardData.introCardId);
+    }
+    saveSeenIntroCards(seenIntroCards);
 }
 
 function createCardText(cardData) {

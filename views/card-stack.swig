@@ -160,7 +160,7 @@
             </div>
         </div>
     </div>
-    
+
     <div class="card-template card date-card card-hide">
         <div class="front">
             <div class="gradient-overlay"></div>
@@ -190,7 +190,7 @@
             <div class="gradient-overlay"></div>
             <div class="texture-overlay"></div>
             <div class="card-content">
-                <div class="intro-counter">Intro card 1 of 5</div>
+                <div class="intro-counter"></div>
                 <div class="intro-header">Welcome to your card stack!</div>
                 <div class="intro-content">
                     <p>This is your card stack. Whenever 1self finds remarkable things about you it&apos;ll drop a card onto the stack.</p>
@@ -206,7 +206,7 @@
             <div class="gradient-overlay"></div>
             <div class="texture-overlay"></div>
             <div class="card-content">
-                <div class="intro-counter">Intro card 2 of 5</div>
+                <div class="intro-counter"></div>
                 <div class="intro-header">Nice swiping!</div>
                 <div class="intro-content">
                     <p>You can also navigate through the card stack using the buttons at the bottom of the screen.</p>
@@ -222,7 +222,7 @@
             <div class="gradient-overlay"></div>
             <div class="texture-overlay"></div>
             <div class="card-content">
-                <div class="intro-counter">Intro card 3 of 5</div>
+                <div class="intro-counter"></div>
                 <div class="intro-header">The fabled &quot;Card 3&quot;</div>
                 <div class="intro-content">
                     <p>You made it! Nice one.</p>
@@ -237,7 +237,7 @@
             <div class="gradient-overlay"></div>
             <div class="texture-overlay"></div>
             <div class="card-content">
-                <div class="intro-counter">Intro card 4 of 5</div>
+                <div class="intro-counter"></div>
                 <div class="intro-header">Excellent work <i class="fa fa-thumbs-o-up"></i></div>
                 <div class="intro-content">
                     <p>Some cards have a front side and a back side</p>
@@ -272,7 +272,7 @@
             <div class="gradient-overlay"></div>
             <div class="texture-overlay"></div>
             <div class="card-content">
-                <div class="intro-counter">Intro card 5 of 5</div>
+                <div class="intro-counter"></div>
                 <div class="intro-header"><i class="fa fa-check-circle"></i> That's it for the intro</div>
                 <div class="intro-content">
                     <p>We hope you enjoy the remarkable things about you in your card stack</p>

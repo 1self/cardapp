@@ -14,8 +14,9 @@ function buildStack (stack) {
     var skip = 0;
     deferred.done(function(cardsArray) {
 
-        if (!seenIntroCards())
-            cardsArray = insertIntroCards(cardsArray);
+        var numberOfIntroCards = $('.intro-card').length;
+        var introCards = getUnseenIntroCards(numberOfIntroCards);
+        cardsArray = introCards.concat(cardsArray);
 
     	globalCardsArray = cardsArray;
 
@@ -51,46 +52,46 @@ function buildStack (stack) {
     });
 }
 
-function seenIntroCards() {
-    if (localStorage.seenIntroCards)
+function getUnseenIntroCards(numberOfIntroCards) {
+    var introCards = [];
+
+    if (!seenAllIntroCards(numberOfIntroCards)) {
+        introCards = createIntroCards(numberOfIntroCards);
+    }
+
+    return introCards;
+}
+
+function seenAllIntroCards(numberOfIntroCards) {
+    var seenIntroCards = getSeenIntroCards();
+    if (seenIntroCards.seen.length === numberOfIntroCards)
         return true;
     else
         return false;
 }
 
-function insertIntroCards(cardsArray) {
-    cardsArray = getIntroCard(-1).concat(cardsArray);
-    return cardsArray;
-}
-
-function getIntroCard(cardIndex) {
+function createIntroCards(numberOfIntroCards) {
     var introCards = [];
+    var cardNumber = 0;
 
-    introCards.push({
-        introCardId: 0,
-        type: "intro"
-    });
-    introCards.push({
-        introCardId: 1,
-        type: "intro"
-    });
-    introCards.push({
-        introCardId: 2,
-        type: "intro"
-    });
-    introCards.push({
-        introCardId: 3,
-        type: "intro"
-    });
-    introCards.push({
-        introCardId: 4,
-        type: "intro"
-    });
+    var seenIntroCards = getSeenIntroCards();
 
-    if (cardIndex === -1)
-        return introCards;
-    else
-        return introCards[cardIndex];
+    for (var i = 0; i < numberOfIntroCards; i++) {
+        if (seenIntroCards.seen.indexOf(i) < 0) {
+            cardNumber++;
+            introCards.push({
+                introCardId: i,
+                introCardNumber: cardNumber,
+                type: "intro"
+            });    
+        }    
+    }
+
+    for (var j = 0; j < introCards.length; j++) {
+        introCards[j].introCardTotal = cardNumber;
+    }
+
+    return introCards;
 }
 
 function markCardUnique(cardEl, label) {
@@ -133,7 +134,9 @@ function addToStack ($liTemplate, stack, cardData, cardIndex, renderThumbnail) {
 
 	var $li = $liTemplate.clone();
 	var liHtml = $li[0];
+
 	var $card = createCard(cardData);
+
 	$li.removeClass("li-template");
 	liHtml.cardIndex = cardIndex;
 	var $stack = $(".stack");
@@ -248,6 +251,7 @@ function createCard (cardData) {
 		injectCardData(cardData, $card);
 	} else if (cardData.type === "intro") {
         $card = $(".card-template.intro-card-" + cardData.introCardId).clone();
+        $card.find('.intro-counter').text('Intro card ' + cardData.introCardNumber + ' of ' + cardData.introCardTotal);
     }
 
 	$card.removeClass("card-template");
