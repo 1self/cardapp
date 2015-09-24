@@ -24,6 +24,7 @@ app.locals.AUTH_CLIENT_ID = process.env.AUTH_CLIENT_ID;
 app.locals.AUTH_CLIENT_SECRET = process.env.AUTH_CLIENT_SECRET;
 app.locals.AUTH_AUTHCODE_URL = process.env.AUTH_AUTHCODE_URL;
 app.locals.AUTH_TOKEN_URL = process.env.AUTH_TOKEN_URL;
+app.locals.API_URL = process.env.API_URL;
 
 // view engine setup
 app.engine('swig', swig.renderFile)

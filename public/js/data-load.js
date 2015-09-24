@@ -15,8 +15,7 @@ function getCards() {
         var minStdDev = getQSParam().minStdDev;
         var maxStdDev = getQSParam().maxStdDev;
 
-        url = API_HOST + '/v1/users/';
-        url += username + '/cards';
+        url = '/data/cards';        
         url += '?extraFiltering=true';
         url += minStdDev ? '&minStdDev=' + minStdDev : '';
         url += maxStdDev ? '&maxStdDev=' + maxStdDev : '';
