@@ -7,12 +7,12 @@ var renderCardStack = function(req, res, next){
 	res.render('card-stack', { username: 'ed' });
 }
 
-router.get('/', 
+router.get('/',
 	oauth.signedInRoute,
 	renderCardStack);
 
-router.get('/card-stack', 
-	// oauth.signedInRoute,
+router.get('/card-stack',
+	oauth.signedInRoute,
 	renderCardStack);
 
 router.get('/chart.html', 
