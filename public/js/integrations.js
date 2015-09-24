@@ -106,7 +106,7 @@ function buildIntegrationCard(integration, $integrationCardTemplate) {
     }
 
     $card.click(function() {
-        window.location.href = 'integration.html?service=' + integration.identifier;
+        window.location.href = '/integrations/' + integration.identifier;
         return false;
     });
 

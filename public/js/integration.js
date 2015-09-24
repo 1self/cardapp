@@ -4,16 +4,16 @@ $(document).ready(function() {
 
 function executeOnLoadTasks() { 
 
-    var service = getQSParam().service;
+    // var service = getQSParam().service;
 
     if (!service || service === "") {
-        window.location.href = 'integrations.html';
+        window.location.href = '/integrations';
         return false;
     }
 
     var onGotData = function(integrationJSON) {
         if (!integrationJSON) {
-            window.location.href = 'integrations.html';
+            window.location.href = '/integrations';
             return false;
         }
         renderIntegrationDetail(integrationJSON);

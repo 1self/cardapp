@@ -4,8 +4,19 @@ var router = express.Router();
 var requestModule = require('request');
 
 /* GET home page. */
-var renderCardStack = function(req, res, next){
+var renderCardStack = function(req, res, next) {
 	res.render('card-stack', { username: 'ed' });
+};
+
+var renderExplore = function (req, res, next) {
+	res.render('explore', { username: 'ed' });
+};
+
+var renderIntegrations = function (req, res, next) {
+	if (!req.params.serviceIdentifier)
+		res.render('integrations', { username: 'ed' });
+	else
+		res.render('integration', { username: 'ed', serviceIdentifier: req.params.serviceIdentifier });
 };
 
 var checkForSession = function(req, res, next) {
@@ -69,6 +80,21 @@ router.get('/',
 router.get('/card-stack',
 	oauth.signedInRoute,
 	renderCardStack
+);
+
+router.get('/explore',
+	oauth.signedInRoute,
+	renderExplore
+);
+
+router.get('/integrations',
+	oauth.signedInRoute,
+	renderIntegrations
+);
+
+router.get('/integrations/:serviceIdentifier',
+	oauth.signedInRoute,
+	renderIntegrations
 );
 
 router.get('/chart.html', 

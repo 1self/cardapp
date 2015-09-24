@@ -45,7 +45,7 @@
 
         var offline = false;
         var API_HOST = 'http://api-staging.1self.co';
-        var username = '{{username}}'
+        var username = '{{username}}';
 
 
     </script>

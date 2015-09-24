@@ -35,17 +35,17 @@
     <!--icons -->
     <!--Android address bar styling -->
     <meta name="theme-color" content="#ffffff">
-    <script src="js/modernizr.custom.19789.js"></script>
-    <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
-    <script src="js/utils.js"></script>
+    <script src="/js/modernizr.custom.19789.js"></script>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+    <script src="/js/utils.js"></script>
     <!--[if lt IE 9]> <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script> <![endif]-->
 
     <script>
 
-        var offline = false;
-        var API_HOST = "https://api.1self.co";
-        var username = getQSParam().user;
+        var API_HOST = 'http://api-staging.1self.co';
+        var username = '{{username}}';
+        var service = '{{serviceIdentifier}}';
 
 
     </script>
@@ -104,11 +104,11 @@
                         </span>
                     </div>
                     <ul class="flyout flyout-init">
-                        <li><a href="#"><div><i class="fa fa-clone"></i></div></a></li>
+                        <li><a href="/card-stack"><div><i class="fa fa-clone"></i></div></a></li>
                         <li><a href="index.html"><div><i class="fa fa-bar-chart"></i></div></a></li>
                         <li><a href="index.html"><div><i class="fa fa-calendar"></i></div></a></li>
-                        <li><a href="integrations.html"><div><i class="fa fa-plug"></i></div></a></li>
-                        <li><a href="#"><div><i class="fa fa-user"></i></div></a></li>
+                        <li><a href="/integrations"><div><i class="fa fa-plug"></i></div></a></li>
+                        <li><a href="/profile"><div><i class="fa fa-user"></i></div></a></li>
                     </ul>
                 </div>
             </div>
@@ -132,14 +132,14 @@
         ga('send', 'pageview');
     </script>
     
-    <script src="js/jquery-2.1.4.min.js"></script>
+    <script src="/js/jquery-2.1.4.min.js"></script>
     <script>
     window.jQuery || document.write('<script src="js/jquery-2.1.4.min.js"><\/script>')
     </script>
     <!-- main script -->
-    <script src="js/main.js"></script>
-    <script src="js/data-load.js"></script>
-    <script src="js/integration.js"></script>
+    <script src="/js/main.js"></script>
+    <script src="/js/data-load.js"></script>
+    <script src="/js/integration.js"></script>
 </body>
 
 </html>
