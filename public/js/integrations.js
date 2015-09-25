@@ -56,6 +56,9 @@ function renderIntegrationsList(integrationsJSON) {
                     $section.find('.section-content-expand').slideUp();
                 }
             }
+
+            // var $clickedHeader = $clickedSection.find('.section-header');
+            // $integrationsContent.scrollTo(0);
         });
     });
 

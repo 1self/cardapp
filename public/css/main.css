@@ -569,6 +569,10 @@ hr {
     border: 1px solid #ddd;
     background-color: #fff;
 }
+.card-container.hover.manual-flip .card .front {
+    -webkit-transform: translateZ(1px);
+    transform: translateZ(1px);
+}
 
 .back {
     -webkit-backface-visibility: hidden;

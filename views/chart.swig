@@ -803,7 +803,14 @@
             var x0 = x.invert(width),
                 i = bisectDate(data, x0, 1),
                 d0 = data[i - 1],
-                d1 = data[i],
+                d1 = data[i];
+
+            var d;
+            if (!d1.date)
+                d = d0;
+            else if (!d0.date)
+                d = d1;
+            else
                 d = x0 - d0.date > d1.date - x0 ? d1 : d0;
 
             svg.select("circle.main-highlight-circle")
