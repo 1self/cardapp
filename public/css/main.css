@@ -512,6 +512,7 @@ hr {
 
 .card-container {
     -webkit-perspective: 800px;
+    -moz-perspective: 800px;
     perspective: 800px;
     width: 100%;
     margin: 0 auto;
@@ -538,19 +539,23 @@ hr {
 
 .card-container.hover.manual-flip .card {
     -webkit-transform: rotateY(180deg);
+    -moz-transform: rotateY(180deg);
     transform: rotateY(180deg)
 }
 
 .card {
     -webkit-transition: -webkit-transform 0.5s;
+    -moz-transition: -webkit-transform 0.5s;
     transition: transform 0.5s;
     position: relative;
     background: none repeat scroll 0 0 #fff;
     border-radius: 4px;
     color: #444444;
     -webkit-transform-style: preserve-3d;
+    -moz-transform-style: preserve-3d;
     transform-style: preserve-3d;
     -webkit-transition: -webkit-transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    -moz-transition: -moz-transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     background: transparent;
     height: 100%
@@ -559,6 +564,7 @@ hr {
 .front-back-extend,
 .front {
     -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
     backface-visibility: hidden;
     width: 90%;
     height: 100%;
@@ -570,16 +576,19 @@ hr {
     background-color: #fff;
 }
 .card-container.hover.manual-flip .card .front {
-    -webkit-transform: translateZ(1px);
-    transform: translateZ(1px);
+    -webkit-transform: translateZ(-1px);
+    -moz-transform: translateZ(-1px);
+    transform: translateZ(-1px);
 }
 
 .back {
     -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
     backface-visibility: hidden;
     position: absolute;
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.14);
     -webkit-transform: rotateY(180deg);
+    -moz-transform: rotateY(180deg);
     transform: rotateY(180deg);
     border: 1px solid #ccc;
     top: -40px;
