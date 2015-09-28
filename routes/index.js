@@ -94,8 +94,41 @@ var getCardData = function(req, res, next) {
 	    });
 };
 
+var getIntegrationsData = function(req, res, next) {
+
+	requestOptions = {
+		 url: req.app.locals.API_URL + '/me/integrations',
+		 headers: {
+		   'Authorization': 'Bearer ' + req.session.token
+		 }
+	};
+
+	requestModule(requestOptions,
+		function (error, httpResponse, body) {
+	        if (!error) {
+	        	if (httpResponse.statusCode === 200) {
+	        		req.integrations = body;
+	        		next();
+	        	} else if (httpResponse.statusCode === 401) {
+	        		req.app.locals.logger.error('Error trying to get card data from API', httpResponse.statusCode, body);
+	        		res.status(401).send('unauthorised');
+	        	} else {
+					req.app.locals.logger.error('Error trying to get card data from API', httpResponse.statusCode, body);
+	        		res.status(500).send('internal server error');
+				}
+	        } else {
+				req.app.locals.logger.error('500 Error trying to get card data from API', error);
+	        	res.status(500).send('internal server error');
+	        }
+	    });
+};
+
 var sendCardData = function(req, res, next) {
 	res.status(200).send(req.cards);	
+};
+
+var sendIntegrationsData = function(req, res, next) {
+	res.status(200).send(req.integrations);	
 };
 
 router.get('/',
@@ -134,6 +167,12 @@ router.get('/data/cards',
 	checkForSession, 
 	getCardData, 
 	sendCardData
+);
+
+router.get('/data/integrations', 
+	checkForSession, 
+	getIntegrationsData, 
+	sendIntegrationsData
 );
 
 router.get('/unite-data',

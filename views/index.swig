@@ -206,11 +206,11 @@
 
     <div class="page-content">
       <div class="banner center">
-        <h1>live smarter</h1>
         <img src="images/main-banner.png" alt="banner one self"/>
+        <h1>Remarkable you</h1>
         <p>
-        <span>Collect, compare, correlate and comment on</span>
-        all of your data to live a smarter life
+        connect your data to find
+        <span>remarkable things about you</span>
         </p>
       </div>
       <div id="signup" class="grid-reset-mobile signup-content">
@@ -223,7 +223,6 @@
             <ul>
               <li>Claim your 1self username</li>
               <li>Get 1self free for two years</li>
-              <li>Get a “1self early adopter” badge for your 1self profile</li>
             </ul>
           </div>
           <div class="grid-cell invite">
@@ -248,7 +247,7 @@
             <p>Everything you do is being documented in data by the apps, websites and devices you use and by the
             world around you.
             </p>
-            <p>For the first time, you can bring all of this data together in order to help you live a smarter life
+            <p>For the first time, you can bring all of this data together to bring another dimension to the remarkable things that you do.
             </p>
             <a class="button" href="/unite-data">TELL ME MORE</a>
             <div class="red-dot-desktop"><img src="images/dot-red.png" alt=""/></div>
@@ -303,7 +302,7 @@
       <div class="invite invite-footer">
         <h1><img src="images/logo.png" alt="logo"/>
         <wbr/>
-        live smarter
+        Remarkable you
         </h1>
         <div style="margin-bottom:10px;">Claim your username. Join our beta </div>
         <input type="text" name="username" class="1s_username" id="mce-username" value="" placeholder="Choose your 1self username"/>
