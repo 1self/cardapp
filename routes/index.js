@@ -19,6 +19,32 @@ var renderIntegrations = function (req, res, next) {
 		res.render('integration', { username: 'ed', serviceIdentifier: req.params.serviceIdentifier });
 };
 
+
+/* Render WWW pages */
+
+var renderUniteData = function(req, res, next) {
+	res.render('unite-data');
+};
+
+var renderCantBuild = function(req, res, next) {
+	res.render('cant-build');
+};
+
+var renderNoExploit = function(req, res, next) {
+	res.render('no-exploit');
+};
+
+var renderQuest = function(req, res, next) {
+	res.render('quest');
+};
+
+var renderPrivacy = function(req, res, next) {
+	res.render('privacy');
+};
+
+/* ---------------- */
+
+
 var checkForSession = function(req, res, next) {
 	if(req.session.signedIn === undefined || req.session.signedIn === false){
 		res.status(401).send('unauthorised');
@@ -107,6 +133,26 @@ router.get('/data/cards',
 	checkForSession, 
 	getCardData, 
 	sendCardData
+);
+
+router.get('/unite-data',
+	renderUniteData
+);
+
+router.get('/cant-build',
+	renderCantBuild
+);
+
+router.get('/no-exploit',
+	renderNoExploit
+);
+
+router.get('/quest',
+	renderQuest
+);
+
+router.get('/privacy',
+	renderPrivacy
 );
 
 module.exports = router;
