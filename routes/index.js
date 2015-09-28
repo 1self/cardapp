@@ -100,7 +100,6 @@ var sendCardData = function(req, res, next) {
 /* user name available check */
 
 var checkUser = function(req, res, next){
-	debugger;
 	req.app.locals.API_URL
 
 	requestOptions = {

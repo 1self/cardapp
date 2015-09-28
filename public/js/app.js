@@ -111,7 +111,7 @@ $(document).ready(function () {
         $('#landing-frame').attr('src', url);
 
         var redirectUrl="/dashboard?streamId="+streamid+"&readToken="+readToken;
-        var loginHref = "https://app.1self.co/login?intent=login&redirectUrl=" + encodeURIComponent(redirectUrl);
+        var loginHref = "/auth/signin";
         $("#loginButton").attr('href', loginHref);
         window.redirectUrl = redirectUrl;
 

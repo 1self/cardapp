@@ -94,7 +94,7 @@
             <img src="images/link-dot.png" alt=""/>
             </span>
           </a>
-          <a class="button signupButton nav-toggle" id="loginButton" href="https://app.1self.co/login?intent=website_login">Log in</a>
+          <a class="button signupButton nav-toggle" id="loginButton" href="/auth/signin">Log in</a>
           <a class="button signupButton nav-toggle" id="joinButton" href="#">Join</a>
         </nav>
       </header>
