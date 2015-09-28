@@ -130,6 +130,31 @@ var sendIntegrationsData = function(req, res, next) {
 	res.status(200).send(req.integrations);	
 };
 
+/* user name available check */
+
+var checkUser = function(req, res, next){
+	req.app.locals.API_URL;
+
+	requestOptions = {
+		 url: req.app.locals.API_URL + '/user/' + req.params.username + '/exists',
+		 headers: {
+		   'Authorization': req.app.locals.USERNAME_EXISTS_TOKEN
+		 }
+	};
+
+	requestModule(requestOptions,
+		function (error, httpResponse, body) {
+	        if (!error) {
+	        	res.status(httpResponse.statusCode).send(body);
+	        } else {
+				req.app.locals.logger.error('500 Error trying to get username exists from API', error);
+	        	res.status(500).send('internal server error');
+	        }
+	   }
+	);
+};
+/* ---------*/
+
 router.get('/',
 	oauth.signedInRoute,
 	renderCardStack
@@ -193,5 +218,11 @@ router.get('/quest',
 router.get('/privacy',
 	renderPrivacy
 );
+
+router.get('/user/:username/exists', 
+	checkUser
+);
+
+
 
 module.exports = router;

@@ -111,7 +111,7 @@ $(document).ready(function () {
         $('#landing-frame').attr('src', url);
 
         var redirectUrl="/dashboard?streamId="+streamid+"&readToken="+readToken;
-        var loginHref = "https://app.1self.co/login?intent=login&redirectUrl=" + encodeURIComponent(redirectUrl);
+        var loginHref = "/auth/signin";
         $("#loginButton").attr('href', loginHref);
         window.redirectUrl = redirectUrl;
 
@@ -165,15 +165,13 @@ var checkUserName = function(){
 
 
 var join = function(service){
-    const API_ENDPOINT = "http://app.1self.co";
-    var redirectUrl = API_ENDPOINT + "/integrations";
     var username = $('#oneselfUsernameJoin').val();
     $('#joinErrorMessage').html("");
     var re = /^[a-zA-Z0-9_]*$/;
     if (!re.test(username)) {
         $('#joinErrorMessage').html("Username needs to be just letters, numbers or underscore.");
     } else {
-        var url = API_ENDPOINT + '/v1/user/' + username + "/exists";
+        var url = '/user/' + username + "/exists";
         $.get(url)
             .done(function(){
                 $('#joinErrorMessage').html("Ack. Sorry. That username is already taken!");
@@ -182,10 +180,9 @@ var join = function(service){
                 var params = [
                     'intent=website_signup',
                     'username=' + username,
-                    'service=' + service,
-                    'redirectUrl=' + (typeof window.redirectUrl === 'undefined' ? redirectUrl : encodeURIComponent(window.redirectUrl))
+                    'service=' + service
                 ];
-                var signupUrl = API_ENDPOINT + "/signup?" + params.join('&');
+                var signupUrl = "/auth/signup?" + params.join('&');
                 document.location.href = signupUrl;
             });
     }
