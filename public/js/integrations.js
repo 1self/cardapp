@@ -30,7 +30,6 @@ function executeOnLoadTasks() {
 }
 
 function renderIntegrationsList(integrationsJSON) {
-    console.log(integrationsJSON);
 
     var $integrationsContent = $('.integrations-content');
     var $sectionTemplate = $('.integrations-section.template');
@@ -69,7 +68,7 @@ function buildCategorySection(category, $sectionTemplate, $smallServiceTemplate,
     var $section = $sectionTemplate.clone();
     $section.removeClass('template');
 
-    $section.find('.section-header').text(category.category);
+    $section.find('.section-header').text(category.categoryName);
 
     category.integrations.forEach(function (integration) {
         var $collapseItem = buildServiceCollapseItem(integration, $smallServiceTemplate);
@@ -105,7 +104,7 @@ function buildIntegrationCard(integration, $integrationCardTemplate) {
         $card.find('.integration-connected').show();
         $card.find('.integration-button').hide(); 
     } else {
-        $card.find('.integration-button div').text(integration.buttonText);       
+        $card.find('.integration-button div').text(integration.integrationAction);       
     }
 
     $card.click(function() {

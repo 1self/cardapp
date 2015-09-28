@@ -39,12 +39,40 @@ function getCards() {
         });
 }
 
-// $(function() {
-//     getCards();
-
-// });
-
 function getIntegrationsInCategories(callback, serviceIdentifier) {
+
+    var url = '/data/integrations';
+
+    $.getJSON(url,
+            function() {
+                console.log("accessed api for integrations");
+            })
+        .done(function(data) {
+
+            console.log('integrations data', data);
+            if (!serviceIdentifier) {
+                callback(data);
+            } else {
+                var singleIntegrationJSON;
+                data.some(function (category) {
+                    category.integrations.forEach(function (integration) {
+                        if (integration.identifier === serviceIdentifier) {
+                            singleIntegrationJSON = integration;
+                            return singleIntegrationJSON; // break out of some loop if set
+                        }
+                    });
+                    return singleIntegrationJSON; // break out of some loop if set
+                });
+                callback(singleIntegrationJSON);
+            }
+        })
+        .fail(function(data) {
+            console.log('error getting integrations', data);
+
+        });
+}
+
+function getIntegrationsInCategories2(callback, serviceIdentifier) {
     var integrationJSON = [];
 
     integrationJSON.push(integrationCatTemplate('Productivity', ['RescueTime', 'Visit Counter', 'GitHub']));

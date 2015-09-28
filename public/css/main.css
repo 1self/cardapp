@@ -2804,7 +2804,7 @@ footer:before {
     background-size: contain;
 }
 
-.integrations .service.googlefit {
+.integrations .service.google-fit {
     background: url(../img/service-googlefit.svg);
     background-repeat: no-repeat;
     background-size: contain;
@@ -2828,13 +2828,13 @@ footer:before {
     background-size: contain;
 }
 
-.integrations .service.intellij {
+.integrations .service.intellij-idea-plugin {
     background: url(../img/service-intellij.png);
     background-repeat: no-repeat;
     background-size: contain;
 }
 
-.integrations .service.lastfm {
+.integrations .service.last-fm {
     background: url(../img/service-lastfm.svg);
     background-repeat: no-repeat;
     background-size: contain;
@@ -2864,7 +2864,7 @@ footer:before {
     background-size: contain;
 }
 
-.integrations .service.sublime {
+.integrations .service.sublime-text-plugin {
     background: url(../img/service-sublime.png);
     background-repeat: no-repeat;
     background-size: contain;
@@ -2876,13 +2876,13 @@ footer:before {
     background-size: contain;
 }
 
-.integrations .service.visitcounter {
+.integrations .service.visitCounter {
     background: url(../img/service-visitcounter.png);
     background-repeat: no-repeat;
     background-size: contain;
 }
 
-.integrations .service.visualstudio {
+.integrations .service.visualStudioExtension {
     background: url(../img/service-visualstudio.png);
     background-repeat: no-repeat;
     background-size: contain;
@@ -2900,7 +2900,7 @@ footer:before {
     border-top-width: 5px;
 }
 
-.top-border.googlefit {
+.top-border.google-fit {
     border-top-style: solid;
     border-color: #DC493C;
     border-top-width: 5px;
@@ -2924,13 +2924,13 @@ footer:before {
     border-top-width: 5px;
 }
 
-.top-border.intellij {
+.top-border.intellij-idea-plugin {
     border-top-style: solid;
     border-color: rgb(26,92,171);
     border-top-width: 5px;
 }
 
-.top-border.lastfm {
+.top-border.last-fm {
     border-top-style: solid;
     border-color: rgb(221,38,73);
     border-top-width: 5px;
@@ -2960,7 +2960,7 @@ footer:before {
     border-top-width: 5px;
 }
 
-.top-border.sublime {
+.top-border.sublime-text-plugin {
     border-top-style: solid;
     border-color: #ff8100;
     border-top-width: 5px;
@@ -2972,13 +2972,13 @@ footer:before {
     border-top-width: 5px;
 }
 
-.top-border.visitcounter {
+.top-border.visitCounter {
     border-top-style: solid;
     border-color: rgb(14,182,234);
     border-top-width: 5px;
 }
 
-.top-border.visualstudio {
+.top-border.visualStudioExtension {
     border-top-style: solid;
     border-color: rgb(106,32,125);
     border-top-width: 5px;
