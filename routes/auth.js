@@ -19,6 +19,15 @@ router.get('/signin',
 router.get('/callback', 
 	function(req, res, next){
 		req.app.locals.logger.info('auth callback hit, authcode ', req.query.code);
+
+		var stateCheck = req.query.state;
+		if(stateCheck !== req.session.state){
+			debugger;
+			req.app.locals.logger.error('auth callback refused due to state check failure');
+			res.status(401).send('state check failed');
+			return;
+		}
+
 		var authcode = req.query.code;
 		var url = req.app.locals.AUTH_TOKEN_URL;
 		var port = req.app.settings.port;

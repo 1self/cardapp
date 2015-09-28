@@ -55,7 +55,6 @@ var checkForSession = function(req, res, next) {
 };
 
 var getCardData = function(req, res, next) {
-
 	var queryKeys = Object.keys(req.query);
 	var qs = [];
 	var qsString = '';
