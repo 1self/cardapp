@@ -16,6 +16,17 @@ router.get('/signin',
 		}
 });
 
+router.get('/signup', 
+	function(req, res, next){
+		if(oauth.signedIn === true){
+			oauth.redirect(req, res, next);
+		} 
+		else{
+			oauth.storePostLoginRedirect(req);
+			oauth.getAuthCodeFromSignup(req, res, next)
+		}
+});
+
 router.get('/callback', 
 	function(req, res, next){
 		req.app.locals.logger.info('auth callback hit, authcode ', req.query.code);

@@ -59,6 +59,35 @@ var getAuthCode = function(req, res, next){
 	res.redirect(authCodeUrl);
 }
 
+		// var params = [
+  //                   'intent=website_signup',
+  //                   'username=' + username,
+  //                   'service=' + service
+  //               ];
+                //var signupUrl = "/auth/signup?" + params.join('&');
+
+var getAuthCodeFromSignup = function(req, res, next){
+	var port = req.app.settings.port;
+	var state = getRandomIntInclusive(0, 1000000000);
+	var redirectUri = req.protocol 
+					+ '://' 
+					+ req.hostname 
+					+ (port ? ':' + port : '')
+					+ '/auth/callback';
+	var authCodeUrl = req.app.locals.AUTH_AUTHCODE_URL + '/signup'
+	+ '?client_id=' + req.app.locals.AUTH_CLIENT_ID
+	+ '&redirect_uri=' + redirectUri
+	+ '&response_type=code'
+	+ '&state=' + state
+	+ '&intent=' + req.query.intent
+	+ '&username=' + req.query.username
+	+ '&service=' + req.query.username;
+
+	req.session.state = '' + state;
+
+	res.redirect(authCodeUrl);
+}                
+
 module.exports.signedInRoute = signedInRoute;
 module.exports.redirect = redirect;
 module.exports.signedIn = signedIn;
@@ -66,4 +95,5 @@ module.exports.signIn = signIn;
 module.exports.signOut = signOut;
 module.exports.storePostLoginRedirect = storePostLoginRedirect;
 module.exports.getAuthCode = getAuthCode;
+module.exports.getAuthCodeFromSignup = getAuthCodeFromSignup;
 
