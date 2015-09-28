@@ -36,8 +36,13 @@ var storePostLoginRedirect= function(req){
 	req.session.postSignInRedirect = req.get('Referrer');
 }
 
+var getRandomIntInclusive = function(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
 var getAuthCode = function(req, res, next){
 	var port = req.app.settings.port;
+	var state = getRandomIntInclusive(0, 1000000000);
 	var redirectUri = req.protocol 
 					+ '://' 
 					+ req.hostname 
@@ -46,7 +51,10 @@ var getAuthCode = function(req, res, next){
 	var authCodeUrl = req.app.locals.AUTH_AUTHCODE_URL
 	+ '?client_id=' + req.app.locals.AUTH_CLIENT_ID
 	+ '&redirect_uri=' + redirectUri
-	+ '&response_type=code';
+	+ '&response_type=code'
+	+ '&state=' + state;
+
+	req.session.state = '' + state;
 
 	res.redirect(authCodeUrl);
 }
