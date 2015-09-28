@@ -156,7 +156,7 @@ var checkUser = function(req, res, next){
 router.get('/',
 	oauth.signedInRoute,
 	renderCardStack
-)
+);
 
 router.get('/card-stack',
 	oauth.signedInRoute,

@@ -46,7 +46,7 @@ var getAuthCode = function(req, res, next){
 	var redirectUri = req.protocol 
 					+ '://' 
 					+ req.hostname 
-					+ (port ? ':' + port : '')
+					+ (req.hostname === 'localhost' ? ':' + port : '')
 					+ '/auth/callback';
 	var authCodeUrl = req.app.locals.AUTH_AUTHCODE_URL
 	+ '?client_id=' + req.app.locals.AUTH_CLIENT_ID
