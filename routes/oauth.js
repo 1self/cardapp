@@ -81,7 +81,7 @@ var getAuthCodeFromSignup = function(req, res, next){
 	+ '&state=' + state
 	+ '&intent=' + req.query.intent
 	+ '&username=' + req.query.username
-	+ '&service=' + req.query.username;
+	+ '&service=' + req.query.service;
 
 	req.session.state = '' + state;
 
