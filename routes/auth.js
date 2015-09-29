@@ -4,7 +4,7 @@ var request = require('request');
 var router = express.Router();
 var oauth = require('./oauth.js');
 var conceal = require('concealotron');
-
+var scopedLogger = require('./scopedLogger');
 router.get('/signin', 
 	function(req, res, next){
 		if(oauth.signedIn === true){
@@ -29,7 +29,7 @@ router.get('/signup',
 
 router.get('/callback', 
 	function(req, res, next){
-		var logger = scopedLogger.logger(conceal(req.query.code), req.app.locals.logger.info);
+		var logger = scopedLogger.logger(conceal(req.query.code), req.app.locals.logger);
 		logger.info('auth callback hit', req.query.code);
 
 		var stateCheck = req.query.state;
@@ -45,7 +45,7 @@ router.get('/callback',
 		var redirectUri = req.protocol + 
 			'://' + 
 			req.hostname + 
-			(port ? ':' + port : '') + 
+			(req.hostname === 'localhost' ? ':' + port : '') + 
 			'/auth/callback';
 		
 		var form = {
@@ -73,8 +73,9 @@ router.get('/callback',
 			}
 
 			if(httpResponse.statusCode !== 200){
-				logger.error('error while requesting access_token, code, body', [httpResponse.stateCode, httpResponse.body]);
-				res.status(httpResponse.statusCode).send();
+				logger.error('error while requesting access_token, code, body', [httpResponse.statusCode, httpResponse.body]);
+				res.status(httpResponse.statusCode).send('internal error');
+				return;
 			}
 
 			logger.info('token retrieved', conceal(body.access_token));
