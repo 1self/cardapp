@@ -73,7 +73,7 @@ router.get('/callback',
 			}
 
 			if(httpResponse.statusCode !== 200){
-				logger.error('error while requesting access_token, code, body', [httpResponse.stateCode, httpResponse.body]);
+				logger.error('error while requesting access_token, code, body', [httpResponse.statusCode, httpResponse.body]);
 				res.status(httpResponse.statusCode).send('internal error');
 				return;
 			}
