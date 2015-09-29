@@ -55,7 +55,7 @@
     <!--[if lt IE 9]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
-    <div class="overlay">
+    <div class="overlay hide">
         <div class="overlay-content">
             <p class="welcome-header"></p>
             <p>Great news! You've qualified to get 1self free for 2 years.</p>

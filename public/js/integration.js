@@ -47,13 +47,16 @@ function renderIntegrationDetail(integrationJSON) {
         $integrationDetail.find('.integration-detail-bottom .integration-instructions').html(integrationJSON.instructions);
 
         $buttons = $integrationDetail.find('.integration-button div, .large-connect-button div');
-        // $largeButton = $integrationDetail.find('.large-connect-button');
 
-        $buttons.text(integrationJSON.buttonText);
-        // $largeButton.text(integrationJSON.buttonText);
+        $buttons.text(integrationJSON.integrationAction);
 
         $buttons.click(function() {
-            window.open(integrationJSON.buttonHref);
+            
+            if (integrationJSON.integrationType === 'hosted')
+                window.location.href = integrationJSON.integrationUrl;
+            else
+                window.open(integrationJSON.integrationUrl);
+            
             return false;
         });        
     }

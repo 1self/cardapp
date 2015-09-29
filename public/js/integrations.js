@@ -11,8 +11,9 @@ function executeOnLoadTasks() {
     getIntegrationsInCategories(onGotData);
 
     if (localStorage.seenIntegrationIntro) {
-        $('.overlay').hide();
+        // $('.overlay').hide();
     } else {
+        $('.overlay').removeClass('hide');
         $('.overlay').addClass('on-top');
 
         $('.welcome-header').text('Welcome, ' + username + '!');
