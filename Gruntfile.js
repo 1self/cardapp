@@ -9,7 +9,7 @@ module.exports = function (grunt) {
   require('load-grunt-tasks')(grunt);
   grunt.loadNpmTasks('grunt-env');
 
-  var reloadPort = 35729, files;
+  var reloadPort = 35730, files;
 
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
