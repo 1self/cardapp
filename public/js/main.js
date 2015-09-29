@@ -27,7 +27,7 @@
   $(".flyout-btn").click(function() {
     console.log('click 1');
     $(".flyout-btn").toggleClass("btn-rotate");
-    $(".overlay").toggleClass("open");
+    $(".nav-overlay").toggleClass("open hide");
     // $(".flyout").find("a").removeClass();
     
     $li = $('.topOfMain');
@@ -36,40 +36,18 @@
     return $(".flyout").removeClass("flyout-init fade").toggleClass("expand");
   });
 
-  $(".flyout").find("a").click(function() {
-    console.log('click 2');
-    $(".flyout-btn").toggleClass("btn-rotate");
-    $(".flyout").removeClass("expand").addClass("fade");
-    return $(this).addClass("clicked");
-  });
-
-  $(".share").find("a").click(function() {
-    console.log('click 3');
-    return $(this).addClass("clicked");
-  });
-
-  $(".share").click(function() {
-    console.log('click 5');
-    $(".flyout-btn").toggleClass("btn-rotate");
-    $(".share-buttons-wrap").toggleClass("hide zoomIn");
-    $(".overlay").toggleClass("open");
-  });
-
   $('.removed-from-deck').delay(1000).remove();
 
-  $(".flyout").find("a").click(function (e) {
+  $(".nav-overlay .navigation-content").find(".navigation-item").click(function (e) {
     console.log('click 6');
     e.preventDefault();                   // prevent default anchor behavior
     var goTo = this.getAttribute("href"); // store anchor href
 
-    // do something while timeOut ticks ... 
-
-    setTimeout(function(){
-         window.location = goTo;
-    }, 550);
-
-  
-});  
+    if (goTo.substr(0, 1) === '/')
+      window.location.href = goTo;
+    else
+      window.open(goTo);
+  });  
 
 }).call(this);
 

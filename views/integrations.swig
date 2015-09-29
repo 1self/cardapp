@@ -70,6 +70,23 @@
         </div>
     </div>
 
+    <div class="nav-overlay hide">
+        <div class="navigation-container">
+            <div class="navigation-content">
+                <div>
+                    <div class="navigation-item" href="/card-stack">Card stack</div>
+                    <div class="navigation-item" href="/integrations">Integrations</div>
+                    <div class="navigation-item" href="/profile">Profile</div>
+                    <hr class="navigation-spacer">
+                    <div class="navigation-item" href="http://blog.1self.co">1self blog</div>
+                    <div class="navigation-item" href="http://1self.uservoice.com">Support &amp; feedback</div>
+                </div>
+            </div>
+            <div class="navigation-padding">
+            </div>
+        </div>
+    </div>
+
     <header role="banner">
         Your integrations
     </header>
@@ -130,13 +147,6 @@
                         <span>
                         </span>
                     </div>
-                    <ul class="flyout flyout-init">
-                        <li><a href="/card-stack"><div><i class="fa fa-clone"></i></div></a></li>
-                        <li><a href="index.html"><div><i class="fa fa-bar-chart"></i></div></a></li>
-                        <li><a href="index.html"><div><i class="fa fa-calendar"></i></div></a></li>
-                        <li><a href="/integrations"><div><i class="fa fa-plug"></i></div></a></li>
-                        <li><a href="/profile"><div><i class="fa fa-user"></i></div></a></li>
-                    </ul>
                 </div>
             </div>
         </div>

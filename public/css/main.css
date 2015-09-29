@@ -992,14 +992,56 @@ footer:before {
     background-size: 20%
 }*/
 
-.overlay.open {
-    background: rgba(0, 0, 0, 0.5);
+.nav-overlay.open {
+    background: rgba(0, 0, 0, 0.85);
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     z-index: 5
+}
+
+.nav-overlay .navigation-container {
+    width: 100%;
+    max-width: 600px;
+    margin: auto;
+    height: 100%;
+    padding: 10px;
+}
+
+.nav-overlay .navigation-content {
+    height: 80%;
+    width: 100%;
+    display: table;
+}
+
+.nav-overlay .navigation-content>div {
+    height: 100%;
+    width: 100%;
+    color: #fff;
+    display: table-cell;
+    vertical-align: bottom;
+}
+
+.nav-overlay .navigation-content .navigation-item {
+    width: 100%;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    text-align: center;
+}
+
+.nav-overlay .navigation-content .navigation-spacer {
+    width: 70%;
+    margin: auto;
+    margin-bottom: 15px;
+    padding-top: 15px;
+    border-color: #00b197;
+}
+
+.nav-overlay .navigation-padding {
+    height: 20%;
+    width: 100%;
 }
 
 .overlay.on-top {
