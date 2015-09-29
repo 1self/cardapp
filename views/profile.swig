@@ -4,7 +4,7 @@
 <!--[if IE 8]> <html class="lt-ie9"> <![endif]-->
 <!--[if IE 9]>    <html class="no-js lt-ie10" lang="en"> <![endif]-->
 <!--[if gt IE 9]><!-->
-<html class="no-js gt-ie9 non-ie" lang="en">
+<html class="no-js gt-ie9 non-ie profile" lang="en">
 <!--<![endif]-->
 <html>
 <!--<![endif]-->
@@ -37,7 +37,7 @@
     <meta name="theme-color" content="#ffffff">
     <script src="js/modernizr.custom.19789.js"></script>
     <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
     <script src="js/utils.js"></script>
 
     <script>
@@ -56,49 +56,27 @@
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
     <div class="overlay"></div>
-    <!--header role="banner">
-        <div class="share-fav">
-            <div class="share droppable">
-                    <?xml version="1.0" encoding="utf-8"?>
-                        <svg version="1.1" class="share-img-container" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="-29.1 142.9 612 649.2" enable-background="new -29.1 142.9 612 649.2" xml:space="preserve">
-                            <path class="share-img" d="M480.8,587.9c-28.6,0-54.4,11.7-72.9,30.7L172.6,490.1c1.6-7.3,2.5-14.9,2.5-22.6c0-7.8-0.9-15.4-2.5-22.6
-    l235.3-128.5c18.5,18.9,44.4,30.7,73,30.7c56.4,0,102.1-45.7,102.1-102.1c0-56.4-45.7-102.1-102.1-102.1S378.7,188.6,378.7,245
-    c0,7.8,0.9,15.3,2.5,22.6L145.8,396c-18.5-18.9-44.3-30.6-72.8-30.6c-56.4,0-102.1,45.7-102.1,102.1c0,56.4,45.7,102.1,102.1,102.1
-    c28.5,0,54.3-11.7,72.8-30.6l235.4,128.4c-1.6,7.3-2.5,14.8-2.5,22.6c0,56.4,45.7,102.1,102.1,102.1S582.9,746.4,582.9,690
-    S537.2,587.9,480.8,587.9z" />
-                        </svg>
-            </div>
-            <div class="fav droppable">
-                    <?xml version="1.0" encoding="utf-8"?>
-                        <svg version="1.1" class="heart-img-container" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="256 263.3 612 550.9" enable-background="new 256 263.3 612 550.9" xml:space="preserve">
-                            <g>
-                                <path class="heart-img" d="M562,814.2c-3.3,0-6.6-1.2-9-3.7c-27.5-27.5-54.6-53.8-80.9-79.2C351.4,614.2,256,521.8,256,441.6
-        c0-98.2,79.9-178.3,178.3-178.3c48.5,0,94.3,19.5,127.7,54c33.5-34.4,79.2-54,127.7-54c98.2,0,178.3,79.9,178.3,178.3
-        c0,79.9-89.1,166.3-212.3,285.8c-27.3,26.5-55.5,53.8-84.7,83.2C568.6,813,565.3,814.2,562,814.2z M434.3,288.8
-        c-84.2,0-152.7,68.6-152.7,152.7c0,69.3,96.6,163,208.3,271.4c23.5,22.7,47.5,46.2,72.1,70.5c26.2-26.1,51.5-50.5,76.1-74.5
-        c114.2-110.8,204.5-198.4,204.5-267.5c-0.1-84.2-68.6-152.7-152.9-152.7c-45.8,0-88.8,20.4-117.9,55.7c-4.8,5.9-14.9,5.9-19.7,0
-        C523.1,309.2,480,288.8,434.3,288.8z" />
-                            </g>
-                        </svg>
-            </div>
-        </div>
-    </header-->
-    <!-- <div class="share-buttons-wrap">
 
-                    <ul class="share-buttons">
-                        <li><a href="#"><span>Item</span></a></li>
-                        <li><a href="#"><span>Item</span></a></li>
-                        <li><a href="#"><span>Item</span></a></li>
-                        <li><a href="#"><span>Item</span></a></li>
-                        <li><a href="#"><span>Item</span></a></li>
-                    </ul>
-               
-</div>
- -->
-
+    <header role="banner">
+        Profile
+    </header>
+    
     <main role="main">
-        <div id="viewport">
-            <a href="/logout"><i class="fa fa-sign-out">signout</i></a>
+        <div class="background"></div>
+        <div class="profile-content">
+            <div class="profile-picture-row">
+                <div class="avatar-image">
+                    <img src="/images/any-data.png">
+                </div>
+            </div>
+            <div class="logout-button-row">
+                <div class="large-connect-button logout-button">
+                    <div>
+                        Sign out&nbsp;&nbsp;<i class="fa fa-sign-out"></i>
+                    </div>
+                </div>
+            
+            </div>
         </div>
         
     </main>
@@ -221,9 +199,8 @@
     <script>
     window.jQuery || document.write('<script src="js/jquery-2.1.4.min.js"><\/script>')
     </script>
-    <script src="js/swing.min.js"></script>
-    <script src="bower_components/moment/min/moment.min.js"></script>
     <script src="js/main.js"></script>
+    <script src="js/profile.js"></script>
    
 </body>
 

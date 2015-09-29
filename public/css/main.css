@@ -2554,7 +2554,7 @@ footer:before {
     float: left;
 }
 
-.integrations .background {
+.integrations .background, .profile .background {
     width: 100%;
     height: 100%;
     padding: 0;
@@ -2642,6 +2642,32 @@ footer:before {
     width: 100%;
     overflow-y: auto;
     overflow-x: hidden;
+}
+
+.profile .profile-content {
+    position: absolute;
+    top: 0px;
+    height: 100%;
+    width: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.profile .profile-picture-row {
+    margin-bottom: 50px;
+}
+
+.profile .avatar-image {
+    width: 50%;
+    max-width: 200px;
+    margin: auto;
+}
+
+.profile .avatar-image img {
+    width: 100%;
+    border-radius: 50%;
+    border: solid 1px #999;
+    padding: 5px;
 }
 
 .integrations .integration-card .service, .integrations .integration-detail .service {
