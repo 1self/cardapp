@@ -28,7 +28,6 @@ router.get('/signup',
 });
 
 var getProfile = function(req, res, next){
-	debugger;
 	var tokenLogger = scopedLogger.logger(conceal(req.session.token), req.app.locals.logger);
 	tokenLogger.silly('getting profile');
 	
@@ -59,7 +58,6 @@ var getProfile = function(req, res, next){
 };
 
 var getAccessToken = function(req, res, next){
-	debugger;
 	var logger = scopedLogger.logger(conceal(req.query.code), req.app.locals.logger);
 	logger.info('auth callback hit', req.query.code);
 

@@ -123,7 +123,7 @@ var logout = function(req, res, next){
 		(req.hostname === 'localhost' ? ':' + port : '') + 
 		'/';
 
-	var url = req.app.locals.API_URL + '/me/logout' + 
+	var url = req.app.locals.APP_URL + '/me/logout' + 
 		'?redirect_uri=' + redirectUri;
 
 	req.session.destroy();
