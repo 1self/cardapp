@@ -259,7 +259,7 @@
             <p>Remarkable is new. Remarkable is memorable, recountable, shareable.</p>
             <p>Remarkable is not ordinary or commonplace and nor are you.</p>
             <p>1self will help you discover your remarkable self, every day.</p>
-            <a class="button" href="/unite-data">TELL ME MORE</a>
+            <!-- <a class="button" href="/unite-data">TELL ME MORE</a> -->
             <div class="red-dot-desktop"><img src="images/dot-red.png" alt=""/></div>
           </div>
         </div>
@@ -267,17 +267,15 @@
       <div class="grid-reset-mobile build-data" id="cant-build">
         <div class="grid-row">
           <div class="grid-cell content">
-            <h2>Unite all of your data</h2>
-            <b>Yup, all of your data. Well, all that you're interested in anyway.</b>
-            <p>Made a purchase. Got a new follower. Spent time doing something. Got a new high score. Travelled
-            somewhere.
+            <h2>Your remarkable data</h2>
+            <b>Your data tells your remarkable life story.</b>
+            <p>Made a purchase. Got a new follower. Spent time doing something. Got a new high score. Travelled somewhere.
             </p>
-            <p>Everything you do is being documented in data by the apps, websites and devices you use and by the
-            world around you.
+            <p>Everything you do is being documented in data by the apps, websites and devices you use and by the world around you.
             </p>
-            <p>For the first time, you can bring all of this data together to bring another dimension to the remarkable things that you do.
+            <p>Use 1self to bring all of this data together and tell the story of the remarkable things that you do.
             </p>
-            <a class="button" href="/unite-data">TELL ME MORE</a>
+            <!-- <a class="button" href="/unite-data">TELL ME MORE</a> -->
           </div>
           <div class="grid-cell img">
             <img src="images/united-data.svg" alt="" class="united"/>
@@ -296,7 +294,7 @@
             </p>
             <P>Your data will be securely stored and private to you. We'll never sell or share your data (unless you choose to).
             </p>
-            <p>We want a completely transparent value exchange so 1self will operate on a “freemium” basis where full features will be unlocked for a small yearly
+            <p>We want a completely transparent value exchange, so 1self will operate on a “freemium” basis where full features will be unlocked for a small yearly
             subscription.
             </p>
           </div>
