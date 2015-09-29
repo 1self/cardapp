@@ -1,5 +1,3 @@
-
-
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -26,15 +24,26 @@ app.locals.AUTH_AUTHCODE_URL = process.env.AUTH_AUTHCODE_URL;
 app.locals.AUTH_TOKEN_URL = process.env.AUTH_TOKEN_URL;
 app.locals.API_URL = process.env.API_URL;
 app.locals.USERNAME_EXISTS_TOKEN = process.env.USERNAME_EXISTS_TOKEN;
+app.locals.LOGFILE = process.env.LOGGINGDIR + '/cardapp.log';
+
+// logging setup
+winston.add(winston.transports.File, { filename: app.locals.LOGFILE, level: 'debug', json: false, prettyPrint: false });
+winston.error("Errors will be logged here");
+winston.warn("Warns will be logged here");
+winston.info("Info will be logged here");
+winston.debug("Debug will be logged here");
+winston.silly("Silly will be logged here");
+app.locals.logger = winston;
 
 // view engine setup
-app.engine('swig', swig.renderFile)
+app.engine('swig', swig.renderFile);
 app.set('view cache', false);
 swig.setDefaults({ cache: false });
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'swig');
 app.set('trust proxy', true);
-app.locals.logger = winston;
+
+
 
 // app.use(favicon(__dirname + '/public/img/favicon.ico'));
 app.use(morgan('dev'));
@@ -52,7 +61,7 @@ app.use(session({
 }));
 
 app.use('/', index);
-app.use('/auth', auth)
+app.use('/auth', auth);
 
 /// catch 404 and forward to error handler
 app.use(function(req, res, next) {

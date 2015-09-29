@@ -127,14 +127,12 @@ var sendCardData = function(req, res, next) {
 };
 
 var sendIntegrationsData = function(req, res, next) {
-	res.status(200).send(req.integrations);	
+	res.status(200).send(req.integrations)
 };
 
 /* user name available check */
 
 var checkUser = function(req, res, next){
-	req.app.locals.API_URL;
-
 	requestOptions = {
 		 url: req.app.locals.API_URL + '/user/' + req.params.username + '/exists',
 		 headers: {
