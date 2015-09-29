@@ -1,6 +1,7 @@
+/*jslint node: true */
 'use strict';
 var scopedLogger = require('./scopedLogger');
-/*jslint node: true */
+var request = require('request');
 
 var signedInRoute = function(req, res, next){
 	if(req.session.signedIn === undefined || req.session.signedIn === false){
@@ -89,7 +90,45 @@ var getAuthCodeFromSignup = function(req, res, next){
 	req.session.state = '' + state;
 
 	res.redirect(authCodeUrl);
-};                
+};             
+
+var deleteToken = function(req, res, next){
+	var requestOptions = {
+		url: req.app.locals.AUTH_TOKEN_URL,
+		headers: {
+		'Authorization': 'Bearer ' + req.session.token
+		}
+	};
+
+	request.del(requestOptions,
+		function (error, httpResponse, body) {
+			if(error){
+				res.status(500).send(body);
+			}
+			else if(httpResponse.statusCode !== 200){
+				res.status(httpResponse.statusCode).send(body);
+			}
+	        else {
+	        	next();
+	        } 
+	   }
+	);
+};
+
+var logout = function(req, res, next){
+	var port = req.app.settings.port;
+	var redirectUri = 	req.protocol + 
+		'://' + 
+		req.hostname + 
+		(req.hostname === 'localhost' ? ':' + port : '') + 
+		'/';
+
+	var url = req.app.locals.API_URL + '/me/logout' + 
+		'?redirect_uri=' + redirectUri;
+
+	req.session.destroy();
+	res.redirect(url);
+};   
 
 module.exports.signedInRoute = signedInRoute;
 module.exports.redirect = redirect;
@@ -99,4 +138,6 @@ module.exports.signOut = signOut;
 module.exports.storePostLoginRedirect = storePostLoginRedirect;
 module.exports.getAuthCode = getAuthCode;
 module.exports.getAuthCodeFromSignup = getAuthCodeFromSignup;
+module.exports.deleteToken = deleteToken;
+module.exports.logout = logout;
 
