@@ -1,7 +1,7 @@
 var express = require('express');
 var oauth = require('./oauth');
 var router = express.Router();
-var requestModule = require('request');
+var request = require('request');
 
 /* GET home page. */
 var renderCardStack = function(req, res, next) {
@@ -73,7 +73,7 @@ var getCardData = function(req, res, next) {
 		 }
 	};
 
-	requestModule(requestOptions,
+	request(requestOptions,
 		function (error, httpResponse, body) {
 	        if (!error) {
 	        	if (httpResponse.statusCode === 200) {
@@ -102,7 +102,7 @@ var getIntegrationsData = function(req, res, next) {
 		 }
 	};
 
-	requestModule(requestOptions,
+	request(requestOptions,
 		function (error, httpResponse, body) {
 	        if (!error) {
 	        	if (httpResponse.statusCode === 200) {
@@ -127,7 +127,7 @@ var sendCardData = function(req, res, next) {
 };
 
 var sendIntegrationsData = function(req, res, next) {
-	res.status(200).send(req.integrations)
+	res.status(200).send(req.integrations);
 };
 
 /* user name available check */
@@ -140,7 +140,7 @@ var checkUser = function(req, res, next){
 		 }
 	};
 
-	requestModule(requestOptions,
+	request(requestOptions,
 		function (error, httpResponse, body) {
 	        if (!error) {
 	        	res.status(httpResponse.statusCode).send(body);
@@ -151,7 +151,6 @@ var checkUser = function(req, res, next){
 	   }
 	);
 };
-/* ---------*/
 
 router.get('/',
 	oauth.signedInRoute,
@@ -219,6 +218,11 @@ router.get('/privacy',
 
 router.get('/user/:username/exists', 
 	checkUser
+);
+
+router.get('/logout', 
+	oauth.deleteToken,
+	oauth.logout
 );
 
 
