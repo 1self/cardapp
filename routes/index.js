@@ -8,8 +8,8 @@ var renderCardStack = function(req, res, next) {
 	res.render('card-stack', { username: 'ed' });
 };
 
-var renderExplore = function (req, res, next) {
-	res.render('explore', { username: 'ed' });
+var renderProfile = function(req, res, next) {
+	res.render('profile', { username: 'ed', avatarUrl: 'xxx.jpg' });
 };
 
 var renderIntegrations = function (req, res, next) {
@@ -163,9 +163,9 @@ router.get('/card-stack',
 	renderCardStack
 );
 
-router.get('/explore',
+router.get('/profile',
 	oauth.signedInRoute,
-	renderExplore
+	renderProfile
 );
 
 router.get('/integrations',
