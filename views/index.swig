@@ -206,10 +206,10 @@
 
     <div class="page-content">
       <div class="banner center">
-        <img src="images/main-banner.png" alt="banner one self"/>
         <h1>Remarkable you</h1>
+        <img src="images/main-banner.png" alt="banner one self"/>
         <p>
-        connect your data to find
+        Connect your data and discover
         <span>remarkable things about you</span>
         </p>
       </div>
@@ -236,8 +236,36 @@
       <div id="learn-more" class="grid-reset-mobile united-data">
         <div class="grid-row">
           <div class="grid-cell img">
-            <img src="images/united-data.svg" alt="" class="united"/>
+            <p class="header">Remarkable</p>
+            <p class="phonetic">[ri-<bold>mahr</bold>-k<italics>uh</italics>-b<italics>uh</italics> l]</p>
+            <div class="remarkable-desc">
+              <p class="sub-header">Adjective</p>
+              <ol type="1">
+                <li>notably or conspicuously unusual; extraordinary: a remarkable change.</li>
+                <li>worthy of notice or attention.</li>
+              </ol>
+              <p class="sub-header">Antonyms</p>
+              <ol>
+                <li>common</li>
+                <li>ordinary</li>
+              </ol>
+            </div>
           </div>
+          <div class="grid-cell content">
+            <h2>Your remarkable life</h2>
+            <b>Every day you do remarkable things.</b>
+            <p>Ok, so perhaps not climbing Everest or finding a life saving cure - not every day. But remarkable in its purest sense: achievements that have cause for remark. Remarks are the fuel of curiosity and conversation.
+            </p>
+            <p>Remarkable is new. Remarkable is memorable, recountable, shareable.</p>
+            <p>Remarkable is not ordinary or commonplace and nor are you.</p>
+            <p>1self will help you discover your remarkable self, every day.</p>
+            <a class="button" href="/unite-data">TELL ME MORE</a>
+            <div class="red-dot-desktop"><img src="images/dot-red.png" alt=""/></div>
+          </div>
+        </div>
+      </div>
+      <div class="grid-reset-mobile build-data" id="cant-build">
+        <div class="grid-row">
           <div class="grid-cell content">
             <h2>Unite all of your data</h2>
             <b>Yup, all of your data. Well, all that you're interested in anyway.</b>
@@ -250,26 +278,9 @@
             <p>For the first time, you can bring all of this data together to bring another dimension to the remarkable things that you do.
             </p>
             <a class="button" href="/unite-data">TELL ME MORE</a>
-            <div class="red-dot-desktop"><img src="images/dot-red.png" alt=""/></div>
-          </div>
-        </div>
-      </div>
-      <div class="grid-reset-mobile build-data" id="cant-build">
-        <div class="grid-row">
-          <div class="grid-cell content">
-            <h2>We can't build it</h2>
-            <b>That's right, we can't build it. At least not on our own.</b>
-            <p>We are building a flexible platform to allow you to store and combine your data.
-            </p>
-            <p>We are building super simple tools to allow developers to integrate their apps with 1self.
-            </p>
-            <p>We are building a community who can find the interesting connections in the data and bubble it up for
-            all of our benefit.
-            </p>
-            <a class="button" href="/cant-build">TELL ME MORE</a>
           </div>
           <div class="grid-cell img">
-            <img src="images/build-data.svg" alt="" class="build"/>
+            <img src="images/united-data.svg" alt="" class="united"/>
             <div class="red-dot-desktop"><img src="images/dot-green.png" alt=""/></div>
           </div>
         </div>
@@ -278,15 +289,14 @@
         <div class="grid-row">
           <div class="grid-cell empower">
             <h2>1self will never exploit your data</h2>
-            <b>We're sure 1self can empower each one of us to live a smarter life through insights from our personal
+            <b>We're sure 1self can empower each one of us to live a more remarkable life through insights from our personal
             data. </b>
             <p>We believe we can <a href="/quest"><span class="maroon">improve humanity</span></a> by gaining collective insights from
             that data.
             </p>
-            <P>Your data will be securely stored and private to you. We'll never sell your data (unless you want us
-            to).
+            <P>Your data will be securely stored and private to you. We'll never sell or share your data (unless you choose to).
             </p>
-            <p>1self will operate on a “freemium” basis where full features will be unlocked for a small yearly
+            <p>We want a completely transparent value exchange so 1self will operate on a “freemium” basis where full features will be unlocked for a small yearly
             subscription.
             </p>
           </div>

@@ -508,7 +508,7 @@ input[type='button']:hover {
     padding: 5em;
 }
 
-.build-data .img img.build {
+.build-data .img img.united {
     width: 80%;
     margin: 15% auto;
 }
@@ -588,6 +588,43 @@ input[type='button']:hover {
     text-align: center;
     position: relative;
     width: 50%;
+    color: rgb(48, 54, 62);
+    padding: 5em;
+}
+
+.united-data p.header {
+    color: rgb(48, 54, 62);
+    font-size: 2.2em;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.united-data p.phonetic {
+    color: #e93d31;
+    font-size: 1.4em;
+}
+
+.united-data p.phonetic bold {
+    color: #e93d31;
+    font-weight: bold;
+}
+
+.united-data p.phonetic italics {
+    color: #e93d31;
+    font-style: italic;
+}
+
+.united-data div.remarkable-desc {
+    text-align: left;
+    padding-top: 5px;
+    color: rgb(69, 75, 84);
+    font-size: 0.9em;
+}
+
+.united-data div.remarkable-desc p.sub-header {
+    font-size: 1.2em;
+    margin-top: 15px;
+    margin-bottom: 10px;
 }
 
 .united-data .content a.button:hover {
@@ -1640,7 +1677,6 @@ p:last-child {
         border-right: 0 none;
     }
 
-    .build-data .img,
     .enable-smart-life .img,
     .integrity .img {
         border-left: 0 none;
