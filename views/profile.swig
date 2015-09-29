@@ -81,7 +81,7 @@
         <div class="profile-content">
             <div class="profile-picture-row">
                 <div class="avatar-image">
-                    <img src="/images/any-data.png">
+                    <img src="{{avatarUrl}}">
                 </div>
             </div>
             <div class="logout-button-row">
