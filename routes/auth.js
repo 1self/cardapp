@@ -12,7 +12,7 @@ router.get('/signin',
 		} 
 		else{
 			oauth.storePostLoginRedirect(req);
-			oauth.getAuthCode(req, res, next)
+			oauth.getAuthCode(req, res, next);
 		}
 });
 
@@ -23,18 +23,18 @@ router.get('/signup',
 		} 
 		else{
 			oauth.storePostLoginRedirect(req);
-			oauth.getAuthCodeFromSignup(req, res, next)
+			oauth.getAuthCodeFromSignup(req, res, next);
 		}
 });
 
 router.get('/callback', 
 	function(req, res, next){
-		req.app.locals.logger.info('auth callback hit, authcode ', req.query.code);
+		var logger = scopedLogger.logger(conceal(req.query.code), req.app.locals.logger.info);
+		logger.info('auth callback hit', req.query.code);
 
 		var stateCheck = req.query.state;
 		if(stateCheck !== req.session.state){
-			debugger;
-			req.app.locals.logger.error('auth callback refused due to state check failure');
+			logger.error('auth callback refused due to state check failure');
 			res.status(401).send('state check failed');
 			return;
 		}
@@ -42,11 +42,11 @@ router.get('/callback',
 		var authcode = req.query.code;
 		var url = req.app.locals.AUTH_TOKEN_URL;
 		var port = req.app.settings.port;
-		var redirectUri = req.protocol 
-						+ '://' 
-						+ req.hostname 
-						+ (port ? ':' + port : '')
-						+ '/auth/callback';
+		var redirectUri = req.protocol + 
+			'://' + 
+			req.hostname + 
+			(port ? ':' + port : '') + 
+			'/auth/callback';
 		
 		var form = {
 			redirect_uri: redirectUri,
@@ -59,13 +59,25 @@ router.get('/callback',
 			pass: req.app.locals.AUTH_CLIENT_SECRET,
 		};
 
+		logger.silly('requesting access_token');
+
 		request.post({
 			url: url,
 			form: form,
 			auth: auth,
 			json: true
 		}, function(error, httpResponse, body){
-			req.app.locals.logger.info('token retrieved', conceal(body.access_token));
+			if(error){
+				logger.error(error);
+				return;
+			}
+
+			if(httpResponse.statusCode !== 200){
+				logger.error('error while requesting access_token, code, body', [httpResponse.stateCode, httpResponse.body]);
+				res.status(httpResponse.statusCode).send();
+			}
+
+			logger.info('token retrieved', conceal(body.access_token));
 			oauth.signIn(req, body.access_token);
 			oauth.redirect(req, res, next);
 		});
