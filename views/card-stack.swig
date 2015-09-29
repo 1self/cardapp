@@ -90,12 +90,13 @@
         </div>
         <div class="card-count"><span class="card-number-text"></span><sup>/<span class="out-of-text"></span></sup></div>
     </main>
+
     <footer>
         <div class="wrap">
             <div class="menu-wrap">
                 <div class="flyout-wrap">
                     <div class="flyout-btn">
-                        <div id="nav-icon2">
+                        <div class="nav-icon">
                           <span></span>
                           <span></span>
                           <span></span>
@@ -113,26 +114,16 @@
                 </div>
             </div>
         </div>
-
-
-            <div class="share-buttons-wrap hide">
-        <ul class="share-buttons">
-            <li><a href="#"><span>Item</span></a></li>
-            <li><a href="#"><span>Item</span></a></li>
-            <li><a href="#"><span>Item</span></a></li>
-            <li><a href="#"><span>Item</span></a></li>
-            <li><a href="#"><span>Item</span></a></li>
-        </ul>
-    </div>
     </footer>
 
-        <li class="li-template card-hide">
-            <input type="hidden" class="cardData">
-            <div class="card-container manual-flip">
-            </div>
-        </li>
+<!-- ---------------------------- Templates ---------------------------- -->
 
-                
+    <li class="li-template card-hide">
+        <input type="hidden" class="cardData">
+        <div class="card-container manual-flip">
+        </div>
+    </li>
+
     <div class="card-template card top-ten-card bottom-ten-card card-hide">
         <div class="front">
             <div class="headline">
@@ -311,6 +302,8 @@
             </div>
         </div>
     </div>
+
+<!-- ---------------------------- End templates ---------------------------- -->
 
     <!-- Analytics -->
     <script>

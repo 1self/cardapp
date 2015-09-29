@@ -107,16 +107,22 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </main>
+    
     <footer>
         <div class="wrap">
             <div class="menu-wrap">
                 <div class="flyout-wrap">
                     <div class="flyout-btn">
-                        <span>
-                        </span>
+                        <div class="nav-icon">
+                          <span></span>
+                          <span></span>
+                          <span></span>
+                          <span></span>
+                          <span></span>
+                          <span></span>
+                        </div>
                     </div>
                 </div>
             </div>

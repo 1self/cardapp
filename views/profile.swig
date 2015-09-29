@@ -90,101 +90,28 @@
                         Sign out&nbsp;&nbsp;<i class="fa fa-sign-out"></i>
                     </div>
                 </div>
-            
             </div>
         </div>
-        
     </main>
+
     <footer>
         <div class="wrap">
             <div class="menu-wrap">
                 <div class="flyout-wrap">
                     <div class="flyout-btn">
-                        <span></span>
-                    </div>
-                </div>
-                <div class="bottom-menu">
-                    <div class="previous hide">
-                    </div>
-                    <div class="next hide">
+                        <div class="nav-icon">
+                          <span></span>
+                          <span></span>
+                          <span></span>
+                          <span></span>
+                          <span></span>
+                          <span></span>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-
-
-            <div class="share-buttons-wrap hide">
-        <ul class="share-buttons">
-            <li><a href="#"><span>Item</span></a></li>
-            <li><a href="#"><span>Item</span></a></li>
-            <li><a href="#"><span>Item</span></a></li>
-            <li><a href="#"><span>Item</span></a></li>
-            <li><a href="#"><span>Item</span></a></li>
-        </ul>
-    </div>
     </footer>
-
-        <li class="li-template card-hide">
-            <input type="hidden" class="cardData">
-            <div class="card-container manual-flip">
-            </div>
-        </li>
-
-                
-    <div class="card-template card top-ten-card bottom-ten-card card-hide">
-        <div class="front">
-            <div class="headline">
-                <div class="headline-row headline-row-top">
-                    <div class="headline-top">
-                        <div class="event-date"></div>
-                        <div class="service-container">
-                            <div class="service"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="headline-row headline-row-bottom">
-                    <div class="headline-text"></div>
-                </div>
-            </div>
-            <div class="chart-container">
-                <div class="chart">
-                    <iframe src="" scrolling="no" frameBorder="0" class="chart-iframe"></iframe>
-                </div>
-                <div class="chart-overlay"></div>
-            </div>
-            <div class="card-menu">
-                <div class="more"></div>
-            </div>
-        </div>
-        <div class="back">
-            <div class="headline">
-                <div class="headline-row headline-row-top">
-                    <div class="headline-top">
-                        <div class="event-date"></div>
-                        <div class="service-container">
-                            <div class="service"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="headline-row headline-row-bottom">
-                    <div class="headline-text"></div>
-                </div>
-            </div>
-            <div class="chart">
-                <iframe src="" scrolling="no" frameBorder="0" class="chart-iframe"></iframe>
-            </div>
-            <div class="card-menu">
-                <div class="more-back"></div>
-            </div>
-        </div>
-    </div>
-    <div class="card-template card date-card card-hide">
-        <div class="front">
-            <div class="gradient-overlay"></div>
-            <div class="texture-overlay"></div>
-            <div class="event-date"></div>
-        </div>
-    </div>
 
     <!-- Analytics -->
     <script>

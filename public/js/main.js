@@ -29,7 +29,7 @@
     $(".flyout-btn").toggleClass("btn-rotate");
     $(".nav-overlay").toggleClass("open hide");
     // $(".flyout").find("a").removeClass();
-    $('#nav-icon2').toggleClass('open');
+    $('.nav-icon').toggleClass('open');
 
     $li = $('.topOfMain');
     sendGAEvent('menu-button-click', username + "#" + $li.attr('cardId'), $li.attr('cardIndex'));
