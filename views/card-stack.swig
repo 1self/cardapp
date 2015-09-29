@@ -95,7 +95,14 @@
             <div class="menu-wrap">
                 <div class="flyout-wrap">
                     <div class="flyout-btn">
-                        <span></span>
+                        <div id="nav-icon2">
+                          <span></span>
+                          <span></span>
+                          <span></span>
+                          <span></span>
+                          <span></span>
+                          <span></span>
+                        </div>
                     </div>
                 </div>
                 <div class="bottom-menu">

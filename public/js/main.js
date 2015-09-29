@@ -36,6 +36,10 @@
     return $(".flyout").removeClass("flyout-init fade").toggleClass("expand");
   });
 
+  $('#nav-icon2').click(function(){
+    $(this).toggleClass('open');
+  });
+
   $('.removed-from-deck').delay(1000).remove();
 
   $(".nav-overlay .navigation-content").find(".navigation-item").click(function (e) {
