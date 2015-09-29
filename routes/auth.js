@@ -45,7 +45,7 @@ router.get('/callback',
 		var redirectUri = req.protocol + 
 			'://' + 
 			req.hostname + 
-			(port ? ':' + port : '') + 
+			(req.hostname === 'localhost' ? ':' + port : '') + 
 			'/auth/callback';
 		
 		var form = {
