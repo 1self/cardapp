@@ -9,7 +9,7 @@ var renderCardStack = function(req, res, next) {
 };
 
 var renderProfile = function(req, res, next) {
-	res.render('profile', { username: 'ed', avatarUrl: 'xxx.jpg' });
+	res.render('profile', req.session.profile);
 };
 
 var renderIntegrations = function (req, res, next) {
