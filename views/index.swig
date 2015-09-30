@@ -209,8 +209,8 @@
         <h1>Remarkable you</h1>
         <img src="images/main-banner.png" alt="banner one self"/>
         <p>
-        Connect your data and discover
-        <span>remarkable things about you</span>
+        Discover remarkable things about you
+        <span>by connecting your data</span>
         </p>
       </div>
       <div id="signup" class="grid-reset-mobile signup-content">
@@ -254,11 +254,12 @@
           <div class="grid-cell content">
             <h2>Your remarkable life</h2>
             <b>Every day you do remarkable things.</b>
-            <p>Ok, so perhaps not climbing Everest or finding a life saving cure - not every day. But remarkable in its purest sense: achievements that have cause for remark. Remarks are the fuel of curiosity and conversation.
+            <p>Ok, so perhaps not scaling Everest or curing malaria - not every day. But remarkable nevertheless; those little cheerable wins and I-did-thats. You know, the ones that whisper 'that's pretty cool, tell someone'.
             </p>
-            <p>Remarkable is new. Remarkable is memorable, recountable, shareable.</p>
-            <p>Remarkable is not ordinary or commonplace and nor are you.</p>
+            <p>Why collect your remarka-bites? They fuel your curiosity, and when you share them they fuel conversation.</p>
+            <p>Remarkable is the new, the memorable, the shareable. Remarkable is not ordinary or commonplace and nor are you.</p>
             <p>1self will help you discover your remarkable self, every day.</p>
+
             <!-- <a class="button" href="/unite-data">TELL ME MORE</a> -->
             <div class="red-dot-desktop"><img src="images/dot-red.png" alt=""/></div>
           </div>
@@ -267,13 +268,23 @@
       <div class="grid-reset-mobile build-data" id="cant-build">
         <div class="grid-row">
           <div class="grid-cell content">
+<!-- 
+          There's all this data and it tells your life story, and you know what? That's right, it's remarkable.
+
+Overindulging on amazon, collecting followers, reading the BBC, flapping your way to a new high score, a weekend in London.
+<these examples can be changed, think they are a nicer way to express it. >
+
+Apps, websites, devices you use, the world around you, they all capture - in little blobs of data - the threads of your story.
+
+Use 1self to weave your data into a story of the remarkable things that you do. -->
+
             <h2>Your remarkable data</h2>
             <b>Your data tells your remarkable life story.</b>
-            <p>Made a purchase. Got a new follower. Spent time doing something. Got a new high score. Travelled somewhere.
+            <p>Your fastest commute, a 14-day coding streak, your record number of messages sent, the most loves of your photos or flapping your way to a new high score.
             </p>
-            <p>Everything you do is being documented in data by the apps, websites and devices you use and by the world around you.
+            <p>Apps, websites, devices you use, the world around you; they all capture the threads of your story in little blobs of data.
             </p>
-            <p>Use 1self to bring all of this data together and tell the story of the remarkable things that you do.
+            <p>Use 1self to find insights, compare with friends or the world and connect and correlate data from different sources. 1self will weave your data into the story of the remarkable things that you do.
             </p>
             <!-- <a class="button" href="/unite-data">TELL ME MORE</a> -->
           </div>
