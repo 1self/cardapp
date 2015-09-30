@@ -79,12 +79,12 @@
             <img src="images/link-dot.png" alt=""/>
             </span>
           </a>
-          <a class="nav-link nav-toggle" href="/quest">QUEST
+          <!-- <a class="nav-link nav-toggle" href="/quest">QUEST
             <span>
             <img src="images/link-dot.png" alt=""/>
             </span>
           </a>
-          <!-- <a class="nav-link nav-toggle" href="developer">DEVELOPERS
+          <a class="nav-link nav-toggle" href="developer">DEVELOPERS
             <span>
             <img src="images/link-dot.png" alt=""/>
             </span>
@@ -338,8 +338,8 @@ Use 1self to weave your data into a story of the remarkable things that you do. 
       </li>
       <li><a href="/#learn-more">learn more</a>
     </li>
-    <li><a href="/quest">quest</a>
-  </li>
+    <!-- <li><a href="/quest">quest</a>
+  </li> -->
 </ul>
 <ul class="nav">
   <li class="heading">other things</li>
