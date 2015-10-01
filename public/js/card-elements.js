@@ -16,7 +16,7 @@ function markCardRead(username, cardElem, cardReloadCount) {
     if (cardId) {
         var now = new Date();
 
-        var apiUrl = API_HOST + "/v1/users/" + username + "/cards/" + cardId;
+        var apiUrl = "/cards/" + cardId;
 
         var viewDuration = now.getTime() - cardElem.cardVisibleAt;
 
@@ -399,7 +399,7 @@ function renderThumbnailMedia($cardLi, cardData) {
             iFrameSrc += '&highlightCondition=' + cardData.type;
             iFrameSrc += '&highlightDates=' + getHighlightDates(cardData);
             iFrameSrc += '&doTransitions=true';
-            iFrameSrc += '&dataSrc=' + encodeURIComponent(API_HOST + cardData.chart);
+            iFrameSrc += '&dataSrc=' + encodeURIComponent(cardData.chart);
             $iframe.attr("src", iFrameSrc);
         }
     }
@@ -418,7 +418,7 @@ function renderMainMedia($cardLi, cardData) {
             iFrameSrc += '&vaxis=true&haxis=true';
             iFrameSrc += '&displayTooltips=true';
             iFrameSrc += '&doTransitions=false';
-            iFrameSrc += '&dataSrc=' + encodeURIComponent(API_HOST + cardData.chart);
+            iFrameSrc += '&dataSrc=' + encodeURIComponent(cardData.chart);
             $iframe.attr("src", iFrameSrc);
         }
     }

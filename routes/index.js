@@ -5,7 +5,8 @@ var request = require('request');
 
 /* GET home page. */
 var renderCardStack = function(req, res, next) {
-	res.render('card-stack', { username: 'ed' });
+	res.render('card-stack', { 
+		username: 'ed' });
 };
 
 var renderProfile = function(req, res, next) {
@@ -152,6 +153,69 @@ var checkUser = function(req, res, next){
 	);
 };
 
+/* getting the rollups */
+var checkRollupRequestMatchesUsername = function(req, res, next){
+	if(req.params.username === req.session.profile.username){
+		next();
+	}
+	else {
+		res.status(401).send('request made to retrieve rollups for another user than the one signed in');
+	}
+};
+
+var getRollups = function(req, res, next){
+
+	var url = req.app.locals.API_URL + 
+		'/users/' + 
+		req.session.profile.username + 
+		'/rollups/day/' + 
+		req.params.objectTags + 
+		'/' + 
+		req.params.actionTags + 
+		'/' +
+		encodeURIComponent(req.params.property) +
+		'/' + 
+		req.params.representation;
+
+	requestOptions = {
+		 url: url,
+		 headers: {
+		   'Authorization': 'Bearer ' + req.session.token
+		 }
+	};
+
+	var rollupRequest = request(requestOptions);
+	rollupRequest.on('response', function(res) {
+		// we don't want the main app cookie interferring with the cookies set on the card app
+    	delete res.headers['set-cookie'];
+	});
+	rollupRequest.pipe(res);
+	// request(requestOptions,
+	// 	function (error, httpResponse, body) {
+	//         if (!error) {
+	//         	res.status(httpResponse.statusCode).send(body);
+	//         } else {
+	// 			req.app.locals.logger.error('500 Error trying to get username exists from API', error);
+	//         	res.status(500).send('internal server error');
+	//         }
+	//    }
+	// );
+};
+
+var patchCard = function(req, res, next){
+	var url = req.app.locals.API_URL + 
+		'/cards/' + req.params.cardId;
+
+	requestOptions = {
+		 url: url,
+		 headers: {
+		   'Authorization': 'Bearer ' + req.session.token
+		 }
+	};
+
+	request(requestOptions).pipe(res);
+};
+
 router.get('/',
 	oauth.signedInRoute,
 	renderCardStack
@@ -224,6 +288,18 @@ router.get('/logout',
 	oauth.deleteToken,
 	oauth.logout
 );
+
+router.get('/v1/users/:username/rollups/day/:objectTags/:actionTags/:property/:representation',
+	checkForSession,
+	checkRollupRequestMatchesUsername,
+	getRollups);
+
+router.patch('/cards/:cardId',
+	checkForSession,
+	checkRollupRequestMatchesUsername,
+	patchCard)
+
+// check for username match
 
 
 

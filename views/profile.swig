@@ -43,7 +43,6 @@
     <script>
 
         var offline = false;
-        var API_HOST = "";
         var username = "{{username}}";
 
 
