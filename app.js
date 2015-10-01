@@ -36,6 +36,11 @@ winston.debug("Debug will be logged here");
 winston.silly("Silly will be logged here");
 app.locals.logger = winston;
 
+process.on('uncaughtException', function(err) {
+  winston.error('Caught exception: ' + err);
+  throw err;
+});
+
 // view engine setup
 app.engine('swig', swig.renderFile);
 app.set('view cache', false);

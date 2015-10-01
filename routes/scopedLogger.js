@@ -1,4 +1,5 @@
-'use strict'
+/*jslint node: true */
+'use strict';
 
 var logger = function(scope, innerLogger){
     return {
@@ -18,6 +19,6 @@ var logger = function(scope, innerLogger){
             innerLogger.error(scope + ': ' + message, data);
         }
     };
-}
+};
 
 exports.logger = logger;

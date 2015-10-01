@@ -1,7 +1,11 @@
+/*jslint node: true */
+'use strict';
+
 var express = require('express');
 var oauth = require('./oauth');
 var router = express.Router();
 var request = require('request');
+var proxyRequest = require('./proxyRequest');
 
 /* GET home page. */
 var renderCardStack = function(req, res, next) {
@@ -67,7 +71,7 @@ var getCardData = function(req, res, next) {
 		qsString = '?' + qs.join('&');
 	}
 
-	requestOptions = {
+	var requestOptions = {
 		 url: req.app.locals.API_URL + '/me/cards' + qsString,
 		 headers: {
 		   'Authorization': 'Bearer ' + req.session.token
@@ -96,7 +100,7 @@ var getCardData = function(req, res, next) {
 
 var getIntegrationsData = function(req, res, next) {
 
-	requestOptions = {
+	var requestOptions = {
 		 url: req.app.locals.API_URL + '/me/integrations',
 		 headers: {
 		   'Authorization': 'Bearer ' + req.session.token
@@ -134,7 +138,7 @@ var sendIntegrationsData = function(req, res, next) {
 /* user name available check */
 
 var checkUser = function(req, res, next){
-	requestOptions = {
+	var requestOptions = {
 		 url: req.app.locals.API_URL + '/user/' + req.params.username + '/exists',
 		 headers: {
 		   'Authorization': req.app.locals.USERNAME_EXISTS_TOKEN
@@ -164,7 +168,7 @@ var checkRollupRequestMatchesUsername = function(req, res, next){
 };
 
 var getRollups = function(req, res, next){
-
+	
 	var url = req.app.locals.API_URL + 
 		'/users/' + 
 		req.session.profile.username + 
@@ -177,43 +181,33 @@ var getRollups = function(req, res, next){
 		'/' + 
 		req.params.representation;
 
-	requestOptions = {
+	var requestOptions = {
 		 url: url,
 		 headers: {
 		   'Authorization': 'Bearer ' + req.session.token
 		 }
 	};
 
-	var rollupRequest = request(requestOptions);
-	rollupRequest.on('response', function(res) {
-		// we don't want the main app cookie interferring with the cookies set on the card app
-    	delete res.headers['set-cookie'];
-	});
+	var rollupRequest = proxyRequest.create(requestOptions);
 	rollupRequest.pipe(res);
-	// request(requestOptions,
-	// 	function (error, httpResponse, body) {
-	//         if (!error) {
-	//         	res.status(httpResponse.statusCode).send(body);
-	//         } else {
-	// 			req.app.locals.logger.error('500 Error trying to get username exists from API', error);
-	//         	res.status(500).send('internal server error');
-	//         }
-	//    }
-	// );
 };
 
 var patchCard = function(req, res, next){
-	var url = req.app.locals.API_URL + 
-		'/cards/' + req.params.cardId;
 
-	requestOptions = {
+	var url = req.app.locals.API_URL + 
+		'/me/cards/' + req.params.cardId;
+
+	var requestOptions = {
 		 url: url,
+		 method: 'PATCH',
 		 headers: {
 		   'Authorization': 'Bearer ' + req.session.token
 		 }
 	};
 
-	request(requestOptions).pipe(res);
+	var rollupRequest = proxyRequest.create(requestOptions);
+	rollupRequest.pipe(res);
+
 };
 
 router.get('/',
@@ -296,8 +290,7 @@ router.get('/v1/users/:username/rollups/day/:objectTags/:actionTags/:property/:r
 
 router.patch('/cards/:cardId',
 	checkForSession,
-	checkRollupRequestMatchesUsername,
-	patchCard)
+	patchCard);
 
 // check for username match
 
