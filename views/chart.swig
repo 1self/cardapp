@@ -185,15 +185,16 @@
     }
 
     function getColour(givenColour, offset) {
-        var colourArray = ['#dd2649', '#00a2d4', '#e93d31', '#f2ae1c', '#61b346', '#cf4b9a', '#367ec0', '#00ad87'];
-        var idx = 0;
-        for (var i in colourArray) {
-            if (colourArray[i] === givenColour) {
-                idx = i;
-                break;
-            }
-        }
-        return colourArray[(idx + offset) % colourArray.length];
+        // var colourArray = ['#dd2649', '#00a2d4', '#e93d31', '#f2ae1c', '#61b346', '#cf4b9a', '#367ec0', '#00ad87'];
+        // var idx = 0;
+        // for (var i in colourArray) {
+        //     if (colourArray[i] === givenColour) {
+        //         idx = i;
+        //         break;
+        //     }
+        // }
+        // return colourArray[(idx + offset) % colourArray.length];
+        return givenColour;
     }
 
     function dataFormatType(dataProperty) {
