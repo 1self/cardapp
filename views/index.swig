@@ -79,12 +79,12 @@
             <img src="images/link-dot.png" alt=""/>
             </span>
           </a>
-          <a class="nav-link nav-toggle" href="/quest">QUEST
+          <!-- <a class="nav-link nav-toggle" href="/quest">QUEST
             <span>
             <img src="images/link-dot.png" alt=""/>
             </span>
           </a>
-          <!-- <a class="nav-link nav-toggle" href="developer">DEVELOPERS
+          <a class="nav-link nav-toggle" href="developer">DEVELOPERS
             <span>
             <img src="images/link-dot.png" alt=""/>
             </span>
@@ -254,7 +254,7 @@
           <div class="grid-cell content">
             <h2>Your remarkable life</h2>
             <b>Every day you do remarkable things.</b>
-            <p>Ok, so perhaps not scaling Everest or curing malaria - not every day. But remarkable nevertheless; those little cheerable wins and I-did-thats. You know, the ones that whisper 'that's pretty cool, tell someone'.
+            <p>Ok, so perhaps not scaling Everest or curing malaria - not every day. But remarkable nevertheless; those little cheerable wins and I-did-thats. You know, the ones that whisper &quot;that&apos;s pretty cool, tell someone&quot;.
             </p>
             <p>Why collect your remarka-bites? They fuel your curiosity, and when you share them they fuel conversation.</p>
             <p>Remarkable is the new, the memorable, the shareable. Remarkable is not ordinary or commonplace and nor are you.</p>
@@ -298,19 +298,19 @@ Use 1self to weave your data into a story of the remarkable things that you do. 
         <div class="grid-row">
           <div class="grid-cell empower">
             <h2>1self will never exploit your data</h2>
-            <b>We're sure 1self can empower each one of us to live a more remarkable life through insights from our personal
-            data. </b>
-            <p>We believe we can <a href="/quest"><span class="maroon">improve humanity</span></a> by gaining collective insights from
+            <b>We&apos;re sure 1self can empower you to live a more remarkable life through insights from your personal data. </b>
+            <!-- <p>We believe we can <a href="/quest"><span class="maroon">improve humanity</span></a> by gaining collective insights from
             that data.
+            </p> -->
+            <P>We&apos;re also sure that your data is valuable and precious.
             </p>
-            <P>Your data will be securely stored and private to you. We'll never sell or share your data (unless you choose to).
+            <P>Your data will be securely stored and private to you. We&apos;ll never sell or share your data (unless you choose to).
             </p>
-            <p>We want a completely transparent value exchange, so 1self will operate on a “freemium” basis where full features will be unlocked for a small yearly
-            subscription.
+            <p>We want a completely transparent value exchange, so 1self will operate on a &quot;freemium&quot; basis. There will always be a free version available but we hope you&apos;ll be tempted to part with a small yearly fee in exchange for lots of extra sweet data goodness.
             </p>
           </div>
           <div class="grid-cell profit-content">
-            <h2 class="red-text">It's your data and its value is yours</h2>
+            <h2 class="red-text">It&apos;s your data and its value is yours</h2>
             <a class="button" href="/no-exploit">TELL ME MORE</a>
           </div>
         </div>
@@ -338,8 +338,8 @@ Use 1self to weave your data into a story of the remarkable things that you do. 
       </li>
       <li><a href="/#learn-more">learn more</a>
     </li>
-    <li><a href="/quest">quest</a>
-  </li>
+    <!-- <li><a href="/quest">quest</a>
+  </li> -->
 </ul>
 <ul class="nav">
   <li class="heading">other things</li>

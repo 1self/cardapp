@@ -35,12 +35,12 @@
                         <img src="images/link-dot.png" alt=""/>
                     </span>
             </a>
-            <a class="nav-link nav-toggle" href="/quest">QUEST
+            <!-- <a class="nav-link nav-toggle" href="/quest">QUEST
                     <span>
                         <img src="images/link-dot.png" alt=""/>
                     </span>
             </a>
-            <!-- <a class="nav-link nav-toggle" href="developer">DEVELOPERS
+            <a class="nav-link nav-toggle" href="developer">DEVELOPERS
           <span>
             <img src="images/link-dot.png" alt=""/>
           </span>
@@ -117,8 +117,7 @@
 <div class="no-exploit-content privacy">
     <h3>Why we store your data</h3>
 
-    <p>1self provides you with a way to collect, compare, correlate and comment on your data so that you can live a
-        smarter life. This necessarily means bringing all the data that is siloed in individual apps into a single
+    <p>1self provides you with a way to collect, compare, correlate and comment on your data to help you discover the remarkable things in your life. This necessarily means bringing all the data that is siloed in individual apps into a single
         data store. We take all reasonable industry standard measures to ensure that this data stays secure and
         private only to you.
     </p>
@@ -167,10 +166,6 @@
 
     <h3>How do we protect visitor information?</h3>
 
-    <p>Our website is scanned on a regular basis for security holes and known vulnerabilities in order to make your
-        visit to our site as safe as possible.
-    </p>
-
     <p>Your personal information is contained behind secured networks and is only accessible by a limited number of
         persons who have special access rights to such systems, and are required to keep the information
         confidential. In addition, all sensitive/credit information you supply is encrypted via Secure Socket Layer
@@ -206,7 +201,7 @@
     </p>
 
 
-    <p>We have not enabled Google AdSense on our site but we may do so in the future.
+    <p>We have not enabled Google AdSense on our site but we may do so in the future. We do use Google Analytics.
     </p>
 
     <p>COPPA (Children Online Privacy Protection Act)
@@ -295,7 +290,7 @@
 <div class="invite invite-footer">
     <h1><img src="images/logo.png" alt="logo"/>
         <wbr/>
-        live smarter
+        Remarkable you
     </h1>
     <div style="margin-bottom:10px;">Claim your username. Join our beta </div>
     <input type="text" name="username" class="1s_username" id="mce-username" value="" placeholder="Choose your 1self username"/>
@@ -312,8 +307,8 @@
         </li>
         <li><a href="/#learn-more">learn more</a>
         </li>
-        <li><a href="/quest">quest</a>
-        </li>
+        <!-- <li><a href="/quest">quest</a>
+        </li> -->
     </ul>
     <ul class="nav">
         <li class="heading">other things</li>
