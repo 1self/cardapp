@@ -210,6 +210,40 @@ var patchCard = function(req, res, next){
 
 };
 
+var getIntegrationDetails = function(req, res, next){
+	var url = req.app.locals.API_URL + '/integrations/' + req.params.serviceIdentifier;
+	var options = {
+		json: true,
+		url: url
+	};
+
+	request(options, function(error, httpResponse, body){
+		if (!error) {
+        	if (httpResponse.statusCode === 200) {
+        		req.integration = body;
+        		next();
+        	} else if (httpResponse.statusCode === 404) {
+        		req.app.locals.logger.error('Error trying to integration, integration not found', httpResponse.statusCode, body);
+        		res.status(404).send('unauthorised');
+        	} else {
+				req.app.locals.logger.error('Error trying to get integration', httpResponse.statusCode, body);
+        		res.status(500).send('internal server error');
+			}
+        } else {
+			req.app.locals.logger.error('500 Error trying to get integration', error);
+        	res.status(500).send('internal server error');
+        }
+	});
+};
+
+var redirectToIntegration = function(req, res, next){
+	var redirectUrl = req.integration.integrationUrl + '?username=' + 
+		req.session.profile.username +
+		'&token=' + req.session.profile.registrationToken;
+
+	res.redirect(redirectUrl);
+}
+
 router.get('/',
 	oauth.signedInRoute,
 	renderCardStack
@@ -233,6 +267,12 @@ router.get('/integrations',
 router.get('/integrations/:serviceIdentifier',
 	oauth.signedInRoute,
 	renderIntegrations
+);
+
+router.get('/integrations/:serviceIdentifier/redirect',
+	oauth.signedInRoute,
+	getIntegrationDetails,
+	redirectToIntegration
 );
 
 router.get('/chart.html', 
