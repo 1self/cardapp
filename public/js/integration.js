@@ -53,7 +53,7 @@ function renderIntegrationDetail(integrationJSON) {
         $buttons.click(function() {
             
             if (integrationJSON.integrationType === 'hosted')
-                window.location.href = integrationJSON.integrationUrl;
+                window.location.href = window.location.href + '/redirect';
             else
                 window.open(integrationJSON.integrationUrl);
             
