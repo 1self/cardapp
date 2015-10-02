@@ -25,6 +25,8 @@
 
     <script>
 
+    // http://bl.ocks.org/stepheneb/1182434
+
     var lineColour = '#' + getQSParam().lineColour;
     var vhlt = getQSParam().vhlt === "true";
     var hhlt = getQSParam().hhlt === "true";

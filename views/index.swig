@@ -227,8 +227,7 @@
           </div>
           <div class="grid-cell invite">
             <h3>Hurry, early adopter places are limited!</h3>
-            <input type="text" name="username" class="1s_username" id="mce-username" value="" placeholder="Choose your 1self username"/>
-            <input  type="submit" value="Join 1self" class="join_username_btn" />
+            <input type="text" name="username" class="1s_username" id="mce-username" value="" placeholder="Choose your 1self username"/><input  type="submit" value="Join 1self" class="join_username_btn" />
             <div class="red-dot-desktop"><img src="images/dot-yellow.png" alt=""/></div>
           </div>
         </div>
@@ -298,21 +297,22 @@ Use 1self to weave your data into a story of the remarkable things that you do. 
         <div class="grid-row">
           <div class="grid-cell empower">
             <h2>1self will never exploit your data</h2>
-            <b>We&apos;re sure 1self can empower you to live a more remarkable life through insights from your personal data. </b>
-            <!-- <p>We believe we can <a href="/quest"><span class="maroon">improve humanity</span></a> by gaining collective insights from
+            <!--<b>We&apos;re sure 1self can empower you to live a more remarkable life through insights from your personal data. </b>
+             <p>We believe we can <a href="/quest"><span class="maroon">improve humanity</span></a> by gaining collective insights from
             that data.
-            </p> -->
+            </p> 
             <P>We&apos;re also sure that your data is valuable and precious.
+            </p>-->
+            <p>Your data will be securely stored and private to you. We&apos;ll never sell or share your data (unless you choose to).
             </p>
-            <P>Your data will be securely stored and private to you. We&apos;ll never sell or share your data (unless you choose to).
-            </p>
-            <p>We want a completely transparent value exchange, so 1self will operate on a &quot;freemium&quot; basis. There will always be a free version available but we hope you&apos;ll be tempted to part with a small yearly fee in exchange for lots of extra sweet data goodness.
-            </p>
+            <p class="more-info"><a class="button" href="/no-exploit">More info</a></p>
+            <!--<p>We want a completely transparent value exchange, so 1self will operate on a &quot;freemium&quot; basis. There will always be a free version available but we hope you&apos;ll be tempted to part with a small yearly fee in exchange for lots of extra sweet data goodness.
+            </p>-->
           </div>
-          <div class="grid-cell profit-content">
+          <!--div class="grid-cell profit-content">
             <h2 class="red-text">It&apos;s your data and its value is yours</h2>
             <a class="button" href="/no-exploit">TELL ME MORE</a>
-          </div>
+          </div-->
         </div>
       </div>
       <div class="seperator y-dwarrow-center">
@@ -324,8 +324,7 @@ Use 1self to weave your data into a story of the remarkable things that you do. 
         Remarkable you
         </h1>
         <div style="margin-bottom:10px;">Claim your username. Join our beta </div>
-        <input type="text" name="username" class="1s_username" id="mce-username" value="" placeholder="Choose your 1self username"/>
-        <input  type="submit" value="Join 1self" class="join_username_btn" />
+        <input type="text" name="username" class="1s_username" id="mce-username" value="" placeholder="Choose your 1self username"/><input  type="submit" value="Join 1self" class="join_username_btn" />
       </div>
     </div>
     <footer class="footer">

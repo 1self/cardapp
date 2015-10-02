@@ -345,12 +345,12 @@ input[type='button']:hover {
 .invite input[type="submit"] {
     width: 20%;
     max-width: 100px;
-    padding: 10px 10px 11px 10px;
     padding: 8px 10px 10px 10px;
     background: #00b698;
     border: 2px solid #fff;
     color: #fff;
     cursor: pointer;
+    border-radius: 0px 20px 20px 0px;
 }
 
 /* .invite input[type="button"]:hover { */
@@ -377,6 +377,7 @@ input[type='button']:hover {
     padding: 8px 11px 9px 10px;
     border: 1px solid #ffffff;
     color: #333333;
+    border-radius: 20px 0px 0px 20px;
 }
 
 .invite input {
@@ -557,7 +558,6 @@ input[type='button']:hover {
 
 .signup-content .invite {
     width: 50%;
-    background: #fff;
     color: #0591BD;
     text-align: center;
     position: relative;
@@ -739,22 +739,21 @@ input[type='button']:hover {
     padding: 5em
 }
 
-.no-profit .profit-content a.button:hover {
-    background: #D30E00
+.empower .more-info a.button:hover {
+    background: #F2AE1C;
+    color: #fff;
 }
 
-.no-profit .profit-content a.button:hover {
-    background: #D30E00
-}
-
-.no-profit .profit-content a.button {
-    background: #e93d31;
+.empower .more-info a.button {
+    background: #fff;
     margin-top: 20px;
-    padding: 15px;
-    margin: 20px;
-    border-color: #4C545C;
-    width: 160px;
+    padding: 5px;
+    border-color: #F2AE1C;
+    width: 100px;
     font-size: 1em;
+    color: #F2AE1C;
+    text-transform: none;
+    border-radius: 15px;
 }
 
 .no-profit .profit-content {
@@ -803,7 +802,7 @@ input[type='button']:hover {
 }
 
 .no-profit .empower h2 {
-    color: #00b698
+    color: #F2AE1C
 }
 
 .build-banner-white h2 {
@@ -839,7 +838,6 @@ input[type='button']:hover {
 .slide-content .content p,
 .slide-content .content b,
 .no-profit .empower b,
-.no-profit .empower p,
 .build-banner-white p,
 .quest-content p,
 .no-exploit-content p {
