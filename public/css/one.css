@@ -372,7 +372,7 @@ input[type='button']:hover {
 }
 
 .invite input[type="text"] {
-    width: 60%;
+    width: 55%;
     max-width: 240px;
     padding: 8px 11px 9px 10px;
     border: 1px solid #ffffff;
@@ -390,6 +390,12 @@ input[type='button']:hover {
 .invite-footer h1 {
     padding-bottom: 0.55em;
     margin-bottom: 10px;
+    font-size: 2em;
+    vertical-align: middle;
+}
+
+.invite-footer h1 span {
+    line-height: 2.1em;
 }
 
 .invite-footer h1 img {
@@ -409,6 +415,17 @@ input[type='button']:hover {
     text-align: center;
     border-bottom: 7px solid #454B54;
     margin-bottom: 5px;
+}
+
+.invite-footer .logo-and-tagline {
+    width: 100%;
+}
+
+.invite-footer .claim-text {
+    width: 100%;
+    margin-bottom: 10px;
+    font-size: 0.9em;
+    clear: both;
 }
 
 .privacy b {
@@ -551,9 +568,11 @@ input[type='button']:hover {
 }
 
 .signup-content .invite h3 {
-    font-size: 1.3em;
+    font-size: 1em;
     margin-bottom: 40px;
     font-family: 'Raleway-medium';
+    padding-left: 2em;
+    padding-right: 2em;
 }
 
 .signup-content .invite {
@@ -561,7 +580,7 @@ input[type='button']:hover {
     color: #0591BD;
     text-align: center;
     position: relative;
-    padding: 3em 1em;
+    padding: 3em 0em;
 }
 
 .signup-content .invite input[type="text"] {
@@ -1480,14 +1499,6 @@ p:last-child {
         padding-left: 0;
         padding-right: 0;
         border-top: 1px solid #454b54;
-    }
-
-    .signup-content .invite input[type="text"] {
-        width: 120px;
-    }
-
-    .signup-content .invite input[type="submit"] {
-        width: 80px;
     }
     .core-drawer-panel-custom{
        margin-top: 62px; 

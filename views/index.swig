@@ -319,11 +319,12 @@ Use 1self to weave your data into a story of the remarkable things that you do. 
         <img src="images/yellow-arr-up.png" alt=""/>
       </div>
       <div class="invite invite-footer">
-        <h1><img src="images/logo.png" alt="logo"/>
-        <wbr/>
-        Remarkable you
-        </h1>
-        <div style="margin-bottom:10px;">Claim your username. Join our beta </div>
+        <div class="logo-and-tagline">
+          
+          <h1><img src="images/logo.png" alt="logo"/> <span>Remarkable you</span></h1>
+        </div>
+        
+        <div class="claim-text">Claim your username. Join our beta </div>
         <input type="text" name="username" class="1s_username" id="mce-username" value="" placeholder="Choose your 1self username"/><input  type="submit" value="Join 1self" class="join_username_btn" />
       </div>
     </div>
