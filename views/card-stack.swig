@@ -44,7 +44,7 @@
     <script>
 
         var offline = false;
-        var username = '{{username}}';
+        var username = '{{profile.username}}';
 
 
     </script>

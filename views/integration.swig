@@ -43,7 +43,7 @@
 
     <script>
 
-        var username = '{{username}}';
+        var username = '{{profile.username}}';
         var service = '{{serviceIdentifier}}';
 
 

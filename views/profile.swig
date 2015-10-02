@@ -43,7 +43,7 @@
     <script>
 
         var offline = false;
-        var username = "{{username}}";
+        var username = "{{profile.username}}";
 
 
     </script>
@@ -80,7 +80,7 @@
         <div class="profile-content">
             <div class="profile-picture-row">
                 <div class="avatar-image">
-                    <img src="{{avatarUrl}}">
+                    <img src="{{profile.avatarUrl}}">
                 </div>
             </div>
             <div class="logout-button-row">
