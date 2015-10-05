@@ -1696,6 +1696,20 @@ p:last-child {
 
 }
 
+@media (max-width: 400px) {
+
+    .banner h1 {
+        font-size: 2.4em;
+        margin-bottom: 25px;
+    }
+
+    .banner p {
+        margin-top: 25px;
+        font-size: 1.3em;
+        margin-bottom: 25px;
+    }
+}
+
 /* unite section */
 .unite-heading {
     font-family: Raleway-light;
