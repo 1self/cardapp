@@ -511,6 +511,7 @@ input[type='button']:hover {
 
 .build-data {
     background: #00B698;
+    border-top: 2px solid #cdd1dc;
 }
 
 .build-data .content a.button:hover {
