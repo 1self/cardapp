@@ -541,6 +541,30 @@ input[type='button']:hover {
     width: 50%;
 }
 
+.build-data .img .image-row {
+    margin: auto;
+}
+
+.image-row .image-cell-30 {
+    width: 30%;
+    float: left;
+    padding: 1%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.image-row .image-cell-30.left-cell {
+    padding-left: 3%;
+}
+
+.image-row .image-cell-30.right-cell {
+    padding-right: 3%;
+}
+
+.clear-float {
+    clear: both;
+}
+
 .signup-content {
     background: #F2AE1C;
 }

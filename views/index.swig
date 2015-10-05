@@ -268,7 +268,19 @@
       <div class="grid-reset-mobile build-data" id="cant-build">
         <div class="grid-row">
           <div class="grid-cell img">
-            <img src="images/united-data.svg" alt="" class="united"/>
+            <div class="image-row">
+              <div class="image-cell-30 left-cell">
+                <img src="images/slider/understand.svg" alt=""/>
+              </div>
+              <div class="image-cell-30">
+                <img src="images/slider/stories.svg" alt=""/>
+              </div>
+              <div class="image-cell-30 right-cell">
+                <img src="images/slider/compare.svg" alt=""/>
+              </div>
+            </div>
+            <div class="clear-float"></div>
+            <!-- <img src="images/united-data.svg" alt="" class="united"/> -->
           </div>
           <div class="grid-cell content">
 <!-- 
