@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <meta content="images/fav.ico" itemprop="image">
     <meta name="description"
-    content="1self lets you collect, compare, correlate and comment on your big data to live a smarter life">
+    content="1self reveals the extraordinary events in your everyday life by analysing the personal data you collect">
     <meta property="og:title"
-    content="1self - live smarter" />
+    content="1self - Remarkable you" />
     <meta property="og:description"
-    content="1self lets you collect, compare, correlate and comment on your big data to live a smarter life" />
+    content="1self reveals the extraordinary events in your everyday life by analysing the personal data you collect" />
     <meta property="og:image"
     content="http://www.1self.co/images/1self_logo_fb.png" />
     <link rel="icon" href="images/fav.ico">
@@ -60,7 +60,7 @@
         color: #FFFFFF;
       }
     </style>
-    <title>1self - live smarter</title>
+    <title>1self - Remarkable you</title>
   </head>
   <body>
     <div class="header-wrapper">
