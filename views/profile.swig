@@ -83,6 +83,11 @@
                     <img src="{{profile.avatarUrl}}">
                 </div>
             </div>
+            <div class="profile-username-row">
+                <div class="username-div">
+                   {{profile.username}}
+                </div>
+            </div>
             <div class="logout-button-row">
                 <div class="large-connect-button logout-button">
                     <div>

@@ -42,16 +42,21 @@
 
     $('.mainContainer').ready(function () {
 
-        var width = $('body').width();
-        var height = $('body').height();
+        if ((dataSrc && dataSrc !== "") || offline) {
+            var width = $('body').width();
+            var height = $('body').height();
 
-        var $chartLoading = $('.chart-loading');
-        $chartLoading.height(height);
-        $chartLoading.css('color', lineColour);
+            if (width > 0) {
 
-        getData(dataSrc, function (data) {
-          drawChart(data, width, height);
-        });
+                var $chartLoading = $('.chart-loading');
+                $chartLoading.height(height);
+                $chartLoading.css('color', lineColour);
+
+                getData(dataSrc, function (data) {
+                  drawChart(data, width, height);
+                });
+            }
+        }
     });
 
     function drawChart(data, width, height) {

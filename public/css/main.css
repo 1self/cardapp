@@ -2819,6 +2819,15 @@ footer:before {
     margin-bottom: 50px;
 }
 
+.profile .profile-username-row {
+    margin-bottom: 50px;
+}
+
+.profile .username-div {
+    margin: auto;
+    text-align: center;
+}
+
 .profile .avatar-image {
     width: 50%;
     max-width: 200px;
