@@ -2677,7 +2677,7 @@ footer:before {
     box-shadow: 1px 1px 5px #CCC;
 }
 
-.integrations main {
+.integrations main, .profile main {
     padding-top: 0px;
     height: 70%;
 }
@@ -2810,6 +2810,9 @@ footer:before {
     width: 100%;
     overflow-y: auto;
     overflow-x: hidden;
+    background-color: #fff;
+    box-shadow: 1px 1px 5px #CCC;
+    padding: 20px;
 }
 
 .profile .profile-picture-row {
