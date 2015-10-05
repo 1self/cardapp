@@ -2795,6 +2795,14 @@ footer:before {
     overflow-x: hidden;
 }
 
+.integrations .integration-loading {
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 1px 1px 5px #CCC;
+    width: 90%;
+    margin: auto;
+}
+
 .profile .profile-content {
     position: absolute;
     top: 0px;

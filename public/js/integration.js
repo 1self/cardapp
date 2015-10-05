@@ -61,4 +61,6 @@ function renderIntegrationDetail(integrationJSON) {
         });        
     }
 
+    $('.integration-detail-container').removeClass('hide');
+    $('.integration-loading').addClass('hide');
 }
