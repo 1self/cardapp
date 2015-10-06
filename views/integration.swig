@@ -105,6 +105,15 @@
                         </div>
                         <div class="large-connect-button"><div>Connect</div></div>
                     </div>
+                    <div class="integration-detail-success hide">
+                        <div class="integration-success-container">
+                            <p class="integration-success-header">Success</p>
+                            <p class="integration-success-description">Nice one! [[ serviceName ]] has been successfully integrated. Now you'll start to see the associated data coming into your 1self account.</p>
+                            <p class="integration-success-description"><a href="/integrations">Head back to the integrations page</a> to link up more lovely data sources.</p>
+                            <p class="integration-success-description"> - or - </p>
+                            <p class="integration-success-description"><a href="/card-stack">Head over to your card stack</a> to see what's waiting for you.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

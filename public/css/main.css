@@ -2916,7 +2916,7 @@ footer:before {
     padding-right: 0.5em;
 }
 
-.integration-detail-bottom {
+.integration-detail-bottom, .integration-detail-success {
     font-size: 0.8em;
 }
 
@@ -2924,10 +2924,14 @@ footer:before {
     margin-top: 15px;
 }
 
-.integration-instructions-header {
+.integration-instructions-header, .integration-success-header {
     color: #00B597;
     font-size: 1.2em;
     margin-bottom: 5px;
+}
+
+.integration-success-description a {
+    color: #00B597;
 }
 
 .integration-card .service {

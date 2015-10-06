@@ -22,7 +22,7 @@ function executeOnLoadTasks() {
     getIntegrationsInCategories(onGotData, service);
 
     $('.back-button').click(function() {
-        window.history.back();
+        window.location.href = '/integrations';
         return false;
     });
 
@@ -31,6 +31,7 @@ function executeOnLoadTasks() {
 function renderIntegrationDetail(integrationJSON) {
 
     var $integrationDetail = $('.integration-detail');
+    var isSuccessfulInstall = getQSParam().success === "true";
 
     $('.page-title').text('Connect ' + integrationJSON.serviceName);
 
@@ -42,7 +43,7 @@ function renderIntegrationDetail(integrationJSON) {
         $integrationDetail.find('.integration-detail-bottom').hide();
         $integrationDetail.find('.integration-button').hide();
         $integrationDetail.find('.integration-connected').show();
-    } else {
+    } else if (!isSuccessfulInstall) {
         $integrationDetail.find('.integration-detail-bottom .integration-long-description').html(integrationJSON.longDescription);
         $integrationDetail.find('.integration-detail-bottom .integration-instructions').html(integrationJSON.instructions);
 
@@ -61,6 +62,16 @@ function renderIntegrationDetail(integrationJSON) {
         });        
     }
 
+    if (isSuccessfulInstall) {
+        var serviceText = $integrationDetail.find('.integration-success-description').first().text();
+        serviceText = serviceText.split('[[ serviceName ]]');
+        serviceText = serviceText[0] + integrationJSON.serviceName + serviceText[1];
+        $integrationDetail.find('.integration-success-description').first().text(serviceText);
+
+        $integrationDetail.find('.integration-detail-bottom').hide();
+        $integrationDetail.find('.integration-detail-success').removeClass('hide');
+    }
+    
     $('.integration-detail-container').removeClass('hide');
     $('.integration-loading').addClass('hide');
 }
