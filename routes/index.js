@@ -237,11 +237,11 @@ var getIntegrationDetails = function(req, res, next){
 };
 
 var redirectToIntegration = function(req, res, next){
-	var redirectBackToCardApp = req.protocol + 
+	var redirectBackToCardApp = encodeURIComponent(req.protocol + 
 		'://' + 
 		req.hostname + 
 		(req.hostname === 'localhost' ? ':' + port : '') + 
-		'/integrations';
+		'/integrations');
 	
 	var integrationUrl = req.integration.integrationUrl + 
 		'?redirect_uri=' + redirectBackToCardApp +
