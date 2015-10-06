@@ -43,7 +43,7 @@
 
     <script>
 
-        var username = '{{username}}';
+        var username = '{{profile.username}}';
         var service = '{{serviceIdentifier}}';
 
 
@@ -79,7 +79,8 @@
     <main role="main">
         <div class="background"></div>
         <div class="integrations-content">
-            <div class="integration-detail-container">
+            <div class="integration-loading"><i class="fa fa-circle-o-notch fa-spin"></i>&nbsp;&nbsp;Loading - be right with you</div>
+            <div class="integration-detail-container hide">
                 <div class="integration-detail top-border">
                     <div class="integration-detail-top">
                         <div class="integration-card-left">

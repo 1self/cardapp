@@ -345,12 +345,12 @@ input[type='button']:hover {
 .invite input[type="submit"] {
     width: 20%;
     max-width: 100px;
-    padding: 10px 10px 11px 10px;
     padding: 8px 10px 10px 10px;
     background: #00b698;
     border: 2px solid #fff;
     color: #fff;
     cursor: pointer;
+    border-radius: 0px 20px 20px 0px;
 }
 
 /* .invite input[type="button"]:hover { */
@@ -372,11 +372,12 @@ input[type='button']:hover {
 }
 
 .invite input[type="text"] {
-    width: 60%;
+    width: 55%;
     max-width: 240px;
     padding: 8px 11px 9px 10px;
     border: 1px solid #ffffff;
     color: #333333;
+    border-radius: 20px 0px 0px 20px;
 }
 
 .invite input {
@@ -389,6 +390,12 @@ input[type='button']:hover {
 .invite-footer h1 {
     padding-bottom: 0.55em;
     margin-bottom: 10px;
+    font-size: 2em;
+    vertical-align: middle;
+}
+
+.invite-footer h1 span {
+    line-height: 2.1em;
 }
 
 .invite-footer h1 img {
@@ -408,6 +415,17 @@ input[type='button']:hover {
     text-align: center;
     border-bottom: 7px solid #454B54;
     margin-bottom: 5px;
+}
+
+.invite-footer .logo-and-tagline {
+    width: 100%;
+}
+
+.invite-footer .claim-text {
+    width: 100%;
+    margin-bottom: 10px;
+    font-size: 0.9em;
+    clear: both;
 }
 
 .privacy b {
@@ -493,6 +511,7 @@ input[type='button']:hover {
 
 .build-data {
     background: #00B698;
+    border-top: 2px solid #cdd1dc;
 }
 
 .build-data .content a.button:hover {
@@ -520,6 +539,30 @@ input[type='button']:hover {
     text-align: center;
     position: relative;
     width: 50%;
+}
+
+.build-data .img .image-row {
+    margin: auto;
+}
+
+.image-row .image-cell-30 {
+    width: 30%;
+    float: left;
+    padding: 1%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.image-row .image-cell-30.left-cell {
+    padding-left: 3%;
+}
+
+.image-row .image-cell-30.right-cell {
+    padding-right: 3%;
+}
+
+.clear-float {
+    clear: both;
 }
 
 .signup-content {
@@ -550,18 +593,19 @@ input[type='button']:hover {
 }
 
 .signup-content .invite h3 {
-    font-size: 1.3em;
+    font-size: 1em;
     margin-bottom: 40px;
     font-family: 'Raleway-medium';
+    padding-left: 2em;
+    padding-right: 2em;
 }
 
 .signup-content .invite {
     width: 50%;
-    background: #fff;
     color: #0591BD;
     text-align: center;
     position: relative;
-    padding: 3em 1em;
+    padding: 3em 0em;
 }
 
 .signup-content .invite input[type="text"] {
@@ -739,22 +783,21 @@ input[type='button']:hover {
     padding: 5em
 }
 
-.no-profit .profit-content a.button:hover {
-    background: #D30E00
+.empower .more-info a.button:hover {
+    background: #F2AE1C;
+    color: #fff;
 }
 
-.no-profit .profit-content a.button:hover {
-    background: #D30E00
-}
-
-.no-profit .profit-content a.button {
-    background: #e93d31;
+.empower .more-info a.button {
+    background: #fff;
     margin-top: 20px;
-    padding: 15px;
-    margin: 20px;
-    border-color: #4C545C;
-    width: 160px;
+    padding: 5px;
+    border-color: #F2AE1C;
+    width: 100px;
     font-size: 1em;
+    color: #F2AE1C;
+    text-transform: none;
+    border-radius: 15px;
 }
 
 .no-profit .profit-content {
@@ -803,7 +846,7 @@ input[type='button']:hover {
 }
 
 .no-profit .empower h2 {
-    color: #00b698
+    color: #F2AE1C
 }
 
 .build-banner-white h2 {
@@ -839,7 +882,6 @@ input[type='button']:hover {
 .slide-content .content p,
 .slide-content .content b,
 .no-profit .empower b,
-.no-profit .empower p,
 .build-banner-white p,
 .quest-content p,
 .no-exploit-content p {
@@ -1483,14 +1525,6 @@ p:last-child {
         padding-right: 0;
         border-top: 1px solid #454b54;
     }
-
-    .signup-content .invite input[type="text"] {
-        width: 120px;
-    }
-
-    .signup-content .invite input[type="submit"] {
-        width: 80px;
-    }
     .core-drawer-panel-custom{
        margin-top: 62px; 
     }
@@ -1684,6 +1718,20 @@ p:last-child {
         border-left: 0 none;
     }
 
+}
+
+@media (max-width: 400px) {
+
+    .banner h1 {
+        font-size: 2.4em;
+        margin-bottom: 25px;
+    }
+
+    .banner p {
+        margin-top: 25px;
+        font-size: 1.3em;
+        margin-bottom: 25px;
+    }
 }
 
 /* unite section */

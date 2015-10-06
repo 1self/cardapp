@@ -44,7 +44,7 @@
     <script>
 
         var offline = false;
-        var username = '{{username}}';
+        var username = '{{profile.username}}';
 
 
     </script>
@@ -101,6 +101,7 @@
                     Remember, your data is safe and private with 1self.
                 </p>
             </div>
+            <div class="integration-loading"><i class="fa fa-circle-o-notch fa-spin"></i>&nbsp;&nbsp;Loading - just a tic</div>
 
             <div class="integrations-section template">
                 <div class="section-header">

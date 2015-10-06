@@ -44,7 +44,7 @@
     <script>
 
         var offline = false;
-        var username = '{{username}}';
+        var username = '{{profile.username}}';
 
 
     </script>
@@ -265,7 +265,7 @@
                 </div>
             </div>
             <div class="chart">
-                <iframe src="chart.html?lineColour=00b197&highlightCondition=top10&highlightDates=2015-05-06&vaxis=true&haxis=true&displayTooltips=true&doTransitions=false&offline=true&dataSrc=https%3A%2F%2Fapi.1self.co%2Fv1%2Fusers%2F0%2Frollups%2Fday%2Fstackoverflow%2Fbrowse%2Fsum.times-visited%2F.json" scrolling="no" frameBorder="0" class="chart-iframe"></iframe>
+                <iframe src="chart.html?lineColour=00b197&highlightCondition=top10&highlightDates=2015-05-06&vaxis=true&haxis=true&displayTooltips=true&doTransitions=false&offline=true" scrolling="no" frameBorder="0" class="chart-iframe"></iframe>
             </div>
             <div class="card-menu">
                 <div class="more-back"></div>

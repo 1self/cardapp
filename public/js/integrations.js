@@ -48,7 +48,7 @@ function renderIntegrationsList(integrationsJSON) {
             $clickedSection.find('.section-content-expand').slideToggle();
 
             var sections = $('.integrations-section');
-            // console.log(sections);
+
             for (var i = 0; i < sections.length; i++) {
                 var $section = $(sections[i]);
                 if ($section.find('.section-header').text() !== $clickedSection.find('.section-header').text()) {
@@ -57,12 +57,11 @@ function renderIntegrationsList(integrationsJSON) {
                 }
             }
 
-            // var $clickedHeader = $clickedSection.find('.section-header');
-            // $integrationsContent.scrollTo(0);
         });
     });
 
     $('.template').remove();
+    $('.integration-loading').addClass('hide');
 }
 
 function buildCategorySection(category, $sectionTemplate, $smallServiceTemplate, $integrationCardTemplate) {

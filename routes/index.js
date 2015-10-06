@@ -9,19 +9,18 @@ var proxyRequest = require('./proxyRequest');
 
 /* GET home page. */
 var renderCardStack = function(req, res, next) {
-	res.render('card-stack', { 
-		username: 'ed' });
+	res.render('card-stack', { profile: req.session.profile });
 };
 
 var renderProfile = function(req, res, next) {
-	res.render('profile', req.session.profile);
+	res.render('profile', { profile: req.session.profile });
 };
 
 var renderIntegrations = function (req, res, next) {
 	if (!req.params.serviceIdentifier)
-		res.render('integrations', { username: 'ed' });
+		res.render('integrations', { profile: req.session.profile });
 	else
-		res.render('integration', { username: 'ed', serviceIdentifier: req.params.serviceIdentifier });
+		res.render('integration', { profile: req.session.profile, serviceIdentifier: req.params.serviceIdentifier });
 };
 
 

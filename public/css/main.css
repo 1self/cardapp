@@ -2677,7 +2677,7 @@ footer:before {
     box-shadow: 1px 1px 5px #CCC;
 }
 
-.integrations main {
+.integrations main, .profile main {
     padding-top: 0px;
     height: 70%;
 }
@@ -2795,6 +2795,14 @@ footer:before {
     overflow-x: hidden;
 }
 
+.integrations .integration-loading {
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 1px 1px 5px #CCC;
+    width: 90%;
+    margin: auto;
+}
+
 .profile .profile-content {
     position: absolute;
     top: 0px;
@@ -2802,10 +2810,22 @@ footer:before {
     width: 100%;
     overflow-y: auto;
     overflow-x: hidden;
+    background-color: #fff;
+    box-shadow: 1px 1px 5px #CCC;
+    padding: 20px;
 }
 
 .profile .profile-picture-row {
     margin-bottom: 50px;
+}
+
+.profile .profile-username-row {
+    margin-bottom: 50px;
+}
+
+.profile .username-div {
+    margin: auto;
+    text-align: center;
 }
 
 .profile .avatar-image {
