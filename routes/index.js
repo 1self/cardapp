@@ -236,11 +236,18 @@ var getIntegrationDetails = function(req, res, next){
 };
 
 var redirectToIntegration = function(req, res, next){
-	var redirectUrl = req.integration.integrationUrl + '?username=' + 
-		req.session.profile.username +
+	var redirectBackToCardApp = encodeURIComponent(req.protocol + 
+		'://' + 
+		req.hostname + 
+		(req.hostname === 'localhost' ? ':' + port : '') + 
+		'/integrations');
+	
+	var integrationUrl = req.integration.integrationUrl + 
+		'?redirect_uri=' + redirectBackToCardApp +
+		'&username=' + req.session.profile.username +
 		'&token=' + req.session.profile.registrationToken;
 
-	res.redirect(redirectUrl);
+	res.redirect(integrationUrl);
 }
 
 router.get('/',
