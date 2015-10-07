@@ -106,13 +106,18 @@ function createCardText(cardData) {
 
         cardText.comparitor = ("Your {{comparitor}} in {{eventPeriod}} {{comparisonPeriod}}").supplant(supplantObject);
 
+// https://github.com/strttn?tab=contributions&from=2015-09-02
+
         if (cardData.actionTags[0] === "commit" || cardData.actionTags[1] === "push") {
             if (cardData.properties.sum.__count__) {
                 supplantObject.action_pl = displayTags(pluralise(cardData.actionTags));
                 cardText.description = template1.supplant(supplantObject);
                 // console.log("template1");
             } else {
-                supplantObject.action_pp = displayTags(pastParticiple(cardData.actionTags));
+                if (propertiesObj.actionOverride)
+                    supplantObject.action_pp = propertiesObj.actionOverride
+                else
+                    supplantObject.action_pp = displayTags(pastParticiple(cardData.actionTags));
                 supplantObject.property = propertiesObj.propertiesText;
                 cardText.description = template2.supplant(supplantObject);
                 // console.log("template2", cardData.actionTags);
@@ -235,12 +240,23 @@ function buildPropertiesTextAndGetValue (propertiesObject) {
         }
     }
 
+    if (stringArray.length === 3 && stringArray[0] === "repo") {
+        returnString = stringArray[2] + ' in ' + stringArray[0] + ' ' + stringArray[1];
+    } else if (stringArray.length === 2 && stringArray[0] === "repo") {
+        returnString = ' to ' + stringArray[0] + ' ' + stringArray[1];
+        returnObj.actionOverride = "commit";
+    }
+
     returnObj.propertiesText = returnString.trim();
 
     if (objectKey === "__count__") {
         returnObj.value = propertiesObject[objectKey];
     } else {
         returnObj.value = propertiesObject;
+    }
+
+    if (returnObj.value.toString() !== '1' && returnObj.actionOverride) {
+        returnObj.actionOverride += 's';
     }
 
     if (isDuration)
