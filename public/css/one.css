@@ -1623,6 +1623,20 @@ p:last-child {
         margin-bottom: 15px;
     }
 
+    .signup-content .grid-cell.content {
+        padding-top: 3em;
+        padding-left: 3em;
+        padding-right: 3em;
+        padding-bottom: 1em;
+    }
+
+    .signup-content .grid-cell.invite {
+        padding-top: 1em;
+        padding-left: 0em;
+        padding-right: 0em;
+        padding-bottom: 3em;
+    }
+
     .confirmation p {
         line-height: 1.2em;
     }
