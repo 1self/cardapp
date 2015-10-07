@@ -190,10 +190,12 @@ function buildPropertiesTextAndGetValue (propertiesObject) {
     var returnString = '';
     var objectKey = Object.keys(propertiesObject)[0];
     var prevObjectKey;
-    var counter = 0;
     var returnObj = {};
     var isDuration = false;
     var isPercent = false;
+    var stringArray = [];
+
+    // 2 committed file changes in repo 1self/visit-counter
 
     while (objectKey && objectKey !== "__count__") {
         var propertyText = unhyphenate(customFormatProperty(objectKey));
@@ -213,11 +215,11 @@ function buildPropertiesTextAndGetValue (propertiesObject) {
 
         if (propertyText !== "") {
             returnString += propertyText;
+            stringArray.push(propertyText);
             if (objectKey && objectKey !== "__count__") {
                 returnString += ": ";
             }
         }
-        counter++;
     }
 
     returnObj.propertiesText = returnString.trim();

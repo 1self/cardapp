@@ -235,7 +235,8 @@ var getIntegrationDetails = function(req, res, next){
 	});
 };
 
-var redirectToIntegration = function(req, res, next){
+var redirectToIntegration = function(req, res, next) {
+	var port = req.app.settings.port;
 	var redirectBackToCardApp = encodeURIComponent(req.protocol + 
 		'://' + 
 		req.hostname + 
@@ -248,7 +249,7 @@ var redirectToIntegration = function(req, res, next){
 		'&token=' + req.session.profile.registrationToken;
 
 	res.redirect(integrationUrl);
-}
+};
 
 router.get('/',
 	oauth.signedInRoute,
