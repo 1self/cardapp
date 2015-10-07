@@ -83,6 +83,7 @@ function createCardText(cardData) {
         var template1 = '{{value}} {{action_pl}}'; // e.g. [Yesterday]: [6th] [fewest] [commit]s in [a day] [ever]
         var template2 = '{{value}} {{action_pp}} {{property}}'; // [Yesterday]: [6th] [most] [commit]ted [file changes] in [a day] [ever]
         var template3 = '{{value}} {{objects}} {{action_pl}}'; // [Yesterday]: [6th] [fewest] [music track] [listen]s in [a day] [ever]
+        var template4 = '{{value}} {{action_pl}} to {{objects}}'; // 3 pushes to Github
         // var template4 = '{{comparitor}} {{action_pl}} to {{property}} in {{eventPeriod}} {{comparisonPeriod}}'; // [Yesterday]: [6th] [fewest] [listen]s [to Royksopp] in [a day] [ever]
         // var template5 = '{{comparitor}} {{objects}} {{property}} in {{eventPeriod}} {{comparisonPeriod}}'; // [Yesterday]: [6th] [fewest] [computer desktop] [all distracting percent] in [a day] [ever]
         var template6 = '{{value}} {{action_pl}} to {{property}}'; // [Yesterday]: [13] [listens] to [Four Tet]<br>Your [6th] [fewest] in [a day]
@@ -109,6 +110,18 @@ function createCardText(cardData) {
             if (cardData.properties.sum.__count__) {
                 supplantObject.action_pl = displayTags(pluralise(cardData.actionTags));
                 cardText.description = template1.supplant(supplantObject);
+                // console.log("template1");
+            } else {
+                supplantObject.action_pp = displayTags(pastParticiple(cardData.actionTags));
+                supplantObject.property = propertiesObj.propertiesText;
+                cardText.description = template2.supplant(supplantObject);
+                // console.log("template2", cardData.actionTags);
+            }
+        } else if (cardData.actionTags[0] === "push") {
+            if (cardData.properties.sum.__count__) {
+                supplantObject.action_pl = displayTags(pluralise(cardData.actionTags));
+                supplantObject.objects = customFormatObjTags(displayTags(cardData.objectTags));
+                cardText.description = template4.supplant(supplantObject);
                 // console.log("template1");
             } else {
                 supplantObject.action_pp = displayTags(pastParticiple(cardData.actionTags));
@@ -334,6 +347,8 @@ function customFormatObjTags(objTagsString) {
         return "computer time";
     else if (objTagsString === "music")
         return "music tracks";
+    else if (objTagsString.indexOf('github') >= 0)
+        return "Github";
     else
         return objTagsString;
 }
