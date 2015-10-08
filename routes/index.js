@@ -241,7 +241,8 @@ var redirectToIntegration = function(req, res, next) {
 		'://' + 
 		req.hostname + 
 		(req.hostname === 'localhost' ? ':' + port : '') + 
-		'/integrations');
+		'/integrations/' + 
+		req.params.serviceIdentifier);
 	
 	var integrationUrl = req.integration.integrationUrl + 
 		'?redirect_uri=' + redirectBackToCardApp +
