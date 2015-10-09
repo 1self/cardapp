@@ -2916,7 +2916,7 @@ footer:before {
     padding-right: 0.5em;
 }
 
-.integration-detail-bottom, .integration-detail-success {
+.integration-detail-bottom, .integration-detail-success, .integration-detail-error {
     font-size: 0.8em;
 }
 
@@ -2924,13 +2924,13 @@ footer:before {
     margin-top: 15px;
 }
 
-.integration-instructions-header, .integration-success-header {
+.integration-instructions-header, .integration-success-header, .integration-error-header {
     color: #00B597;
     font-size: 1.2em;
     margin-bottom: 5px;
 }
 
-.integration-success-description a {
+.integration-success-description a, .integration-error-description a {
     color: #00B597;
 }
 

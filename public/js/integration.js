@@ -32,6 +32,7 @@ function renderIntegrationDetail(integrationJSON) {
 
     var $integrationDetail = $('.integration-detail');
     var isSuccessfulInstall = getQSParam().success === "true";
+    var errorInstall = getQSParam().error;
 
     $('.page-title').text('Connect ' + integrationJSON.serviceName);
 
@@ -70,6 +71,12 @@ function renderIntegrationDetail(integrationJSON) {
 
         $integrationDetail.find('.integration-detail-bottom').hide();
         $integrationDetail.find('.integration-detail-success').removeClass('hide');
+
+    } else if (errorInstall) {
+        var errorText = 'Ack. Something went wrong integrating  ' + integrationJSON.serviceName + '. Click the &ldquo;' + integrationJSON.integrationAction + '&rdquo; button above to try again. Or if you prefer, choose one of the options below.';
+        $integrationDetail.find('.integration-error-description').first().html(errorText);
+        $integrationDetail.find('.integration-detail-bottom').hide();
+        $integrationDetail.find('.integration-detail-error').removeClass('hide');
     }
     
     $('.integration-detail-container').removeClass('hide');

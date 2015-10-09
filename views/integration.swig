@@ -114,6 +114,15 @@
                             <p class="integration-success-description"><a href="/card-stack">Head over to your card stack</a> to see what's waiting for you.</p>
                         </div>
                     </div>
+                    <div class="integration-detail-error hide">
+                        <div class="integration-error-container">
+                            <p class="integration-error-header">Something went wrong</p>
+                            <p class="integration-error-description"></p>
+                            <p class="integration-error-description"><a href="/integrations">Head back to the integrations page</a> to link up different data sources.</p>
+                            <p class="integration-error-description"> - or - </p>
+                            <p class="integration-error-description"><a href="/card-stack">Head over to your card stack</a> to see what's waiting for you.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
