@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-    <meta content="images/fav.ico" itemprop="image">
+    <meta content="/images/fav.ico" itemprop="image">
     <meta name="description"
     content="1self reveals the extraordinary events in your everyday life by analysing the personal data you collect">
     <meta property="og:title"
@@ -12,11 +12,11 @@
     content="1self reveals the extraordinary events in your everyday life by analysing the personal data you collect" />
     <meta property="og:image"
     content="http://www.1self.co/images/1self_logo_fb.png" />
-    <link rel="icon" href="images/fav.ico">
-    <link rel="stylesheet" type="text/css" href="css/one.css">
-    <script src="js/jquery-2.1.4.min.js" type="text/javascript"></script>
-    <script src="js/invite.js" type="text/javascript"></script>
-    <style type="text/css">
+    <link rel="icon" href="/images/fav.ico">
+    <link rel="stylesheet" type="text/css" href="/css/one.css">
+    <script src="/js/jquery-2.1.4.min.js" type="text/javascript"></script>
+    <script src="/js/invite.js" type="text/javascript"></script>
+    <style type="/text/css">
       
       #landing-wrapper .invite {
         background-color: rgb(242, 174, 28);
@@ -66,7 +66,7 @@
     <div class="header-wrapper">
       <header class="page-nav">
         <div class="logo">
-          <a href="/"><img src="images/logo.png" alt="logo"/></a>
+          <a href="/"><img src="/images/logo.png" alt="logo"/></a>
         </div>
         <div class="mobile-only-nav nav-toggle">
           <div></div>
@@ -76,22 +76,22 @@
         <nav class="nav-right" id="collapse-link">
           <a class="nav-link nav-toggle" href="#learn-more" id="lnkLearnMore">LEARN MORE
             <span>
-            <img src="images/link-dot.png" alt=""/>
+            <img src="/images/link-dot.png" alt=""/>
             </span>
           </a>
           <!-- <a class="nav-link nav-toggle" href="/quest">QUEST
             <span>
-            <img src="images/link-dot.png" alt=""/>
+            <img src="/images/link-dot.png" alt=""/>
             </span>
           </a>
           <a class="nav-link nav-toggle" href="developer">DEVELOPERS
             <span>
-            <img src="images/link-dot.png" alt=""/>
+            <img src="/images/link-dot.png" alt=""/>
             </span>
           </a> -->
           <a class="nav-link nav-toggle" href="http://blog.1self.co" target="_blank">BLOG
             <span>
-            <img src="images/link-dot.png" alt=""/>
+            <img src="/images/link-dot.png" alt=""/>
             </span>
           </a>
           <a class="button signupButton nav-toggle" id="loginButton" href="/auth/signin">Log in</a>
@@ -127,7 +127,7 @@
 
             <div class="grid-cell invite">
               <iframe id="landing-frame" style="height: 460px;" ></iframe>
-              <div class="red-dot-desktop"><img src="images/dot-yellow.png" alt=""/></div>
+              <div class="red-dot-desktop"><img src="/images/dot-yellow.png" alt=""/></div>
             </div>
           </div>
         </div>
@@ -142,14 +142,14 @@
               </div>
             </div>
             <div class="grid-cell img">
-              <img style="width: 472px" src="images/heatmap_coding.png">
+              <img style="width: 472px" src="/images/heatmap_coding.png">
             </div>
           </div>
         </div>
       </div>
       <div class="center what-is">
         <h3>What is 1self?</h3>
-        <img src="images/yellow-arr-down.png" style="height: 50px; position: relative;
+        <img src="/images/yellow-arr-down.png" style="height: 50px; position: relative;
   top: 22px;">
       </div>
     </div>
@@ -207,7 +207,7 @@
     <div class="page-content">
       <div class="banner center">
         <h1>Remarkable you</h1>
-        <img src="images/main-banner.png" alt="banner one self"/>
+        <img src="/images/main-banner.png" alt="banner one self"/>
         <p>1self reveals the extraordinary events in your everyday life by analysing the personal data you collect
         <!-- Discover remarkable things about you
         <span>by connecting your data</span> -->
@@ -217,7 +217,7 @@
         <div class="grid-row">
           <div class="grid-cell content">
             <div class="yarrow-down-desktop">
-              <img src="images/yellow-arr-down.png" alt=""/>
+              <img src="/images/yellow-arr-down.png" alt=""/>
             </div>
             <h2>Join our beta now</h2>
             <ul>
@@ -228,7 +228,7 @@
           <div class="grid-cell invite">
             <h3>Hurry, early adopter places are limited!</h3>
             <input type="text" name="username" class="1s_username" id="mce-username" value="" placeholder="Choose your 1self username"/><input  type="submit" value="Join 1self" class="join_username_btn" />
-            <div class="red-dot-desktop"><img src="images/dot-yellow.png" alt=""/></div>
+            <div class="red-dot-desktop"><img src="/images/dot-yellow.png" alt=""/></div>
           </div>
         </div>
       </div>
@@ -261,7 +261,7 @@
                 <li>ordinary</li>
               </ol>
             </div>
-            <div class="red-dot-desktop"><img src="images/dot-red.png" alt=""/></div>
+            <div class="red-dot-desktop"><img src="/images/dot-red.png" alt=""/></div>
           </div>
         </div>
       </div>
@@ -270,17 +270,17 @@
           <div class="grid-cell img">
             <div class="image-row">
               <div class="image-cell-30 left-cell">
-                <img src="images/slider/understand.svg" alt=""/>
+                <img src="/images/slider/understand.svg" alt=""/>
               </div>
               <div class="image-cell-30">
-                <img src="images/slider/stories.svg" alt=""/>
+                <img src="/images/slider/stories.svg" alt=""/>
               </div>
               <div class="image-cell-30 right-cell">
-                <img src="images/slider/compare.svg" alt=""/>
+                <img src="/images/slider/compare.svg" alt=""/>
               </div>
             </div>
             <div class="clear-float"></div>
-            <!-- <img src="images/united-data.svg" alt="" class="united"/> -->
+            <!-- <img src="/images/united-data.svg" alt="" class="united"/> -->
           </div>
           <div class="grid-cell content">
 <!-- 
@@ -302,7 +302,7 @@ Use 1self to weave your data into a story of the remarkable things that you do. 
             </p>
             <p>Remarkable is the new, the memorable, the shareable. Remarkable is not ordinary or commonplace and nor are you.</p>
             <!-- <a class="button" href="/unite-data">TELL ME MORE</a> -->
-            <div class="red-dot-desktop"><img src="images/dot-green.png" alt=""/></div>
+            <div class="red-dot-desktop"><img src="/images/dot-green.png" alt=""/></div>
           </div>
         </div>
       </div>
@@ -329,12 +329,12 @@ Use 1self to weave your data into a story of the remarkable things that you do. 
         </div>
       </div>
       <div class="seperator y-dwarrow-center">
-        <img src="images/yellow-arr-up.png" alt=""/>
+        <img src="/images/yellow-arr-up.png" alt=""/>
       </div>
       <div class="invite invite-footer">
         <div class="logo-and-tagline">
           
-          <h1><img src="images/logo.png" alt="logo"/> <span>Remarkable you</span></h1>
+          <h1><img src="/images/logo.png" alt="logo"/> <span>Remarkable you</span></h1>
         </div>
         
         <div class="claim-text">Claim your username. Join our beta </div>
@@ -345,7 +345,7 @@ Use 1self to weave your data into a story of the remarkable things that you do. 
       <ul class="nav relative">
         <li class="heading">1self</li>
         <li class="seperator-left">
-          <img src="images/seperator.png" alt=""/>
+          <img src="/images/seperator.png" alt=""/>
         </li>
         <li><a href="/">home</a>
       </li>
@@ -357,7 +357,7 @@ Use 1self to weave your data into a story of the remarkable things that you do. 
 <ul class="nav">
   <li class="heading">other things</li>
   <li class="seperator-center">
-    <img src="images/seperator.png" alt=""/>
+    <img src="/images/seperator.png" alt=""/>
   </li>
   <li><a href="/privacy">privacy policy</a></li>
   <li><a href="/no-exploit">pricing</a></li>
@@ -365,7 +365,7 @@ Use 1self to weave your data into a story of the remarkable things that you do. 
 <ul class="nav">
   <li class="heading">contact</li>
   <li class="seperator-center">
-    <img src="images/seperator.png" alt=""/>
+    <img src="/images/seperator.png" alt=""/>
   </li>
   <li>UK office:<br/>
     30 Brock Street, London, NW1 3FG<br/><br/>
@@ -375,7 +375,7 @@ Use 1self to weave your data into a story of the remarkable things that you do. 
 <ul class="nav connect">
   <li class="heading">connect</li>
   <li class="seperator-right">
-    <img src="images/seperator.png" alt=""/>
+    <img src="/images/seperator.png" alt=""/>
   </li>
   <li>
     <a href="https://twitter.com/1self_co" target="_blank"><span><i class="fa fa-twitter"></i></span></a>
