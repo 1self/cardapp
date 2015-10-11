@@ -141,7 +141,7 @@
                 <div class="chart-overlay"></div>
             </div>
             <div class="card-menu">
-                <div class="more"><div><span>More info</span></div></div>
+                <div class="more"><div><span><i class="fa fa-info-circle"></i>&nbsp;&nbsp;More info</span></div></div>
             </div>
         </div>
         <div class="back">
@@ -153,7 +153,7 @@
                 <p class="headline-description"></p>
                 <p class="headline-comparitor"></p>
                 <p class="headline-info">
-                    <i class="fa fa-info-circle"></i> <a class="infoLink" target="_blank"></a>
+                    <a class="infoLink" target="_blank"></a>&nbsp;&nbsp;<i class="fa fa-external-link"></i>
                 </p>
                 <br style="clear: both;" />
             </div>
