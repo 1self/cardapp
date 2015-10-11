@@ -2888,7 +2888,16 @@ footer:before {
     max-width: 600px;  
 }
 
-.integration-detail {
+.integration-result-container {
+    background: white;
+    border: 1px solid #CCC;
+    margin: 1em auto 1em auto;
+    box-shadow: 1px 1px 5px #CCC;
+    width: 90%;
+    max-width: 600px;  
+}
+
+.integration-detail, .integration-result {
     padding: 8px;
     width: 100%;
 }
@@ -2926,7 +2935,7 @@ footer:before {
 
 .integration-instructions-header, .integration-success-header, .integration-error-header {
     color: #00B597;
-    font-size: 1.2em;
+    font-size: 1.4em;
     margin-bottom: 5px;
 }
 
@@ -2984,10 +2993,19 @@ footer:before {
     box-shadow: 1px 1px 5px #CCC;
 }
 
-.get-started-button div, .large-connect-button div {
+.integration-pending {
+    color: #00B597;
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 23px;
+}
+
+.get-started-button div, .large-connect-button div, .integration-pending div {
     display: table-cell;
     vertical-align: middle;
     text-align: center;
+    width: 100%;
 }
 
 .service-name {

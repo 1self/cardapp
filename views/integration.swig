@@ -95,6 +95,7 @@
                                 <div><i class="service-tick fa fa-3x fa-check-circle"></i></div>
                                 <div>Connected</div>
                             </div>
+                            <div class="integration-pending hide"><div><i class="fa fa-2x fa-circle-o-notch fa-spin"></i></div></div>
                         </div>
                     </div>
                     <div class="integration-detail-bottom">
@@ -104,10 +105,15 @@
                             <p class="integration-instructions"></p>
                         </div>
                         <div class="large-connect-button"><div>Connect</div></div>
+                        <div class="integration-pending hide"><div><i class="fa fa-2x fa-circle-o-notch fa-spin"></i></div></div>
                     </div>
+                </div>
+            </div>
+            <div class="integration-result-container hide">
+                <div class="integration-result">
                     <div class="integration-detail-success hide">
                         <div class="integration-success-container">
-                            <p class="integration-success-header">Success</p>
+                            <p class="integration-success-header"><i class="fa fa-thumbs-up"></i>&nbsp;&nbsp;Success</p>
                             <p class="integration-success-description">Nice one! [[ serviceName ]] has been successfully integrated. Now you'll start to see the associated data coming into your 1self account.</p>
                             <p class="integration-success-description"><a href="/integrations">Head back to the integrations page</a> to link up more lovely data sources.</p>
                             <p class="integration-success-description"> - or - </p>
@@ -116,7 +122,7 @@
                     </div>
                     <div class="integration-detail-error hide">
                         <div class="integration-error-container">
-                            <p class="integration-error-header">Something went wrong</p>
+                            <p class="integration-error-header"><i class="fa fa-exclamation-triangle"></i>&nbsp;&nbsp;Something went wrong</p>
                             <p class="integration-error-description"></p>
                             <p class="integration-error-description"><a href="/integrations">Head back to the integrations page</a> to link up different data sources.</p>
                             <p class="integration-error-description"> - or - </p>
