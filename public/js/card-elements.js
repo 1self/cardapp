@@ -86,6 +86,7 @@ function createCardText(cardData) {
         var template4 = '{{value}} {{action_pl}} to {{objects}}'; // 3 pushes to Github
         // var template4 = '{{comparitor}} {{action_pl}} to {{property}} in {{eventPeriod}} {{comparisonPeriod}}'; // [Yesterday]: [6th] [fewest] [listen]s [to Royksopp] in [a day] [ever]
         // var template5 = '{{comparitor}} {{objects}} {{property}} in {{eventPeriod}} {{comparisonPeriod}}'; // [Yesterday]: [6th] [fewest] [computer desktop] [all distracting percent] in [a day] [ever]
+        var template5 = '{{value}} {{property}} {{objects}}'; // [9hrs] [total] [computer time]
         var template6 = '{{value}} {{action_pl}} to {{property}}'; // [Yesterday]: [13] [listens] to [Four Tet]<br>Your [6th] [fewest] in [a day]
         var template7 = '{{value}} of your {{objects}} was {{property}}'; // [Yesterday]: [1.2%] of your [computer use] was [business]<br>Your [6th] [fewest] in [a day]
         var template8 = '{{value}} {{property}}'; // [Yesterday]: [2609] [steps]<br>Your [6th] [fewest] in [a day]
@@ -115,7 +116,7 @@ function createCardText(cardData) {
                 // console.log("template1");
             } else {
                 if (propertiesObj.actionOverride)
-                    supplantObject.action_pp = propertiesObj.actionOverride
+                    supplantObject.action_pp = propertiesObj.actionOverride;
                 else
                     supplantObject.action_pp = displayTags(pastParticiple(cardData.actionTags));
                 supplantObject.property = propertiesObj.propertiesText;
@@ -147,15 +148,20 @@ function createCardText(cardData) {
                 // console.log("template6");
             }
         } else if (cardData.actionTags[0] === "use") {
-            supplantObject.property = "&quot;" + propertiesObj.propertiesText + "&quot;";
-            supplantObject.objects = customFormatObjTags(displayTags(cardData.objectTags));
-            supplantObject.cardDate = cardData.cardDate;
-            cardText.description = template7.supplant(supplantObject);
-
+            if (cardData.properties.sum && cardData.properties.sum['total-duration']) {
+                supplantObject.property = propertiesObj.propertiesText;
+                supplantObject.objects = customFormatObjTags(displayTags(cardData.objectTags));
+                supplantObject.cardDate = cardData.cardDate;
+                cardText.description = template5.supplant(supplantObject);
+            } else {
+                supplantObject.property = "&quot;" + propertiesObj.propertiesText + "&quot;";
+                supplantObject.objects = customFormatObjTags(displayTags(cardData.objectTags));
+                supplantObject.cardDate = cardData.cardDate;
+                cardText.description = template7.supplant(supplantObject);
+            }
             cardText.extraInfo = {};
             cardText.extraInfo.text = 'More info at RescueTime.com';
             cardText.extraInfo.link = ("https://www.rescuetime.com/dashboard/for/the/day/of/{{cardDate}}").supplant(supplantObject);
-            // console.log("template7", cardData.actionTags);
 
         } else if (cardData.actionTags[0] === "develop") {
             if (cardData.chart.indexOf('.duration') > 0) {
