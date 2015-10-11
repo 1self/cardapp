@@ -90,7 +90,7 @@
                             </div>
                         </div>
                         <div class="integration-card-right">
-                            <div class="integration-button"><div>Connect</div></div>
+                            <div class="standard-button integration-button"><div>Connect</div></div>
                             <div class="integration-connected">
                                 <div><i class="service-tick fa fa-3x fa-check-circle"></i></div>
                                 <div>Connected</div>
@@ -104,7 +104,7 @@
                             <p class="integration-instructions-header">Instructions</p>
                             <p class="integration-instructions"></p>
                         </div>
-                        <div class="large-connect-button"><div>Connect</div></div>
+                        <div class="standard-button large-centered-button large-connect-button"><div>Connect</div></div>
                         <div class="integration-pending hide"><div><i class="fa fa-2x fa-circle-o-notch fa-spin"></i></div></div>
                     </div>
                 </div>
@@ -113,20 +113,44 @@
                 <div class="integration-result">
                     <div class="integration-detail-success hide">
                         <div class="integration-success-container">
-                            <p class="integration-success-header"><i class="fa fa-thumbs-up"></i>&nbsp;&nbsp;Success</p>
-                            <p class="integration-success-description">Nice one! [[ serviceName ]] has been successfully integrated. Now you'll start to see the associated data coming into your 1self account.</p>
-                            <p class="integration-success-description"><a href="/integrations">Head back to the integrations page</a> to link up more lovely data sources.</p>
-                            <p class="integration-success-description"> - or - </p>
-                            <p class="integration-success-description"><a href="/card-stack">Head over to your card stack</a> to see what's waiting for you.</p>
+                            <div class="integration-result-row">
+                                <p class="integration-success-header"><i class="fa fa-thumbs-up"></i>&nbsp;&nbsp;Success</p>
+                                <p class="integration-success-description">Nice one! [[ serviceName ]] has been successfully integrated. Now you'll start to see the associated data coming into your 1self account.</p>
+                            </div>
+                            <div class="integration-result-row">
+                                <div class="standard-button to-integrations-button left">
+                                    <div><i class="fa fa-arrow-left"></i>&nbsp;&nbsp;Back to integrations</div>
+                                </div>
+                                <div class="to-integrations-text left"><div>- link up more lovely data sources.</div></div>
+                            </div>
+                            <div class="integration-result-row">
+                                <div class="standard-button to-card-stack-button left">
+                                    <div><i class="fa fa-arrow-right"></i>&nbsp;&nbsp;To your card stack</div>
+                                </div>
+                                <div class="to-card-stack-text left"><div>- to see what's waiting for you.</div></div>
+                            </div>
+                            <div class="clear"></div>
                         </div>
                     </div>
                     <div class="integration-detail-error hide">
                         <div class="integration-error-container">
-                            <p class="integration-error-header"><i class="fa fa-exclamation-triangle"></i>&nbsp;&nbsp;Something went wrong</p>
-                            <p class="integration-error-description"></p>
-                            <p class="integration-error-description"><a href="/integrations">Head back to the integrations page</a> to link up different data sources.</p>
-                            <p class="integration-error-description"> - or - </p>
-                            <p class="integration-error-description"><a href="/card-stack">Head over to your card stack</a> to see what's waiting for you.</p>
+                            <div class="integration-result-row">
+                                <p class="integration-error-header"><i class="fa fa-exclamation-triangle"></i>&nbsp;&nbsp;Something went wrong</p>
+                                <p class="integration-error-description"></p>
+                            </div>
+                            <div class="integration-result-row">
+                                <div class="standard-button to-integrations-button left">
+                                    <div><i class="fa fa-arrow-left"></i>&nbsp;&nbsp;Back to integrations</div>
+                                </div>
+                                <div class="to-integrations-text left"><div>- link up more lovely data sources.</div></div>
+                            </div>
+                            <div class="integration-result-row">
+                                <div class="standard-button to-card-stack-button left">
+                                    <div><i class="fa fa-arrow-right"></i>&nbsp;&nbsp;To your card stack</div>
+                                </div>
+                                <div class="to-card-stack-text left"><div>- to see what's waiting for you.</div></div>
+                            </div>
+                            <div class="clear"></div>
                         </div>
                     </div>
                 </div>

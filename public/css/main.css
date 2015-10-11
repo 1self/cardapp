@@ -2949,20 +2949,7 @@ footer:before {
 
 .integration-button {
     width: 60px;
-    border-radius: 13px;
-    height: 26px;
     font-size: 0.6em;
-    display: table;
-    background-color: #00B597;
-    color: #fff;
-    box-shadow: 1px 1px 5px #CCC;
-    cursor: pointer;
-}
-
-.integration-button div {
-    display: table-cell;
-    vertical-align: middle;
-    text-align: center;
 }
 
 .integration-connected {
@@ -2977,20 +2964,60 @@ footer:before {
     color: #999;
 }
 
-.get-started-button, .large-connect-button {
-    width: 60%;
-    max-width: 150px;
+.integration-result-row {
+    width: 100%;
+    float: left;
+    margin-bottom: 10px;
+}
+
+.to-card-stack-button, .to-integrations-button {
+    margin-right: 10px;
+    width: 160px;
+}
+
+.to-card-stack-text, .to-integrations-text {
+    display: table;
+    height: 26px;
+}
+
+.to-card-stack-text div, .to-integrations-text div {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.standard-button {
     border-radius: 13px;
     height: 26px;
-/*    font-size: 0.6em;*/
     display: table;
     background-color: #00B597;
     color: #fff;
-    margin: auto;
     cursor: pointer;
+    box-shadow: 1px 1px 5px #CCC;
+}
+
+.standard-button div {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    width: 100%;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.large-centered-button {
+    width: 60%;
+    max-width: 150px;
+    margin: auto;
     margin-top: 20px;
     margin-bottom: 20px;
-    box-shadow: 1px 1px 5px #CCC;
+}
+
+.get-started-button {
+    width: 60%;
+    max-width: 150px;
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 .integration-pending {
@@ -3001,7 +3028,7 @@ footer:before {
     width: 23px;
 }
 
-.get-started-button div, .large-connect-button div, .integration-pending div {
+.get-started-button div, .integration-pending div {
     display: table-cell;
     vertical-align: middle;
     text-align: center;

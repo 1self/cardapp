@@ -26,6 +26,16 @@ function executeOnLoadTasks() {
         return false;
     });
 
+    $('.to-integrations-button').click(function() {
+        window.location.href = '/integrations';
+        return false;
+    });
+
+    $('.to-card-stack-button').click(function() {
+        window.location.href = '/card-stack';
+        return false;
+    });
+
 }
 
 function renderIntegrationDetail(integrationJSON) {
