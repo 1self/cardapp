@@ -1037,7 +1037,7 @@ footer:before {
     margin: auto;
     margin-bottom: 15px;
     padding-top: 15px;
-    border-color: #00b197;
+    border-color: #00B597;
 }
 
 .nav-overlay .navigation-padding {
@@ -2202,7 +2202,7 @@ footer:before {
 
 .intro-header {
     font-size: 1.2em;
-    color: #00b197;
+    color: #00B597;
     text-align: left;
     height: 15%;
     padding-top: 10px;
@@ -2262,8 +2262,8 @@ footer:before {
 }
 
 .intro-card .card-menu .more span {
-    border: solid 1px #00b197;
-    color: #00b197;
+    border: solid 1px #00Bb97;
+    color: #00B597;
     background-color: #fff;
 }
 
@@ -2981,6 +2981,7 @@ footer:before {
     cursor: pointer;
     margin-top: 20px;
     margin-bottom: 20px;
+    box-shadow: 1px 1px 5px #CCC;
 }
 
 .get-started-button div, .large-connect-button div {
