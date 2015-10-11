@@ -60,7 +60,7 @@ function renderIntegrationDetail(integrationJSON) {
             $integrationDetail.find('.integration-pending').removeClass('hide');
             
             if (integrationJSON.integrationType === 'hosted')
-                window.location.href = window.location.href + '/redirect';
+                window.location.href = "/integrations/" + integrationJSON.identifier + '/redirect';
             else
                 window.open(integrationJSON.integrationUrl);
             
