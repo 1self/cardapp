@@ -111,7 +111,7 @@ function createCardText(cardData) {
 
         if (cardData.actionTags[0] === "commit" || cardData.actionTags[1] === "push") {
             if (cardData.properties.sum.__count__) {
-                supplantObject.action_pl = displayTags(pluralise(cardData.actionTags));
+                supplantObject.action_pl = displayTags(pluralise(cardData.actionTags, propertiesObj.value));
                 cardText.description = template1.supplant(supplantObject);
                 // console.log("template1");
             } else {
@@ -125,7 +125,7 @@ function createCardText(cardData) {
             }
         } else if (cardData.actionTags[0] === "push") {
             if (cardData.properties.sum.__count__) {
-                supplantObject.action_pl = displayTags(pluralise(cardData.actionTags));
+                supplantObject.action_pl = displayTags(pluralise(cardData.actionTags,propertiesObj.value));
                 supplantObject.objects = customFormatObjTags(displayTags(cardData.objectTags));
                 cardText.description = template4.supplant(supplantObject);
                 // console.log("template1");
@@ -142,7 +142,7 @@ function createCardText(cardData) {
                 cardText.description = template3.supplant(supplantObject);
                 // console.log("template3");
             } else {
-                supplantObject.action_pl = displayTags(pluralise(cardData.actionTags));
+                supplantObject.action_pl = displayTags(pluralise(cardData.actionTags, propertiesObj.value));
                 supplantObject.property = propertiesObj.propertiesText;
                 cardText.description = template6.supplant(supplantObject);
                 // console.log("template6");
@@ -312,18 +312,21 @@ function displayTags(tagArray) {
     return returnString.trim();
 }
 
-function pluralise(stringArray) {
-    var lastItem = stringArray[stringArray.length - 1];
-    
-    var plural;
-    if (lastItem === "push")
-        plural = "es";
-    else
-        plural = "s";
+function pluralise(stringArray, value) {
 
-    lastItem += plural;
+    if (value !== 1) {
+        var lastItem = stringArray[stringArray.length - 1];
+        
+        var plural;
+        if (lastItem === "push")
+            plural = "es";
+        else
+            plural = "s";
 
-    stringArray[stringArray.length - 1] = lastItem;
+        lastItem += plural;
+
+        stringArray[stringArray.length - 1] = lastItem;
+    }
 
     return stringArray;
 }
