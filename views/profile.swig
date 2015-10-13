@@ -89,7 +89,7 @@
                 </div>
             </div>
             <div class="logout-button-row">
-                <div class="large-connect-button logout-button">
+                <div class="standard-button large-centered-button logout-button">
                     <div>
                         Sign out&nbsp;&nbsp;<i class="fa fa-sign-out"></i>
                     </div>

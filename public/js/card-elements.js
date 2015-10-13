@@ -86,6 +86,7 @@ function createCardText(cardData) {
         var template4 = '{{value}} {{action_pl}} to {{objects}}'; // 3 pushes to Github
         // var template4 = '{{comparitor}} {{action_pl}} to {{property}} in {{eventPeriod}} {{comparisonPeriod}}'; // [Yesterday]: [6th] [fewest] [listen]s [to Royksopp] in [a day] [ever]
         // var template5 = '{{comparitor}} {{objects}} {{property}} in {{eventPeriod}} {{comparisonPeriod}}'; // [Yesterday]: [6th] [fewest] [computer desktop] [all distracting percent] in [a day] [ever]
+        var template5 = '{{value}} {{property}} {{objects}}'; // [9hrs] [total] [computer time]
         var template6 = '{{value}} {{action_pl}} to {{property}}'; // [Yesterday]: [13] [listens] to [Four Tet]<br>Your [6th] [fewest] in [a day]
         var template7 = '{{value}} of your {{objects}} was {{property}}'; // [Yesterday]: [1.2%] of your [computer use] was [business]<br>Your [6th] [fewest] in [a day]
         var template8 = '{{value}} {{property}}'; // [Yesterday]: [2609] [steps]<br>Your [6th] [fewest] in [a day]
@@ -110,12 +111,12 @@ function createCardText(cardData) {
 
         if (cardData.actionTags[0] === "commit" || cardData.actionTags[1] === "push") {
             if (cardData.properties.sum.__count__) {
-                supplantObject.action_pl = displayTags(pluralise(cardData.actionTags));
+                supplantObject.action_pl = displayTags(pluralise(cardData.actionTags, propertiesObj.value));
                 cardText.description = template1.supplant(supplantObject);
                 // console.log("template1");
             } else {
                 if (propertiesObj.actionOverride)
-                    supplantObject.action_pp = propertiesObj.actionOverride
+                    supplantObject.action_pp = propertiesObj.actionOverride;
                 else
                     supplantObject.action_pp = displayTags(pastParticiple(cardData.actionTags));
                 supplantObject.property = propertiesObj.propertiesText;
@@ -124,7 +125,7 @@ function createCardText(cardData) {
             }
         } else if (cardData.actionTags[0] === "push") {
             if (cardData.properties.sum.__count__) {
-                supplantObject.action_pl = displayTags(pluralise(cardData.actionTags));
+                supplantObject.action_pl = displayTags(pluralise(cardData.actionTags,propertiesObj.value));
                 supplantObject.objects = customFormatObjTags(displayTags(cardData.objectTags));
                 cardText.description = template4.supplant(supplantObject);
                 // console.log("template1");
@@ -141,21 +142,26 @@ function createCardText(cardData) {
                 cardText.description = template3.supplant(supplantObject);
                 // console.log("template3");
             } else {
-                supplantObject.action_pl = displayTags(pluralise(cardData.actionTags));
+                supplantObject.action_pl = displayTags(pluralise(cardData.actionTags, propertiesObj.value));
                 supplantObject.property = propertiesObj.propertiesText;
                 cardText.description = template6.supplant(supplantObject);
                 // console.log("template6");
             }
         } else if (cardData.actionTags[0] === "use") {
-            supplantObject.property = "&quot;" + propertiesObj.propertiesText + "&quot;";
-            supplantObject.objects = customFormatObjTags(displayTags(cardData.objectTags));
-            supplantObject.cardDate = cardData.cardDate;
-            cardText.description = template7.supplant(supplantObject);
-
+            if (cardData.properties.sum && cardData.properties.sum['total-duration']) {
+                supplantObject.property = propertiesObj.propertiesText;
+                supplantObject.objects = customFormatObjTags(displayTags(cardData.objectTags));
+                supplantObject.cardDate = cardData.cardDate;
+                cardText.description = template5.supplant(supplantObject);
+            } else {
+                supplantObject.property = "&quot;" + propertiesObj.propertiesText + "&quot;";
+                supplantObject.objects = customFormatObjTags(displayTags(cardData.objectTags));
+                supplantObject.cardDate = cardData.cardDate;
+                cardText.description = template7.supplant(supplantObject);
+            }
             cardText.extraInfo = {};
             cardText.extraInfo.text = 'More info at RescueTime.com';
             cardText.extraInfo.link = ("https://www.rescuetime.com/dashboard/for/the/day/of/{{cardDate}}").supplant(supplantObject);
-            // console.log("template7", cardData.actionTags);
 
         } else if (cardData.actionTags[0] === "develop") {
             if (cardData.chart.indexOf('.duration') > 0) {
@@ -306,18 +312,21 @@ function displayTags(tagArray) {
     return returnString.trim();
 }
 
-function pluralise(stringArray) {
-    var lastItem = stringArray[stringArray.length - 1];
-    
-    var plural;
-    if (lastItem === "push")
-        plural = "es";
-    else
-        plural = "s";
+function pluralise(stringArray, value) {
 
-    lastItem += plural;
+    if (value !== 1) {
+        var lastItem = stringArray[stringArray.length - 1];
+        
+        var plural;
+        if (lastItem === "push")
+            plural = "es";
+        else
+            plural = "s";
 
-    stringArray[stringArray.length - 1] = lastItem;
+        lastItem += plural;
+
+        stringArray[stringArray.length - 1] = lastItem;
+    }
 
     return stringArray;
 }

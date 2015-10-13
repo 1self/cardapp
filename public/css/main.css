@@ -1037,7 +1037,7 @@ footer:before {
     margin: auto;
     margin-bottom: 15px;
     padding-top: 15px;
-    border-color: #00b197;
+    border-color: #00B597;
 }
 
 .nav-overlay .navigation-padding {
@@ -2202,7 +2202,7 @@ footer:before {
 
 .intro-header {
     font-size: 1.2em;
-    color: #00b197;
+    color: #00B597;
     text-align: left;
     height: 15%;
     padding-top: 10px;
@@ -2262,8 +2262,8 @@ footer:before {
 }
 
 .intro-card .card-menu .more span {
-    border: solid 1px #00b197;
-    color: #00b197;
+    border: solid 1px #00Bb97;
+    color: #00B597;
     background-color: #fff;
 }
 
@@ -2853,7 +2853,8 @@ footer:before {
     float: left;
     font-size: 0.7em;
     overflow: hidden;
-    padding: 0.5em
+    padding: 0.5em;
+    width: 100%;
 }
 
 .integration-card-container {
@@ -2888,7 +2889,16 @@ footer:before {
     max-width: 600px;  
 }
 
-.integration-detail {
+.integration-result-container {
+    background: white;
+    border: 1px solid #CCC;
+    margin: 1em auto 1em auto;
+    box-shadow: 1px 1px 5px #CCC;
+    width: 90%;
+    max-width: 600px;  
+}
+
+.integration-detail, .integration-result {
     padding: 8px;
     width: 100%;
 }
@@ -2926,7 +2936,7 @@ footer:before {
 
 .integration-instructions-header, .integration-success-header, .integration-error-header {
     color: #00B597;
-    font-size: 1.2em;
+    font-size: 1.4em;
     margin-bottom: 5px;
 }
 
@@ -2940,20 +2950,7 @@ footer:before {
 
 .integration-button {
     width: 60px;
-    border-radius: 13px;
-    height: 26px;
     font-size: 0.6em;
-    display: table;
-    background-color: #00B597;
-    color: #fff;
-    box-shadow: 1px 1px 5px #CCC;
-    cursor: pointer;
-}
-
-.integration-button div {
-    display: table-cell;
-    vertical-align: middle;
-    text-align: center;
 }
 
 .integration-connected {
@@ -2968,25 +2965,75 @@ footer:before {
     color: #999;
 }
 
-.get-started-button, .large-connect-button {
-    width: 60%;
-    max-width: 150px;
+.integration-result-row {
+    width: 100%;
+    float: left;
+    margin-bottom: 10px;
+}
+
+.to-card-stack-button, .to-integrations-button {
+    margin-right: 10px;
+    width: 160px;
+}
+
+.to-card-stack-text, .to-integrations-text {
+    display: table;
+    height: 26px;
+}
+
+.to-card-stack-text div, .to-integrations-text div {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.standard-button {
     border-radius: 13px;
     height: 26px;
-/*    font-size: 0.6em;*/
     display: table;
     background-color: #00B597;
     color: #fff;
-    margin: auto;
     cursor: pointer;
+    box-shadow: 1px 1px 5px #CCC;
+}
+
+.standard-button div {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    width: 100%;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.large-centered-button {
+    width: 60%;
+    max-width: 150px;
+    margin: auto;
     margin-top: 20px;
     margin-bottom: 20px;
 }
 
-.get-started-button div, .large-connect-button div {
+.get-started-button {
+    width: 60%;
+    max-width: 150px;
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.integration-pending {
+    color: #00B597;
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 23px;
+}
+
+.get-started-button div, .integration-pending div {
     display: table-cell;
     vertical-align: middle;
     text-align: center;
+    width: 100%;
 }
 
 .service-name {
