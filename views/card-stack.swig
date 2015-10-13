@@ -251,7 +251,7 @@
                     <p>Give it a try below.</p>
                 </div>
                 <div class="card-menu">
-                    <div class="more"><div><span>More info</span></div></div>
+                    <div class="more"><div><span><i class="fa fa-info-circle"></i>&nbsp;&nbsp;More info</span></div></div>
                 </div>
             </div>
         </div>
@@ -295,7 +295,11 @@
                 <div class="intro-content nose">
                     <p><img src="img/icons/nose.png"></p>
                 </div>
+                <div class="intro-content">
+                    <p>&nbsp;</p>
+                    <p class="left">Er, sorry. Carry on. :p</p>
                 </div>
+            </div>
             <div class="card-menu">
                 <div class="more-back"></div>
             </div>
