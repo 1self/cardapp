@@ -1,4 +1,4 @@
-	/*jslint node: true */
+/*jslint node: true */
 'user strict';
 
 var express = require('express');
@@ -7,6 +7,8 @@ var router = express.Router();
 var oauth = require('./oauth.js');
 var conceal = require('concealotron');
 var scopedLogger = require('./scopedLogger');
+var profile = require('./profile.js');
+
 router.get('/signin', 
 	function(req, res, next){
 		if(oauth.signedIn === true){
@@ -28,36 +30,6 @@ router.get('/signup',
 			oauth.getAuthCodeFromSignup(req, res, next);
 		}
 });
-
-var getProfile = function(req, res, next){
-	var tokenLogger = scopedLogger.logger(conceal(req.session.token), req.app.locals.logger);
-	tokenLogger.silly('getting profile');
-	
-	var requestOptions = {
-		url: req.app.locals.API_URL + '/me/profile',
-		headers: {
-			Authorization: 'Bearer ' + req.session.token
-		},
-		json: true
-	};
-
-	request(requestOptions, function(error, httpResponse, body){
-		if(error){
-			tokenLogger.error(error);
-			return;
-		}
-
-		if(httpResponse.statusCode !== 200){
-			tokenLogger.error('error while retrieving profile, code, body', [httpResponse.statusCode, httpResponse.body]);
-			res.status(httpResponse.statusCode).send('internal error');
-			return;
-		}
-
-		tokenLogger.debug('profile retrieved', conceal(body.username));
-		req.session.profile = body;
-		next();
-	});
-};
 
 var getAccessToken = function(req, res, next){
 	var logger = scopedLogger.logger(conceal(req.query.code), req.app.locals.logger);
@@ -117,7 +89,7 @@ var getAccessToken = function(req, res, next){
 
 router.get('/callback', 
 	getAccessToken,
-	getProfile,
+	profile.getProfile,
 	oauth.redirect
 );
 

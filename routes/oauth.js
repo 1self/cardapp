@@ -5,6 +5,20 @@ var request = require('request');
 
 var signedInRoute = function(req, res, next){
 	if(req.session.signedIn === undefined || req.session.signedIn === false){
+
+		if(req.query.appid && req.query.streamid && req.query.readToken)
+		{
+			req.session.referrer = {
+				appId: req.query.appid,
+				streamId: req.query.streamid,
+				readToken: req.query.readToken,
+				version: req.query.version
+			};
+
+			req.session.shouldRegisterStream = true;
+			req.session.streamRegistered = false;
+		}
+		
 		res.render('index');
 	}
 	else {

@@ -6,10 +6,60 @@ var oauth = require('./oauth');
 var router = express.Router();
 var request = require('request');
 var proxyRequest = require('./proxyRequest');
+var profile = require('./profile.js');
 
 /* GET home page. */
-var renderCardStack = function(req, res, next) {
-	res.render('card-stack', { profile: req.session.profile });
+var registerStream = function(req, res, next){
+	if(	req.session.shouldRegisterStream && 
+		req.session.streamRegistered === false &&
+		req.session.referrer){
+		
+		var requestOptions = {
+			url: req.app.locals.API_URL + '/me/streams?readToken=' + req.session.referrer.readToken,
+			method: "POST",
+			headers: {
+			   'Authorization': 'Bearer ' + req.session.token
+			},
+			json: true,
+			body: {
+				streamId: req.session.referrer.streamId
+			}
+		};
+
+		request(requestOptions, function(error, httpResponse, body){
+			req.session.shouldRegisterStream = false;
+			if (!error) {
+	        	if (httpResponse.statusCode === 200) {
+	        		req.session.streamRegistered = body; // normally body is true
+	        		next();
+	        	} else if (httpResponse.statusCode === 401) {
+	        		req.app.locals.logger.error('Error trying to register stream on API', httpResponse.statusCode, body);
+	        		res.status(401).send('unauthorised');
+	        	} else {
+					req.app.locals.logger.error('Error trying to register stream on API', httpResponse.statusCode, body);
+	        		res.status(500).send('internal server error trying to register stream');
+				}
+	        } 
+	        else {
+	        	// do this once the stream is registered
+				req.app.locals.logger.error('Error trying to register stream on API', error);
+	        	res.status(500).send('internal server error trying to register stream');
+	        }
+		});
+		
+	}
+	else{
+		next();
+	}
+};
+
+var renderEntryPoint = function(req, res, next) {
+	if(req.session.profile.cardCount > 0){
+		res.render('card-stack', { profile: req.session.profile });
+	}
+	else {
+		res.render('integrations', { profile: req.session.profile });
+	}
 };
 
 var renderProfile = function(req, res, next) {
@@ -254,12 +304,16 @@ var redirectToIntegration = function(req, res, next) {
 
 router.get('/',
 	oauth.signedInRoute,
-	renderCardStack
+	profile.getProfile,
+	registerStream,
+	renderEntryPoint
+
 );
 
 router.get('/card-stack',
 	oauth.signedInRoute,
-	renderCardStack
+	renderEntryPoint
+
 );
 
 router.get('/profile',
