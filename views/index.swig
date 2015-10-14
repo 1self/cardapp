@@ -104,7 +104,7 @@
     <div id="landing-wrapper" style="display: none">
       <div class="page-content" style="padding-top: 59px;">
         <div class="banner center" style="padding-top: 10px">
-          <h1 class="blue">Welcome to 1self</h1>
+          <h1>Welcome to 1self</h1>
         </div>
         <div class="grid-reset-mobile signup-content">
           <div class="grid-row">

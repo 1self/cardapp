@@ -126,7 +126,7 @@
                                 </div>
                             </div>
                             <div class="integration-card-right">
-                                <div class="integration-button"><div>Connect</div></div>
+                                <div class="standard-button integration-button"><div>Connect</div></div>
                                 <div class="integration-connected">
                                     <div><i class="service-tick fa fa-3x fa-check-circle"></i></div>
                                     <div>Connected</div>
