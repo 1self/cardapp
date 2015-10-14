@@ -1,11 +1,11 @@
 // Set up moment locale
 moment.locale('en', {
     calendar : {
-        lastDay : '[Yesterday at] LT',
-        sameDay : '[Today at] LT',
-        nextDay : '[Tomorrow at] LT',
-        lastWeek : 'dddd [at] LT',
-        nextWeek : '[next] dddd [at] LT',
+        lastDay : '[Yesterday]',
+        sameDay : '[Today]',
+        nextDay : '[Tomorrow]',
+        lastWeek : 'dddd ll',
+        nextWeek : 'dddd ll',
         sameElse : 'dddd ll'
     }
 });
