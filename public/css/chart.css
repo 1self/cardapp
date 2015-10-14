@@ -104,6 +104,7 @@ path {
 
 .axis text {
     fill: rgb(169, 178, 189);
+    font-size: 0.75em;
 }
 
 /*  &.days text {
