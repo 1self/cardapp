@@ -67,7 +67,7 @@
             <p>1self is compatible with many of your favourite apps and services. You just need to pick which services and apps you want to connect with 1self. Then 1self will help you find your remarkable information.</p>
             <hr>
             <p>Let's begin by connecting some data sources. The more you connect, the more 1self will be able to find remarkable things about you.</p>
-            <div class="get-started-button"><div>Start connecting</div></div>
+            <div class="standard-button get-started-button"><div>Start connecting</div></div>
         </div>
     </div>
 
