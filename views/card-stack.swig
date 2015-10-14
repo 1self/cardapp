@@ -45,6 +45,8 @@
 
         var offline = false;
         var username = '{{profile.username}}';
+        var registeredOn = "{{profile.registeredOn}}";
+        registeredOn = new Date(registeredOn);
 
 
     </script>
@@ -61,6 +63,7 @@
                 <div>
                     <div class="navigation-item" href="/card-stack">Card stack</div>
                     <div class="navigation-item" href="/integrations">Integrations</div>
+                    <div class="navigation-item hide dashboard-nav" href="/dashboard">Dashboard</div>
                     <div class="navigation-item" href="/profile">Profile</div>
                     <hr class="navigation-spacer">
                     <div class="navigation-item" href="http://blog.1self.co">1self blog</div>

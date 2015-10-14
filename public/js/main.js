@@ -24,6 +24,8 @@
 // Menu
 
 (function() {
+  showDashboardNav();
+
   $(".flyout-btn").click(function() {
     console.log('click 1');
     $(".flyout-btn").toggleClass("btn-rotate");
@@ -52,6 +54,12 @@
 
 }).call(this);
 
+function showDashboardNav() {
+  var lastPrevUserDate = new Date('2015-10-08T09:50:40.640Z');
+  if (registeredOn && registeredOn < lastPrevUserDate) { // registeredOn is declared in the html page
+      $('.dashboard-nav').removeClass('hide');
+  }  
+}
 
 function clickPulse(x, y, $pulseElem) {
     
