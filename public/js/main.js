@@ -55,7 +55,7 @@
 }).call(this);
 
 function showDashboardNav() {
-  var lastPrevUserDate = new Date('2015-10-08T09:50:40.640Z');
+  var lastPrevUserDate = new Date('2015-10-14T20:50:40.640Z');
   if (registeredOn && registeredOn < lastPrevUserDate) { // registeredOn is declared in the html page
       $('.dashboard-nav').removeClass('hide');
   }  
