@@ -302,6 +302,10 @@ var redirectToIntegration = function(req, res, next) {
 	res.redirect(integrationUrl);
 };
 
+var redirectToOldDashboard = function(req, res, next) {
+	res.redirect('https://app.1self.co/dashboard');
+};
+
 router.get('/',
 	oauth.signedInRoute,
 	profile.getProfile,
@@ -324,6 +328,11 @@ router.get('/profile',
 router.get('/integrations',
 	oauth.signedInRoute,
 	renderIntegrations
+);
+
+router.get('/dashboard',
+	oauth.signedInRoute,
+	redirectToOldDashboard
 );
 
 router.get('/integrations/:serviceIdentifier',
