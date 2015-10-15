@@ -303,7 +303,8 @@ var redirectToIntegration = function(req, res, next) {
 };
 
 var redirectToOldDashboard = function(req, res, next) {
-	res.redirect('https://app.1self.co/dashboard');
+	console.log(req.app.locals);
+	res.redirect(req.app.locals.DASHBOARD_URL);
 };
 
 router.get('/',
