@@ -2971,12 +2971,12 @@ footer:before {
     margin-bottom: 10px;
 }
 
-.to-card-stack-button, .to-integrations-button {
+.to-card-stack-button, .to-integrations-button, .to-support-button {
     margin-right: 10px;
     width: 160px;
 }
 
-.to-card-stack-text, .to-integrations-text {
+.to-card-stack-text, .to-integrations-text, .to-support-text {
     display: table;
     height: 26px;
 }
@@ -3003,6 +3003,12 @@ footer:before {
     width: 100%;
     padding-left: 10px;
     padding-right: 10px;
+}
+
+.sub-button {
+    color: #000;
+    border: solid 1px #00B597;
+    background-color: #fff;
 }
 
 .large-centered-button {

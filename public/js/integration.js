@@ -26,6 +26,11 @@ function executeOnLoadTasks() {
         return false;
     });
 
+    $('.to-support-button').click(function() {
+        window.open('https://1self.uservoice.com');
+        return false;
+    });
+
     $('.to-integrations-button').click(function() {
         window.location.href = '/integrations';
         return false;

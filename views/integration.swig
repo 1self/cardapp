@@ -142,13 +142,19 @@
                                 <p class="integration-error-description"></p>
                             </div>
                             <div class="integration-result-row">
-                                <div class="standard-button to-integrations-button left">
+                                <div class="standard-button to-support-button left">
+                                    <div><i class="fa fa-medkit"></i>&nbsp;&nbsp;Get support</div>
+                                </div>
+                                <div class="to-support-text left"><div>- we&apos;re here to help.</div></div>
+                            </div>
+                            <div class="integration-result-row">
+                                <div class="standard-button sub-button to-integrations-button left">
                                     <div><i class="fa fa-arrow-left"></i>&nbsp;&nbsp;Back to integrations</div>
                                 </div>
                                 <div class="to-integrations-text left"><div>- link up more lovely data sources.</div></div>
                             </div>
                             <div class="integration-result-row">
-                                <div class="standard-button to-card-stack-button left">
+                                <div class="standard-button sub-button to-card-stack-button left">
                                     <div><i class="fa fa-arrow-right"></i>&nbsp;&nbsp;To your card stack</div>
                                 </div>
                                 <div class="to-card-stack-text left"><div>- to see what's waiting for you.</div></div>
