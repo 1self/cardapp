@@ -16,50 +16,7 @@
     <link rel="stylesheet" type="text/css" href="/css/one.css">
     <script src="/js/jquery-2.1.4.min.js" type="text/javascript"></script>
     <script src="/js/invite.js" type="text/javascript"></script>
-    <style type="/text/css">
-      
-      #landing-wrapper .invite {
-        background-color: rgb(242, 174, 28);
-      }
-      #landing-wrapper .content {
-        background-color: #FFFFFF;
-        color: black;
-      }
-      #landing-wrapper #learn-more .content {
-        background-color: rgb(240, 90, 67);
-      }
-      #landing-wrapper .banner {
-        color: black;
-        background-color: #FFFFFF;
-      }
-      #landing-wrapper .banner h1 {
-        margin-bottom: 0px;
-        padding-top: 25px;
-        padding-bottom: 25px;
-      }
-      .what-is {
-        background-color: white;
-        color: black;
-        padding-top: 40px;
-        width: 100%;
-      }
-      .join-div {
-        margin-top: 15%;
-        font-size: 1.5em;
-      }
-      .join-button {
-        border: 1px solid #FFFFFF;
-        padding: 5px 30px;
-        border-radius: 30px;
-        background-color: #f2ae1c;
-        font-family: 'Raleway-Bold';
-        color: #FFFFFF;
-      }
-      .join-button:hover {
-        background-color: #FFB921;
-        color: #FFFFFF;
-      }
-    </style>
+
     <title>1self - Remarkable you</title>
   </head>
   <body>
@@ -113,6 +70,10 @@
               <p>This chart shows you your total active coding duration by day.</p>
               <p>Your data is private and secure. No detail of what you’ve coded or your filenames is sent to 1self.
               </p>
+              <div class="join-div">
+                <a id="join_button" href="" class="join-button">Join 1self</a>
+              </div>
+              <p class="why-join"><a href="#learn-more-landing">And <span>do more with your data</span></a></p>
             </div>
             <div class="grid-cell content" id="cyber-dojo-content" style="display: none">
               <h2>Your dojo data</h2>
@@ -121,7 +82,10 @@
               <p>Cyber-dojo uses 1self to let you to collect and visualise your dojo data.</p>
 
               <p>This spinning globe shows dojos happening around the world on <wbr><a href="http://cyber-dojo.org/" target="_blank" class="blue">Cyber-Dojo.org</a></p>
-              <p>With 1self, you can <a href="#learn-more-landing" class="blue">do more with your data</a>.</p>
+              <div class="join-div">
+                <a id="join_button" href="" class="join-button">Join 1self</a>
+              </div>
+              <p class="why-join"><a href="#learn-more-landing">And <span>do more with your data</span></a></p>
 
             </div>
 
@@ -137,6 +101,7 @@
               <h2>Do more with your data</h2>
               <p>Join 1self to comment on your data, compare with others and join it with your data from other sources like Github, Hacker News, Stack Overflow, Visual Studio, IntelliJ IDEA and more.
               </p>
+              <p>Discover the remarkable you from the data that tells your story</p>
               <div class="join-div">
                 <a id="join_button" href="" class="join-button">Join 1self</a>
               </div>

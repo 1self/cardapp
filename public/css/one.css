@@ -2,7 +2,6 @@
 @import url("base.css");
 @import url("fonts/fonts.css");
 @import url("fonts/font-awesome.min.css");
-
 a.button,
 button,
 input[type='sumbit'],
@@ -28,7 +27,9 @@ input[type='button']:hover {
     background: #00b698;
 }
 
+
 /* ===[ Page Navigation css ]=== */
+
 .page-nav:after,
 .clearfix:after {
     content: "";
@@ -50,9 +51,9 @@ input[type='button']:hover {
 *,
 *:before,
 *:after {
-  -webkit-box-sizing: inherit !important;
-  -moz-box-sizing: inherit !important;
-  box-sizing: inherit !important;
+    -webkit-box-sizing: inherit !important;
+    -moz-box-sizing: inherit !important;
+    box-sizing: inherit !important;
 }
 
 .header-wrapper {
@@ -62,7 +63,6 @@ input[type='button']:hover {
     z-index: 1000;
     color: #ffffff !important;
 }
-
 
 .page-nav.shrink .nav-right a.nav-link span {
     padding-bottom: 9px;
@@ -87,12 +87,14 @@ input[type='button']:hover {
     padding: 10px 10px 6px 10px;
 }
 
+
 /** {
  -webkit-transition: all 0.3s ease-in-out;
   -moz-transition: all 0.3s ease-in-out;
   -o-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
 }*/
+
 .footer ul.nav li a:hover {
     color: #cdd1dc;
     border-bottom: 1px solid #5D656E;
@@ -243,12 +245,16 @@ input[type='button']:hover {
     border-radius: 100px;
 }
 
+
 /* ===[ Main content ]=== */
+
 .page-content {
     padding-top: 93px
 }
 
+
 /* ===[ Banner section ]=== */
+
 .banner h1,
 .invite-footer h1 {
     font-family: 'Raleway-Bold'
@@ -353,18 +359,40 @@ input[type='button']:hover {
     border-radius: 0px 20px 20px 0px;
 }
 
+
 /* .invite input[type="button"]:hover { */
+
+
 /*     background: #00967D */
+
+
 /* } */
 
+
 /* .invite input[type="button"] { */
+
+
 /*     width: 100px; */
+
+
 /*     padding: 10px 10px 11px 10px; */
+
+
 /*     padding: 8px 10px 10px 10px; */
+
+
 /*     background: #00b698; */
+
+
 /*     border: 2px solid #fff; */
+
+
 /*     color: #fff; */
+
+
 /*     cursor: pointer; */
+
+
 /* } */
 
 .invite::-webkit-input-placeholder {
@@ -403,11 +431,11 @@ input[type='button']:hover {
 }
 
 .invite-footer input[type="submit"]:hover {
-    background: #F1B024;
+    background: #FDC526;
 }
 
 .invite-footer input[type="submit"] {
-    background: #FDC526
+    background: #F1B024
 }
 
 .invite-footer {
@@ -626,7 +654,6 @@ input[type='button']:hover {
 .signup-content .invite input[type="submit"]:hover {
     background: #0591BD;
     border-color: #0591BD;
-
 }
 
 .united-data {
@@ -995,9 +1022,11 @@ div.quest-content p {
     border: 1px solid #30363e;
 }
 
+
 /*.confirmation .share a.twitter:hover span{
     background: #30363E;
 }*/
+
 .confirmation .share a.twitter span,
 .confirmation .share a.twitter:hover {
     background: #5EA9DD;
@@ -1180,9 +1209,11 @@ div.quest-content p {
     height: 45px;
 }
 
+
 /*body .margin-zero{
     margin:0;
 }*/
+
 .maroon {
     color: #c0504d
 }
@@ -1226,13 +1257,15 @@ div.quest-content p {
 body {
     letter-spacing: 1px
 }
-.core-drawer-panel-custom{
-  top:0!important;
-  margin-top: 89px;
-  height: 90%;
+
+.core-drawer-panel-custom {
+    top: 0!important;
+    margin-top: 89px;
+    height: 90%;
 }
+
 p:last-child {
-   padding-bottom: 30px;
+    padding-bottom: 30px;
 }
 
 #loginBox {
@@ -1240,7 +1273,7 @@ p:last-child {
     width: 225px;
     background-color: #454B54;
     position: absolute;
-    display:none;
+    display: none;
     right: 140px;
     z-index: 1000;
     padding: 20px;
@@ -1251,7 +1284,7 @@ p:last-child {
     width: 280px;
     background-color: #454B54;
     position: absolute;
-    display:none;
+    display: none;
     right: 20px;
     z-index: 1000;
     padding: 20px;
@@ -1261,13 +1294,13 @@ p:last-child {
     text-transform: none;
 }
 
-.loginHeading{
+.loginHeading {
     font-size: 2em;
     font-weight: bold;
     margin-bottom: 20px;
 }
 
-.joinHeading{
+.joinHeading {
     font-size: 2em;
     font-weight: bold;
     margin-bottom: 20px;
@@ -1278,7 +1311,7 @@ p:last-child {
     height: 10px;
     font-size: 18px;
     float: right;
-    cursor:pointer;
+    cursor: pointer;
 }
 
 #signInForm div {
@@ -1293,7 +1326,6 @@ p:last-child {
     border: 1px solid #ffffff;
     color: #333333;
 }
-
 
 #oneselfUsernameJoin {
     margin: 5px 0 20px 0;
@@ -1315,21 +1347,97 @@ p:last-child {
     color: #f2ae1c;
 }
 
-#joinBox .signup_go_back_link, .join_waitlist_msg {
-    margin-top:10px;
+#joinBox .signup_go_back_link,
+.join_waitlist_msg {
+    margin-top: 10px;
 }
 
 #joinBox .join_waitlist_msg a {
-    color: white;   
+    color: white;
     text-decoration: underline;
 }
 
+#landing-wrapper .invite {
+    background-color: rgb(242, 174, 28);
+}
+
+#landing-wrapper .content {
+    background-color: #FFFFFF;
+    color: black;
+}
+
+#landing-wrapper h1 {
+    color: #367ec0;
+}
+
+#learn-more-landing .content h2 {
+    background-color: #FFFFFF;
+    color: #dd2649;
+}
+
+#landing-wrapper #learn-more .content {
+    background-color: rgb(240, 90, 67);
+}
+
+#landing-wrapper .banner {
+    color: black;
+    background-color: #FFFFFF;
+}
+
+#landing-wrapper .banner h1 {
+    margin-bottom: 0px;
+    padding-top: 25px;
+    padding-bottom: 25px;
+}
+
+.what-is {
+    background-color: white;
+    color: #30363E;
+    padding-top: 40px;
+    width: 100%;
+}
+
+.why-join a {
+    font-size: 0.8em;
+    color: #30363E;
+}
+
+.why-join a span {
+    text-decoration: underline;
+}
+
+.join-div {
+    margin-top: 15%;
+    font-size: 1.5em;
+}
+
+.join-button {
+    padding: 5px 30px;
+    border-radius: 30px;
+    background-color: #367ec0;
+    font-family: 'Raleway-Bold';
+    color: #FFFFFF;
+}
+
+.join-button:hover {
+    background-color: #538ecb;
+    color: #FFFFFF;
+}
+
+#learn-more-landing .join-button {
+    background-color: #dd2649;
+}
+
+#learn-more-landing .join-button:hover {
+    background-color: #e93e5a;
+}
+
 .errorMessage {
-    color:red;
+    color: red;
     font-size: inherit;
 }
 
-#joinErrorMessage{
+#joinErrorMessage {
     margin-bottom: 10px;
 }
 
@@ -1337,8 +1445,8 @@ p:last-child {
     background: #f2ae1c;
 }
 
-#loginButton{
-    background:transparent;
+#loginButton {
+    background: transparent;
 }
 
 @media (max-width: 875px) {
@@ -1360,42 +1468,33 @@ p:last-child {
         padding-left: 7px;
         width: 28px;
     }
-
     .confirmation .share a {
         text-align: left;
         margin: 5px auto;
     }
-
     .confirmation {
         margin: 2em;
     }
-
-    #loginBox{
+    #loginBox {
         right: 15px;
     }
-
     .confirmation .share {
         width: 250px;
         margin: 0 auto;
     }
-
     .grid-reset-tablet .grid-row .grid-cell {
         display: block;
         width: auto;
     }
-
     .grid-reset-tablet .grid-row {
         display: block;
     }
-
     .grid-reset-tablet {
         display: block;
     }
-
     .build-banner-white {
         padding: 3em 4.5em
     }
-
     .confirmation .button {
         font-size: 0.7em;
         width: 139px;
@@ -1403,19 +1502,15 @@ p:last-child {
         width: 140px;
         border: 1px solid #fff;
     }
-
     .page-nav .logo img {
         height: 40px
     }
-
     .page-nav .logo {
         margin: 0
     }
-
     .page-nav {
         padding: 1em
     }
-
     .enable-smart-life .content,
     .integrity .content,
     .signup-content .content,
@@ -1431,66 +1526,53 @@ p:last-child {
     .no-exploit-content {
         padding: 3em
     }
-
     .slide-content .content {
         padding: 2% 2% 2% 5%;
     }
-
     .slide-content .img {
         padding: 2% 4% 2% 0;
     }
-
     .slide-content .img img {
         max-width: 100px;
     }
-
     .slick-prev {
         height: 29px;
         left: -50px;
     }
-
     .slick-next {
         height: 29px;
         right: -50px;
     }
-
     .content-slider {
         width: 100%;
         margin-left: auto;
         margin-right: auto;
     }
-
     /*    .united-data .img img.united {
             width: 80%;
         }*/
     body .page-content {
         padding-top: 8em
     }
-
     footer.footer ul.nav {
         font-size: 0.9em
     }
-
     footer.footer {
         padding: 1em
     }
-
     body .footer ul.nav .seperator-right,
     body .footer ul.nav .seperator-center,
     body .footer ul.nav .seperator-left {
         padding-top: 18px;
         padding-bottom: 28px;
     }
-
     .logo {
         width: 50%
     }
-
     .mobile-only-nav div {
         border: 1px solid;
         margin: 7px 7px;
     }
-
     .mobile-only-nav {
         float: right;
         width: 40px;
@@ -1502,7 +1584,6 @@ p:last-child {
         padding: 0px;
         cursor: pointer;
     }
-
     .nav-right {
         float: none;
         display: none;
@@ -1511,12 +1592,10 @@ p:last-child {
         padding: 0;
         padding-top: 20px;
     }
-
     .nav-right a.nav-link:hover {
         background: #454b54;
         border-top: 1px solid #454B54;
     }
-
     .nav-right a.nav-link:hover,
     .nav-right a.nav-link,
     .nav-right a.button {
@@ -1529,11 +1608,11 @@ p:last-child {
         padding-right: 0;
         border-top: 1px solid #454b54;
     }
-    .core-drawer-panel-custom{
-       margin-top: 62px; 
+    .core-drawer-panel-custom {
+        margin-top: 62px;
     }
-    paper-item{
-    line-height: 11px;
+    paper-item {
+        line-height: 11px;
     }
 }
 
@@ -1542,73 +1621,57 @@ p:last-child {
         font-size: 13px;
         min-width: 320px
     }
-
     .mobile-only {
         display: block;
     }
-
     .desktop-only {
         display: none !important;
     }
-
     .confirmation .seperator.pink-divider {
         min-width: 100%;
     }
-
     .confirmation .button {
         position: relative;
         margin-top: 20px;
     }
-
     .confirmation .share {
         width: auto;
     }
-
     .grid-reset-mobile .grid-row .grid-cell {
         display: block;
         width: auto;
     }
-
     .grid-reset-mobile .grid-row {
         display: block;
     }
-
     .link-box {
         height: 37px;
     }
-
     .grid-reset-mobile {
         display: block;
     }
-
     .leftFloat,
     .rightFloat,
     .left-reset,
     .right-reset {
         float: none;
     }
-
     .build-banner-white {
         padding: 3em
     }
-
     .banner-white h2 {
         font-size: 1.6em;
         font-family: 'Raleway-medium';
     }
-
     .banner-white {
         padding: 4em 2em;
     }
-
     .invite form input[type="submit"] {
         width: 85px
     }
-
     .invite form input[type="text"] {
         width: 115px
     }
-
     .img .red-dot-desktop,
     .content .red-dot-desktop,
     .profit-content .yarrow-top-desktop,
@@ -1616,17 +1679,14 @@ p:last-child {
         right: 50%;
         left: none;
     }
-
     .img .yarrow-down-desktop,
     .yarrow-down-desktop {
         left: 50%;
     }
-
     .next-page {
         font-size: 0.9em;
         margin-bottom: 15px;
     }
-
     .signup-content .grid-cell.content {
         padding-top: 3em;
         padding-left: 0em;
@@ -1634,7 +1694,6 @@ p:last-child {
         padding-bottom: 1em;
         text-align: center;
     }
-
     .signup-content .grid-cell.invite {
         padding-top: 1em;
         padding-left: 0em;
@@ -1642,43 +1701,34 @@ p:last-child {
         padding-bottom: 3em;
         text-align: center;
     }
-
     .signup-content .grid-cell.invite h3 {
         padding-left: 2em;
         padding-right: 2em;
     }
-
     .confirmation p {
         line-height: 1.2em;
     }
-
     .no-exploit-content h2 {
         font-size: 2.5em
     }
-
     .quest-banner h2 {
         font-size: 2.5em
     }
-
     .footer .nav.connect li {
         text-align: center;
     }
-
     .confirmation .share a {
         font-size: 0.85em;
     }
-
     footer.footer ul.nav {
         font-size: 1.1em;
     }
-
     footer.footer ul.nav .seperator-left img,
     footer.footer ul.nav .seperator-center img,
     footer.footer ul.nav .seperator-right img {
         width: 100%;
         position: static;
     }
-
     footer.footer ul.nav .seperator-left,
     footer.footer ul.nav .seperator-center,
     footer.footer ul.nav .seperator-right {
@@ -1687,71 +1737,57 @@ p:last-child {
         left: 0;
         height: auto;
     }
-
     footer.footer ul.nav li.heading {
         padding-top: 20px
     }
-
     footer.footer ul.nav li {
         padding-left: 2em
     }
-
     footer.footer ul.nav {
         padding: 0;
         display: block;
         max-width: none;
     }
-
     .slide-content .content {
         padding: 0% 0% 0% 2%;
         width: 100%;
         /*margin-left : -10%;*/
     }
-
     .slide-content .img {
         padding: 0% 2% 0% 0%;
         width: 100%;
         /*  margin-right : -10%;*/
         margin: 0 auto;
     }
-
     .slide-content .img img {
         max-width: 100px;
     }
-
     .slick-prev {
         height: 29px;
         left: -50px;
     }
-
     .slick-next {
         height: 29px;
         right: -50px;
     }
-
     .content-slider-container {
         padding: 50px;
     }
-
     .any-data .img,
     .united-data .img {
         border-right: 0 none;
     }
-
     .enable-smart-life .img,
     .integrity .img {
         border-left: 0 none;
     }
-
 }
 
 @media (max-width: 400px) {
-
     .banner h1 {
         font-size: 2.4em;
         margin-bottom: 25px;
     }
-
     .banner p {
         margin-top: 25px;
         font-size: 1.3em;
@@ -1759,7 +1795,9 @@ p:last-child {
     }
 }
 
+
 /* unite section */
+
 .unite-heading {
     font-family: Raleway-light;
 }
@@ -1772,58 +1810,58 @@ nav {
     color: #ffffff !important;
 }
 
-.authinput{
+.authinput {
     border-radius: 100px;
     margin-bottom: 0.5em;
     border-width: 1px;
 }
 
-.authserviceicon{
+.authserviceicon {
     float: left;
     font-size: 1.2em;
     margin-left: 0.3em;
 }
 
-.authservicetext{
+.authservicetext {
     float: left;
     font-family: 'Raleway-thin';
     margin-left: 0.3em;
     margin-top: 0.1em;
 }
 
-.signup-details{
+.signup-details {
     margin-bottom: 0.3em;
 }
 
-#oneselfUsernameJoin{
+#oneselfUsernameJoin {
     border-radius: 100px;
 }
 
-.githubbutton{
+.githubbutton {
     background-color: #000;
 }
 
-.facebookbutton{
+.facebookbutton {
     background-color: #384D8D;
 }
 
-#joinBox{
+#joinBox {
     font-family: 'Raleway-thin'
 }
 
-.joinfooter{
+.joinfooter {
     margin-top: 2em;
     font-size: 0.8em;
 }
 
-.oneselfUsername{
+.oneselfUsername {
     margin-top: 2em;
 }
 
-.buttonclear{
+.buttonclear {
     float: clear;
 }
 
-.authservice-button{
+.authservice-button {
     border-color: #00b8e7;
 }

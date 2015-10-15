@@ -71,7 +71,7 @@ $(document).ready(function () {
         return false;
     });
 
-    $("#join_button").click(function(event){
+    $(".join-button").click(function(event){
         event.preventDefault();
         $('#joinBox').css('top', $(document).scrollTop() + 70 + "px");
         $('#joinBox').show();
