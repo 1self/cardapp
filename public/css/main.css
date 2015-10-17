@@ -2677,7 +2677,7 @@ footer:before {
     box-shadow: 1px 1px 5px #CCC;
 }
 
-.integrations main, .profile main {
+.integrations main, .profile main, .admin main {
     padding-top: 0px;
     height: 70%;
 }
@@ -2801,6 +2801,86 @@ footer:before {
     box-shadow: 1px 1px 5px #CCC;
     width: 90%;
     margin: auto;
+}
+
+.admin .admin-query {
+    width: 100%;
+    background-color: #fff;
+    box-shadow: 1px 1px 5px #CCC;
+    padding: 20px;
+}
+
+.admin .admin-loading {
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 1px 1px 5px #CCC;
+    width: 100%;
+    margin: auto;
+}
+
+.admin .cards-content {
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    margin-top: 10px;
+    overflow-y: auto;
+}
+
+.admin .total-cards-content {
+    width: 100%;
+    height: 100px;
+    padding: 20px;
+    margin-top: 10px;
+}
+
+.admin .total-cards-row {
+    background-color: #fff;
+    box-shadow: 1px 1px 5px #CCC;
+    padding: 20px;    
+}
+
+.admin .cards-section {
+    background-color: #fff;
+    box-shadow: 1px 1px 5px #CCC;
+    padding: 20px;
+    margin-bottom: 15px;
+}
+
+.admin .date-row {
+    width: 100%;
+    height: 40px;
+    margin-bottom: 10px;
+}
+
+.admin .cards-for-date {
+    width: 100%;
+}
+
+.admin .card-row {
+    width: 100%;
+    font-size: 0.8em;
+}
+
+.admin .service {
+    width: 15%;
+    padding-bottom: 15%;
+/*    float: left;
+    margin-right: 0.7em;*/
+}
+
+.admin .card-detail {
+    width: 85%;
+}
+
+.admin .card-separator {
+    border: 0;
+    border-bottom: 1px solid #ddd;
+    margin: 10px auto;
+    width: 80%;
+}
+
+.admin .username-entry {
+    margin-right: 5px;
 }
 
 .profile .profile-content {
@@ -3046,97 +3126,97 @@ footer:before {
     font-size: 1.2em;
 }
 
-.integrations .service.foursquare {
+.admin .service.foursquare, .integrations .service.foursquare {
     background: url(../img/service-foursquare.svg);
     background-repeat: no-repeat;
     background-size: contain;
 }
 
-.integrations .service.github {
+.admin .service.github, .integrations .service.github {
     background: url(../img/service-github.svg);
     background-repeat: no-repeat;
     background-size: contain;
 }
 
-.integrations .service.google-fit {
+.admin .service.googlefit, .integrations .service.google-fit {
     background: url(../img/service-googlefit.svg);
     background-repeat: no-repeat;
     background-size: contain;
 }
 
-.integrations .service.googleplaymusic {
+.admin .service.googleplaymusic, .integrations .service.googleplaymusic {
     background: url(../img/service-googleplaymusic.png);
     background-repeat: no-repeat;
     background-size: contain;
 }
 
-.integrations .service.hackernews {
+.admin .service.hackernews, .integrations .service.hackernews {
     background: url(../img/service-hackernews.svg);
     background-repeat: no-repeat;
     background-size: contain;
 }
 
-.integrations .service.instagram {
+.admin .service.instagram, .integrations .service.instagram {
     background: url(../img/service-instagram.svg);
     background-repeat: no-repeat;
     background-size: contain;
 }
 
-.integrations .service.intellij-idea-plugin {
+.admin .service.intellij, .integrations .service.intellij-idea-plugin {
     background: url(../img/service-intellij.png);
     background-repeat: no-repeat;
     background-size: contain;
 }
 
-.integrations .service.last-fm {
+.admin .service.lastfm, .integrations .service.last-fm {
     background: url(../img/service-lastfm.svg);
     background-repeat: no-repeat;
     background-size: contain;
 }
 
-.integrations .service.rescuetime {
+.admin .service.rescuetime, .integrations .service.rescuetime {
     background: url(../img/service-rescuetime.svg);
     background-repeat: no-repeat;
     background-size: contain;
 }
 
-.integrations .service.spotify {
+.admin .service.spotify, .integrations .service.spotify {
     background: url(../img/service-spotify.png);
     background-repeat: no-repeat;
     background-size: contain;
 }
 
-.integrations .service.stackoverflow {
+.admin .service.stackoverflow, .integrations .service.stackoverflow {
     background: url(../img/service-stackoverflow.svg);
     background-repeat: no-repeat;
     background-size: contain;
 }
 
-.integrations .service.strava {
+.admin .service.strava, .integrations .service.strava {
     background: url(../img/service-strava.png);
     background-repeat: no-repeat;
     background-size: contain;
 }
 
-.integrations .service.sublime-text-plugin {
+.admin .service.sublime, .integrations .service.sublime-text-plugin {
     background: url(../img/service-sublime.png);
     background-repeat: no-repeat;
     background-size: contain;
 }
 
-.integrations .service.twitter {
+.admin .service.twitter, .integrations .service.twitter {
     background: url(../img/service-twitter.svg);
     background-repeat: no-repeat;
     background-size: contain;
 }
 
-.integrations .service.visitCounter {
+.admin .service.visitCounter, .integrations .service.visitCounter {
     background: url(../img/service-visitcounter.png);
     background-repeat: no-repeat;
     background-size: contain;
 }
 
-.integrations .service.visualStudioExtension {
+.admin .service.visualStudioExtension, .integrations .service.visualStudioExtension {
     background: url(../img/service-visualstudio.png);
     background-repeat: no-repeat;
     background-size: contain;

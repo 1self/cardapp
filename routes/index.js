@@ -66,6 +66,10 @@ var renderProfile = function(req, res, next) {
 	res.render('profile', { profile: req.session.profile });
 };
 
+var renderAdmin = function(req, res, next) {
+	res.render('admin', { profile: req.session.profile });
+};
+
 var renderIntegrations = function (req, res, next) {
 	if (!req.params.serviceIdentifier)
 		res.render('integrations', { profile: req.session.profile });
@@ -112,6 +116,8 @@ var getCardData = function(req, res, next) {
 	var queryKeys = Object.keys(req.query);
 	var qs = [];
 	var qsString = '';
+	var url;
+
 	for (var i = 0; i < queryKeys.length; i++) {
 		qs.push(queryKeys[i] + '=' + req.query[queryKeys[i]]);
 	}
@@ -120,8 +126,17 @@ var getCardData = function(req, res, next) {
 		qsString = '?' + qs.join('&');
 	}
 
+	if (req.params.username) {
+		var username = decodeURIComponent(req.params.username);
+		url = req.app.locals.API_URL + '/users/' + username + '/cards';
+	} else {
+		url = req.app.locals.API_URL + '/me/cards';
+	}
+
+	url += qsString;
+
 	var requestOptions = {
-		 url: req.app.locals.API_URL + '/me/cards' + qsString,
+		 url: url,
 		 headers: {
 		   'Authorization': 'Bearer ' + req.session.token
 		 }
@@ -336,6 +351,12 @@ router.get('/dashboard',
 	redirectToOldDashboard
 );
 
+router.get('/admin',
+	oauth.signedInRoute,
+	oauth.signedInAsAdmin,
+	renderAdmin
+);
+
 router.get('/integrations/:serviceIdentifier',
 	oauth.signedInRoute,
 	renderIntegrations
@@ -352,6 +373,14 @@ router.get('/chart.html',
 	function(req, res) {
   		res.render('chart', { });
   	}
+);
+
+// admin use only
+router.get('/data/cards/:username', 
+	checkForSession,
+	oauth.signedInAsAdmin,
+	getCardData, 
+	sendCardData
 );
 
 router.get('/data/cards', 

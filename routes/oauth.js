@@ -26,6 +26,26 @@ var signedInRoute = function(req, res, next){
 	}
 };
 
+var signedInAsAdmin = function(req, res, next) {
+	var adminUsers = ['ed', 'm'];
+
+	var notAdmin = function() {
+		if (req.session.profile !== undefined)  {
+			req.session.isAdmin = false;
+		}
+		res.render('index');
+	};
+
+	if (req.session.signedIn === undefined || req.session.signedIn === false) {
+		notAdmin();
+	} else if (adminUsers.indexOf(req.session.profile.username) < 0) {
+		notAdmin();
+	} else {
+		req.session.profile.isAdmin = true;
+		next();
+	}
+};
+
 var redirect = function(req, res, next){
 	if(req.session.postSignInRedirect !== undefined){
 		res.redirect(req.session.postSignInRedirect);
@@ -145,6 +165,7 @@ var logout = function(req, res, next){
 };   
 
 module.exports.signedInRoute = signedInRoute;
+module.exports.signedInAsAdmin = signedInAsAdmin;
 module.exports.redirect = redirect;
 module.exports.signedIn = signedIn;
 module.exports.signIn = signIn;

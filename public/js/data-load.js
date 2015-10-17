@@ -1,6 +1,6 @@
 var deferred; // = $.Deferred();
 
-function getCards() {
+function getCards(username) {
 
     deferred = $.Deferred();
 
@@ -15,7 +15,11 @@ function getCards() {
         var minStdDev = getQSParam().minStdDev;
         var maxStdDev = getQSParam().maxStdDev;
 
-        url = '/data/cards';        
+        url = '/data/cards';    
+
+        if (username !== undefined && username !== '')
+            url += '/' + encodeURIComponent(username);  
+
         url += '?extraFiltering=true';
         url += minStdDev ? '&minStdDev=' + minStdDev : '';
         url += maxStdDev ? '&maxStdDev=' + maxStdDev : '';
