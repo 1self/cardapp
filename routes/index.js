@@ -242,7 +242,6 @@ var getRollups = function(req, res, next){
 };
 
 var patchCard = function(req, res, next){
-
 	var url = req.app.locals.API_URL + 
 		'/me/cards/' + req.params.cardId;
 
@@ -251,7 +250,9 @@ var patchCard = function(req, res, next){
 		 method: 'PATCH',
 		 headers: {
 		   'Authorization': 'Bearer ' + req.session.token
-		 }
+		 },
+		 json: true,
+		 body: req.body
 	};
 
 	var rollupRequest = proxyRequest.create(requestOptions);
