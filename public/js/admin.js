@@ -72,12 +72,12 @@ function addCardDetail(cardData, $dateSection) {
     var $separator = $('.card-separator.template').clone();
     $cardRow.removeClass('template');
     $separator.removeClass('template');
+    $cardRow.find('.service').addClass(getDataSource(cardData));
 
     createCardText(cardData);
 
     $cardRow.find('.card-text').html(cardData.cardText.description);
     $cardRow.find('.card-comparitor').html(cardData.cardText.comparitor);
-    $cardRow.find('.service').addClass(getDataSource(cardData));
 
     $cardsDiv = $dateSection.find('.cards-for-date');
     $cardsDiv.append($cardRow);
