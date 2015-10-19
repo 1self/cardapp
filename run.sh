@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-export $(cat .env | xargs) && grunt
+export $(cat .env | xargs) && grunt 

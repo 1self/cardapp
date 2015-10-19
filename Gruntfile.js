@@ -8,8 +8,9 @@ module.exports = function (grunt) {
   // load all grunt tasks
   require('load-grunt-tasks')(grunt);
   grunt.loadNpmTasks('grunt-env');
+  grunt.loadNpmTasks('grunt-keepalive');
 
-  var reloadPort = 35730, files;
+  var reloadPort = 35731, files;
 
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
@@ -80,5 +81,10 @@ module.exports = function (grunt) {
   grunt.registerTask('default', [
     'develop',
     'watch'
+  ]);
+
+  grunt.registerTask('staging', [
+    'develop',
+    'keepalive'
   ]);
 };
