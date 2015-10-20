@@ -333,12 +333,14 @@ router.get('/',
 
 router.get('/card-stack',
 	oauth.signedInRoute,
+	profile.getProfile,
 	renderEntryPoint
 
 );
 
 router.get('/profile',
 	oauth.signedInRoute,
+	profile.getProfile,
 	renderProfile
 );
 
