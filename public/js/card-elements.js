@@ -16,6 +16,8 @@ function markCardRead(username, cardElem, cardReloadCount) {
     if (cardId) {
         var now = new Date();
 
+        var localISODate = formatLocalDateInISOWithOffset(now);
+
         var apiUrl = "/cards/" + cardId;
 
         var viewDuration = now.getTime() - cardElem.cardVisibleAt;
@@ -25,7 +27,8 @@ function markCardRead(username, cardElem, cardReloadCount) {
                                             { 
                                                 viewDuration:       viewDuration,
                                                 cardIndex:          +cardElem.getAttribute('cardIndex'),
-                                                cardReloadCount:    cardReloadCount
+                                                cardReloadCount:    cardReloadCount,
+                                                clientReadDate:     localISODate
                                             }
                         };
 

@@ -43,6 +43,29 @@ function formatDateString(newRandTime) {
     return formattedDate;
 }
 
+function formatLocalDateInISOWithOffset(dateToFormat) {
+    if (dateToFormat && Object.prototype.toString.call(dateToFormat) === "[object Date]") {
+
+        var tzo = -dateToFormat.getTimezoneOffset(),
+            dif = tzo >= 0 ? '+' : '-',
+            pad = function(num) {
+                var norm = Math.abs(Math.floor(num));
+                return (norm < 10 ? '0' : '') + norm;
+            };
+        return dateToFormat.getFullYear() 
+            + '-' + pad(dateToFormat.getMonth()+1)
+            + '-' + pad(dateToFormat.getDate())
+            + 'T' + pad(dateToFormat.getHours())
+            + ':' + pad(dateToFormat.getMinutes()) 
+            + ':' + pad(dateToFormat.getSeconds()) 
+            + dif + pad(tzo / 60) 
+            + ':' + pad(tzo % 60);
+
+    } else {
+        return "";
+    }
+}
+
 function msToTime(duration) {
     var milliseconds = parseInt((duration%1000)/100);
     var seconds = parseInt((duration/1000)%60);
