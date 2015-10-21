@@ -249,12 +249,18 @@ function buildPropertiesTextAndGetValue (propertiesObject) {
         }
     }
 
-    if (stringArray.length === 3 && stringArray[0] === "repo") {
-        returnString = stringArray[2] + ' in ' + stringArray[0] + ' ' + stringArray[1];
-    } else if (stringArray.length === 2 && stringArray[0] === "repo") {
-        returnString = ' to ' + stringArray[0] + ' ' + stringArray[1];
-        returnObj.actionOverride = "commit";
+    if (stringArray[0] === "repo") {
+        if (stringArray.length === 3) {
+            returnString = stringArray[2] + ' in ' + stringArray[0] + ' ' + stringArray[1];
+        } else if (stringArray.length === 2) {
+            returnString = ' to ' + stringArray[0] + ' ' + stringArray[1];
+        } else if (stringArray.length === 5) {
+            returnString = stringArray[4] + ' to ' + stringArray[3];
+            returnString += ' ' + stringArray[2] + ' in ' + stringArray[0] + ' ' + stringArray[1];
+            returnObj.actionOverride = "commit";
+        }
     }
+
 
     returnObj.propertiesText = returnString.trim();
 
