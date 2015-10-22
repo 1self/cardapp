@@ -112,54 +112,137 @@ var checkForSession = function(req, res, next) {
 	}
 };
 
+var getOfflineData = function(req, res, next) {
+	var body = [
+	{
+   "_id" : "5627a8b9349ecbe54909d859",
+   "userId" : "5622400d0585baac6cb83bea",
+   "type" : "cardsgenerating",
+   "thumbnailMedia" : "chart.html",
+   "source" : "1self-GitHub",
+   "cardDate" : "2015-10-21",
+   "generatedDate" : "2015-10-21T15:01:13.814Z"
+},
+{
+   "_id" : "5627a896349ecbe54909d858",
+   "userId" : "5622400d0585baac6cb83bea",
+   "type" : "datasyncing",
+   "thumbnailMedia" : "chart.html",
+   "source" : "1self-GitHub",
+   "cardDate" : "2015-10-21",
+   "generatedDate" : "2015-10-21T15:00:38.109Z"
+},
+{
+"type": "date",
+"cardDate": "2015-10-15"
+},
+{
+"_id": "56261c3b890c73c76a455262",
+"userId": "53c3a6363c88f90200823407",
+"type": "top10",
+"outOf": 13,
+"thumbnailMedia": "chart.html",
+"startRange": "2015-10-15",
+"endRange": "2015-10-15",
+"objectTags": [
+"computer",
+"git",
+"github",
+"software",
+"source-control"
+],
+"actionTags": [
+"commit"
+],
+"position": 2,
+"properties": {
+"sum": {
+"repo": {
+"1self/cardapp": {
+"file-types": {
+"css": {
+"line-additions": 324
+}
+}
+}
+}
+}
+},
+"propertyName": "line-additions.sum.repo.1self/cardapp.file-types.css",
+"stdDev": 141.87168878168887,
+"correctedStdDev": 153.69432951349629,
+"sampleStdDev": 0.6217892129981566,
+"sampleCorrectedStdDev": 0.5739592735367599,
+"mean": 235.78571428571428,
+"variance": 88.21428571428572,
+"value": 324,
+"sortingValue": -324,
+"cardDate": "2015-10-15",
+"generatedDate": "2015-10-20T10:49:31.308Z",
+"chart": "/v1/users/m/rollups/day/computer,git,github,software,source-control/commit/sum.repo.1self%2Fcardapp.file-types.css.line-additions/.json",
+"weight": 0.15605287088175013,
+"depth": 6,
+"id": "56261c3b890c73c76a455262"
+}
+];
+	req.cards = body;
+	next();
+};
+
 var getCardData = function(req, res, next) {
 	var queryKeys = Object.keys(req.query);
 	var qs = [];
 	var qsString = '';
 	var url;
+	var offline = false;
 
-	for (var i = 0; i < queryKeys.length; i++) {
-		qs.push(queryKeys[i] + '=' + req.query[queryKeys[i]]);
-	}
+	if (!offline) {
 
-	if (qs.length > 0) {
-		qsString = '?' + qs.join('&');
-	}
+		for (var i = 0; i < queryKeys.length; i++) {
+			qs.push(queryKeys[i] + '=' + req.query[queryKeys[i]]);
+		}
 
-	if (req.params.username) {
-		var username = decodeURIComponent(req.params.username);
-		url = req.app.locals.API_URL + '/users/' + username + '/cards';
+		if (qs.length > 0) {
+			qsString = '?' + qs.join('&');
+		}
+
+		if (req.params.username) {
+			var username = decodeURIComponent(req.params.username);
+			url = req.app.locals.API_URL + '/users/' + username + '/cards';
+		} else {
+			url = req.app.locals.API_URL + '/me/cards';
+		}
+
+		url += qsString;
+
+		var requestOptions = {
+			 url: url,
+			 headers: {
+			   'Authorization': 'Bearer ' + req.session.token
+			 }
+		};
+
+		request(requestOptions,
+			function (error, httpResponse, body) {
+		        if (!error) {
+		        	if (httpResponse.statusCode === 200) {
+		        		req.cards = body;
+		        		next();
+		        	} else if (httpResponse.statusCode === 401) {
+		        		req.app.locals.logger.error('Error trying to get card data from API', httpResponse.statusCode, body);
+		        		res.status(401).send('unauthorised');
+		        	} else {
+						req.app.locals.logger.error('Error trying to get card data from API', httpResponse.statusCode, body);
+		        		res.status(500).send('internal server error');
+					}
+		        } else {
+					req.app.locals.logger.error('500 Error trying to get card data from API', error);
+		        	res.status(500).send('internal server error');
+		        }
+		    });
 	} else {
-		url = req.app.locals.API_URL + '/me/cards';
+		getOfflineData(req, res, next);
 	}
-
-	url += qsString;
-
-	var requestOptions = {
-		 url: url,
-		 headers: {
-		   'Authorization': 'Bearer ' + req.session.token
-		 }
-	};
-
-	request(requestOptions,
-		function (error, httpResponse, body) {
-	        if (!error) {
-	        	if (httpResponse.statusCode === 200) {
-	        		req.cards = body;
-	        		next();
-	        	} else if (httpResponse.statusCode === 401) {
-	        		req.app.locals.logger.error('Error trying to get card data from API', httpResponse.statusCode, body);
-	        		res.status(401).send('unauthorised');
-	        	} else {
-					req.app.locals.logger.error('Error trying to get card data from API', httpResponse.statusCode, body);
-	        		res.status(500).send('internal server error');
-				}
-	        } else {
-				req.app.locals.logger.error('500 Error trying to get card data from API', error);
-	        	res.status(500).send('internal server error');
-	        }
-	    });
 };
 
 var getIntegrationsData = function(req, res, next) {

@@ -35,7 +35,11 @@ function getDataSource (cardData) {
         else {
             return 'unknown-data-source';
         }
-    } 
+    } else if (cardData.source) {
+    	if (cardData.source === '1self-GitHub') {
+            return 'github';
+        }
+    }
 }
 
 function getPrimaryColour(dataSourceName) {

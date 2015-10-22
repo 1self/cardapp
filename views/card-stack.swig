@@ -193,6 +193,17 @@
         </div>
     </div>
 
+    <div class="card-template card pending-card card-hide">
+        <div class="front">
+            <div class="card-content">
+                <div class="card-content-inner">
+                    <div class="pending-card-logo"></div>
+                    <div class="pending-card-text"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="card-template card intro-card intro-card-0 card-hide">
         <div class="front">
             <div class="gradient-overlay"></div>

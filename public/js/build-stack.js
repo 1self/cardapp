@@ -239,10 +239,26 @@ function injectCardData (cardData, $card) {
 
 }
 
+function injectPendingCardData(cardData, $card) {
+    var cardText;
+    var dataSource = getDataSource(cardData);
+
+    $card.find('.card-content').addClass(dataSource);
+    // $card.find('.pending-card-logo').addClass(dataSource);
+
+    if (cardData.type === "datasyncing") {
+        cardText = "Your " + dataSource + " data is being synced";
+    } else if (cardData.type === "cardsgenerating") {
+        cardText = "Your " + dataSource + " cards are being generated";
+    }
+
+    $card.find('.pending-card-text').text(cardText);
+}
+
 function createCard (cardData) {
 	var $card; 
 
-	if (cardData.type ==="date") {
+	if (cardData.type === "date") {
 		$card = $(".card-template.date-card").clone();
         $card.find('.event-date').text(dateRangetext(cardData.type, cardData.cardDate));
 
@@ -252,6 +268,9 @@ function createCard (cardData) {
 	} else if (cardData.type === "intro") {
         $card = $(".card-template.intro-card-" + cardData.introCardId).clone();
         $card.find('.intro-counter').text('Intro card ' + cardData.introCardNumber + ' of ' + cardData.introCardTotal);
+    } else if (cardData.type === "datasyncing" || cardData.type === "cardsgenerating") {
+        $card = $(".card-template.pending-card").clone();
+        injectPendingCardData(cardData, $card);
     }
 
 	$card.removeClass("card-template");

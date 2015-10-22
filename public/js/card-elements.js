@@ -257,7 +257,7 @@ function buildPropertiesTextAndGetValue (propertiesObject) {
         } else if (stringArray.length === 5) {
             returnString = stringArray[4] + ' to ' + stringArray[3];
             returnString += ' ' + stringArray[2] + ' in ' + stringArray[0] + ' ' + stringArray[1];
-            returnObj.actionOverride = "commit";
+            // returnObj.actionOverride = "commit";
         }
     }
 

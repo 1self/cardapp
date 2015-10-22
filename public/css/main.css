@@ -2267,6 +2267,30 @@ footer:before {
     background-color: #fff;
 }
 
+.pending-card .card-content {
+    display: table;
+    padding: 20px;
+    width: 100%;
+    height: 100%;
+}
+
+.pending-card .card-content-inner {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.pending-card .pending-card-logo {
+    width: 40%;
+    padding-bottom: 40%;
+    margin: auto;
+}
+
+.pending-card .pending-card-text {
+    margin-top: 30px;
+    font-size: 1.7em;
+}
+
 .headline .service-container {
     width: 40px;
     height: 40px;
@@ -2295,13 +2319,13 @@ footer:before {
     color: #fa4778;
 }
 
-.headline.github {
+.headline.github, .pending-card .card-content.github {
     border-top-style: solid;
     border-color: #000000;
     border-top-width: 20px;
 }
 
-.headline.github .service {
+.headline.github .service, .pending-card .card-content.github .pending-card-logo {
     background: url(../img/service-github.svg);
     background-repeat: no-repeat;
     background-size: contain;
