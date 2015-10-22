@@ -42,6 +42,27 @@ function getDataSource (cardData) {
     }
 }
 
+function setDataSource(cardData) {
+	if (cardData.source) {
+		if (cardData.source === '1self-GitHub') {
+            cardData.identifier = 'github';
+            cardData.serviceName = 'Github';
+        } else if (cardData.source === '1self-google-fit') {
+            cardData.identifier = 'googlefit';
+            cardData.serviceName = 'Google Fit';
+        } else if (cardData.source === '1self-rescuetime') {
+            cardData.identifier = 'rescuetime';
+            cardData.serviceName = 'RescueTime';
+        } else if (cardData.source === '1self-strava') {
+            cardData.identifier = 'strava';
+            cardData.serviceName = 'Strava';
+        } else if (cardData.source === 'last.fm') {
+            cardData.identifier = 'lastfm';
+            cardData.serviceName = 'Last.fm';
+        }
+	}
+}
+
 function getPrimaryColour(dataSourceName) {
 	if (dataSourceName === "foursquare")
 		return "#fa4778";

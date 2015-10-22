@@ -194,7 +194,7 @@ var getCardData = function(req, res, next) {
 	var qs = [];
 	var qsString = '';
 	var url;
-	var offline = false;
+	var offline = true;
 
 	if (!offline) {
 

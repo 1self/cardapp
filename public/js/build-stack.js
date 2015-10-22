@@ -241,15 +241,15 @@ function injectCardData (cardData, $card) {
 
 function injectPendingCardData(cardData, $card) {
     var cardText;
-    var dataSource = getDataSource(cardData);
+    setDataSource(cardData);
 
-    $card.find('.card-content').addClass(dataSource);
+    $card.find('.card-content').addClass(cardData.identifier);
     // $card.find('.pending-card-logo').addClass(dataSource);
 
     if (cardData.type === "datasyncing") {
-        cardText = "Your " + dataSource + " data is being synced";
+        cardText = "Your " + cardData.serviceName + " data is being synced";
     } else if (cardData.type === "cardsgenerating") {
-        cardText = "Your " + dataSource + " cards are being generated";
+        cardText = "Your " + cardData.serviceName + " cards are being generated";
     }
 
     $card.find('.pending-card-text').text(cardText);
