@@ -27,6 +27,7 @@ app.locals.APP_URL = process.env.APP_URL;
 app.locals.DASHBOARD_URL = process.env.DASHBOARD_URL;
 app.locals.USERNAME_EXISTS_TOKEN = process.env.USERNAME_EXISTS_TOKEN;
 app.locals.LOGFILE = process.env.LOGGINGDIR + '/cardapp.log';
+app.locals.OFFLINE = process.env.OFFLINE;
 
 // logging setup
 winston.add(winston.transports.File, { filename: app.locals.LOGFILE, level: 'debug', json: false, prettyPrint: false });
