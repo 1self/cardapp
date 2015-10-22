@@ -59,6 +59,9 @@ function setDataSource(cardData) {
         } else if (cardData.source === 'last.fm') {
             cardData.identifier = 'lastfm';
             cardData.serviceName = 'Last.fm';
+        } else {
+        	cardData.identifier = 'unknown-data-source';
+        	cardData.serviceName = '';
         }
 	}
 }
