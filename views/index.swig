@@ -324,8 +324,8 @@ Use 1self to weave your data into a story of the remarkable things that you do. 
   <li class="seperator-center">
     <img src="/images/seperator.png" alt=""/>
   </li>
-  <li><a href="/privacy">privacy policy</a></li>
-  <li><a href="/no-exploit">pricing</a></li>
+  <li><a href="/info/privacy">privacy policy</a></li>
+  <li><a href="/info/no-exploit">pricing</a></li>
 </ul>
 <ul class="nav">
   <li class="heading">contact</li>

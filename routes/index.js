@@ -414,23 +414,23 @@ router.get('/data/integrations',
 	sendIntegrationsData
 );
 
-router.get('/unite-data',
+router.get('/info/unite-data',
 	renderUniteData
 );
 
-router.get('/cant-build',
+router.get('/info/cant-build',
 	renderCantBuild
 );
 
-router.get('/no-exploit',
+router.get('/info/no-exploit',
 	renderNoExploit
 );
 
-router.get('/quest',
+router.get('/info/quest',
 	renderQuest
 );
 
-router.get('/privacy',
+router.get('/info/privacy',
 	renderPrivacy
 );
 

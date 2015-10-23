@@ -69,8 +69,17 @@ var signOut = function(req){
 	req.session.signedIn = false;
 };
 
+var getPostLoginRedirect = function(referrer) {
+	if (referrer.indexOf('/info/') >= 0) {
+		var ref = referrer.split('/info/');
+		return ref[0] + '/';
+	} else {
+		return referrer;
+	}
+};
+
 var storePostLoginRedirect= function(req){
-	req.session.postSignInRedirect = req.get('Referrer');
+	req.session.postSignInRedirect = getPostLoginRedirect(req.get('Referrer'));
 };
 
 var getRandomIntInclusive = function(min, max) {

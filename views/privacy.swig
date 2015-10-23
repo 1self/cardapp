@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-    <meta content="images/fav.ico" itemprop="image">
+    <meta content="/images/fav.ico" itemprop="image">
     <meta name="description"
           content="1self reveals the extraordinary events in your everyday life by analysing the personal data you collect">
     <meta property="og:title"
@@ -11,17 +11,17 @@
           content="1self reveals the extraordinary events in your everyday life by analysing the personal data you collect" />
     <meta property="og:image"
       content="http://www.1self.co/images/1self_logo_fb.png" />
-    <link rel="icon" href="images/fav.ico">
-    <link rel="stylesheet" type="text/css" href="css/one.css">
-    <script src="js/jquery-2.1.4.min.js" type="text/javascript"></script>
-    <script src="js/invite.js" type="text/javascript"></script>
+    <link rel="icon" href="/images/fav.ico">
+    <link rel="stylesheet" type="text/css" href="/css/one.css">
+    <script src="/js/jquery-2.1.4.min.js" type="text/javascript"></script>
+    <script src="/js/invite.js" type="text/javascript"></script>
     <title>1self - Remarkable you</title>
 </head>
 <body>
 <div class="header-wrapper">
     <header class="page-nav">
         <div class="logo">
-            <a href="/"><img src="images/logo.png" alt="logo"/></a>
+            <a href="/"><img src="/images/logo.png" alt="logo"/></a>
         </div>
         <div class="mobile-only-nav nav-toggle">
             <div></div>
@@ -32,7 +32,7 @@
 
             <a class="nav-link nav-toggle" href="/#learn-more">LEARN MORE
                     <span>
-                        <img src="images/link-dot.png" alt=""/>
+                        <img src="/images/link-dot.png" alt=""/>
                     </span>
             </a>
             <!-- <a class="nav-link nav-toggle" href="/quest">QUEST
@@ -47,10 +47,10 @@
             </a> -->
             <a class="nav-link nav-toggle" href="http://blog.1self.co" target="_blank">BLOG
           <span>
-            <img src="images/link-dot.png" alt=""/>
+            <img src="/images/link-dot.png" alt=""/>
           </span>
             </a>
-            <a class="button signupButton nav-toggle" id="loginButton" href="http://app.1self.co/login?intent=website_login">Log in</a>
+            <a class="button signupButton nav-toggle" id="loginButton" href="/auth/signin">Log in</a>
             <a class="button signupButton nav-toggle" href="/#signup">Join</a>
         </nav>
     </header>
@@ -109,10 +109,10 @@
 <div class="banner quest-banner">
     <h2>Privacy Policy</h2>
 
-    <div class="seperator pink-divider"><img src="images/dot-red.png" alt=""></div>
+    <div class="seperator pink-divider"><img src="/images/dot-red.png" alt=""></div>
 </div>
 <div class="seperator y-uparrow-center">
-    <img src="images/yellow-arr-down.png" alt=""/>
+    <img src="/images/yellow-arr-down.png" alt=""/>
 </div>
 <div class="no-exploit-content privacy">
     <h3>Why we store your data</h3>
@@ -285,10 +285,10 @@
     </p>
 </div>
 <div class="seperator y-dwarrow-center">
-    <img src="images/yellow-arr-up.png" alt=""/>
+    <img src="/images/yellow-arr-up.png" alt=""/>
 </div>
 <div class="invite invite-footer">
-    <h1><img src="images/logo.png" alt="logo"/>
+    <h1><img src="/images/logo.png" alt="logo"/>
         <wbr/>
         Remarkable you
     </h1>
@@ -301,7 +301,7 @@
     <ul class="nav relative">
         <li class="heading">1self</li>
         <li class="seperator-left">
-            <img src="images/seperator.png" alt=""/>
+            <img src="/images/seperator.png" alt=""/>
         </li>
         <li><a href="/">home</a>
         </li>
@@ -313,15 +313,15 @@
     <ul class="nav">
         <li class="heading">other things</li>
         <li class="seperator-center">
-            <img src="images/seperator.png" alt=""/>
+            <img src="/images/seperator.png" alt=""/>
         </li>
-        <li><a href="/privacy">privacy policy</a></li>
-        <li><a href="/no-exploit">pricing</a></li>
+        <li><a href="/info/privacy">privacy policy</a></li>
+        <li><a href="/info/no-exploit">pricing</a></li>
     </ul>
     <ul class="nav">
         <li class="heading">contact</li>
         <li class="seperator-center">
-            <img src="images/seperator.png" alt=""/>
+            <img src="/images/seperator.png" alt=""/>
         </li>
         <li>UK office
             30 Brock Street, London, NW1 3FG<br/><br/>
@@ -331,7 +331,7 @@
     <ul class="nav connect">
         <li class="heading">connect</li>
         <li class="seperator-right">
-            <img src="images/seperator.png" alt=""/>
+            <img src="/images/seperator.png" alt=""/>
         </li>
         <li>
             <a href="https://twitter.com/1self_co"><span><i class="fa fa-twitter"></i></span></a>
@@ -341,7 +341,7 @@
     <div class="copyright">Copyright © 2014 1SELF. All rights reserved.
     </div>
 </footer>
-<script src="js/app.js" type="text/javascript"></script>
+<script src="/js/app.js" type="text/javascript"></script>
 
 
 <script>
