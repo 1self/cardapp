@@ -60,6 +60,10 @@ path {
   font-size: 0.8em;
 }
 
+.mainContainer rect {
+    cursor: ew-resize;
+}
+
 .dot {
     /*stroke: #000;*/
 }
