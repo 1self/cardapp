@@ -992,6 +992,25 @@ footer:before {
     background-size: 20%
 }*/
 
+.bottom-menu .add-new-log-item {
+    float: right;
+    margin-right: 15px;
+/*    background-color: #00B597;
+    height: 30px;
+    padding-left: 8px;
+    padding-right: 8px;
+    display: table;
+    border-radius: 15px;*/
+}
+
+.bottom-menu .add-new-log-item div {
+/*    color: #fff;*/
+    font-size: 0.9em;
+/*    display: table-cell;
+    vertical-align: middle;
+    text-align: center;*/
+}
+
 .nav-overlay.open {
     background: rgba(0, 0, 0, 0.85);
     position: absolute;
@@ -1043,6 +1062,92 @@ footer:before {
 .nav-overlay .navigation-padding {
     height: 20%;
     width: 100%;
+}
+
+.log .log-overlay {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #fff;
+    z-index: 5;
+    padding: 20px;
+}
+
+.log .new-activity-sub-header {
+    font-size: 1.1em;
+}
+
+.log .new-activity-section {
+    height: 100%;
+}
+
+.log .new-activity-sub-header-note {
+    font-size: 0.8em;
+}
+
+.log .new-activity-content {
+    margin-top: 15px;
+    height: 90%;
+}
+
+.log .new-activity-content .selection-list {
+    max-height: 65%;
+    overflow-y: auto;
+    width: 100%;
+}
+
+.log .new-activity-content .list-item {
+    height: 50px;
+    width: 100%;
+    border-top: 1px solid lightgray;
+    padding: 15px;
+    display: table;
+    font-size: 0.9em;
+    cursor: pointer;
+}
+
+.log .new-activity-content .list-item:last-of-type {
+    border-bottom: 1px solid lightgray;
+}
+
+.log .new-activity-content .list-item div {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.log .new-activity-content .list-item div.not-selected {
+    display: none;
+}
+
+.log .new-activity-content .list-item div.selected {
+    width: 30px;
+}
+
+.log .new-activity-content .list-item:hover {
+    background-color: lightgray;
+}
+
+.log .new-activity-content .button-row {
+    margin-top: 20px;
+    font-size: 0.9em;
+}
+
+.log .new-activity-content .button-row > div {
+    margin-right: 10px;
+}
+
+.log .new-activity-content .button-row .add-new-text {
+    margin-bottom: 5px;
+}
+
+/*.log .new-activity-content input[type="text"] {
+    width: 75%;
+}*/
+
+.log .property-type-text {
+    font-size: 0.8em;
 }
 
 /* Nav hamburger to close button -------------------- */
@@ -2696,7 +2801,7 @@ footer:before {
     box-shadow: 1px 1px 5px #CCC;
 }
 
-.integrations main, .profile main, .admin main {
+.integrations main, .profile main, .admin main, .log main {
     padding-top: 0px;
     height: 70%;
 }
@@ -2724,7 +2829,7 @@ footer:before {
     float: left;
 }
 
-.integrations .background, .profile .background {
+.integrations .background, .profile .background, .log .background {
     width: 100%;
     height: 100%;
     padding: 0;
@@ -2914,6 +3019,17 @@ footer:before {
     padding: 20px;
 }
 
+.log .log-content {
+    position: absolute;
+    top: 0px;
+    height: 100%;
+    width: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background-color: #fff;
+    box-shadow: 1px 1px 5px #CCC;
+}
+
 .profile .profile-picture-row {
     margin-bottom: 50px;
 }
@@ -2938,6 +3054,67 @@ footer:before {
     border-radius: 50%;
     border: solid 1px #999;
     padding: 5px;
+}
+
+.log .log-row {
+    width: 100%;
+    height: 50px;
+    border-bottom: 1px solid lightgray;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.log .log-row:hover {
+    background-color: lightgray;
+}
+
+.log .notification-row {
+    width: 100%;
+    height: 50px;
+    border-bottom: 1px solid lightgray;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    color: #fff;
+    background-color: #00B597;
+    display: none;
+}
+
+.log .notification-success, .log .notification-name {
+    margin-right: 10px;
+}
+
+.log .notification-name span {
+    text-decoration: underline;
+}
+
+.log .log-item-name {
+    height: 100%;
+    width: 80%;
+    display: table;
+}
+
+.log .log-item-name div {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.log .log-item-button {
+    height: 30px;
+    width: 30px;
+    display: table;
+    background-color: #00B597;
+    border-radius: 15px;
+}
+
+.log .log-item-button div {
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+    color: #fff;
 }
 
 .integrations .integration-card .service, .integrations .integration-detail .service {

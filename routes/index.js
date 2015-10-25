@@ -101,6 +101,10 @@ var renderPrivacy = function(req, res, next) {
 	res.render('privacy');
 };
 
+var renderLog = function(req, res, next) {
+	res.render('log');
+};
+
 /* ---------------- */
 
 
@@ -432,6 +436,10 @@ router.get('/info/quest',
 
 router.get('/info/privacy',
 	renderPrivacy
+);
+
+router.get('/log',
+	renderLog
 );
 
 router.get('/user/:username/exists', 
