@@ -74,7 +74,7 @@
 
     <header role="banner">
       <div class="back-button hide"><i class="fa fa-arrow-left"></i>&nbsp;&nbsp;Back</div>
-      <div class="page-title">Log something</div>
+      <div class="page-title">Select row to log that activity</div>
       <div class="page-title-add hide">Adding new loggable activity</div>
     </header>
     
@@ -113,14 +113,8 @@
             <div class="new-activity-sub-header">Select activity name</div>
             <div class="new-activity-sub-header-note">Optional. This can be left blank and logging will be done at category level</div>
             <div class="new-activity-content">
-              <div class="new-activity-sub-header activity-category-text">Drink</div>
-              <div class="selection-list">
-                <div class="list-item"><div>Coffee</div></div>
-                <div class="list-item"><div>Tea</div></div>
-                <div class="list-item"><div>Water</div></div>
-                <div class="list-item"><div>Beer</div></div>
-                <div class="list-item"><div>Wine</div></div>
-                <div class="list-item"><div>Squash</div></div>       
+              <div class="new-activity-sub-header activity-category-text"></div>
+              <div class="selection-list">      
               </div>
               <div class="button-row">
                 <div class="add-new-text">Nothing that matches?</div>
@@ -135,7 +129,7 @@
           <div class="new-activity-section activity-name-new hide">
             <div class="new-activity-sub-header">Enter activity name</div>
             <div class="new-activity-content">
-              <div class="new-activity-sub-header activity-category-text">Drink</div>
+              <div class="new-activity-sub-header activity-category-text"></div>
               <input type="text" maxlength="25" size="25" placeholder="E.g. 'sit-up' or 'coffee'">
               <div class="button-row">
                 <div class="standard-button new-name-save">
@@ -203,15 +197,7 @@
             <input type="hidden" class="activity-data">
             <div class="new-activity-sub-header">Fitness - Press ups</div>
             <div class="new-activity-content">
-              <div class="property-log-row numeric quantity">
-                <div class="property-enter-text">Enter Quantity</div>
-                <input maxlength="7" type="number">
-              </div>
-              <div class="property-log-row timespan hide">
-                <div class="property-enter-text">Enter Duration</div>
-                <input max="23" type="number" name="hh" size="2" placeholder="HH"> :
-                <input max="59" type="number" name="MM" size="2" placeholder="MM"> :
-                <input max="59" type="number" name="ss" size="2" placeholder="SS"> :
+              <div class="property-log-rows">
               </div>
               <div class="button-row">
                 <div class="standard-button property-log-save left">
@@ -272,7 +258,7 @@
                     </div>
                     <div class="standard-button add-new-log-item">
                       <div>
-                        <i class="fa fa-plus"></i>&nbsp;&nbsp;Add new
+                        <i class="fa fa-plus"></i>&nbsp;&nbsp;Add new activity
                       </div>
                     </div>
                 </div>
@@ -287,17 +273,43 @@
                 <div class="list-item property template">
                   <div class="selector not-selected"><i class="fa fa-check"></i></div>
                   <div>
-                    <span class="property-name-text">Quantity</span>
-                    <span class="property-type-text">(numeric)</span>
+                    <span class="property-name-text"></span>
+                    <span class="property-type-text"></span>
                   </div>
                 </div>
 
 
           <div class="log-row template">
             <input type="hidden" class="activity-data">
-            <div class="log-item-name left"><div>Drink - Coffee</div></div>
-            <div class="log-item-button right"><div>1</div></div>
+            <div class="log-item-name left"><div></div></div>
           </div>
+
+
+              <div class="property-log-row numeric template">
+                <input type="hidden" class="property-name">
+                <input type="hidden" class="property-type">
+                <div class="property-enter-text"></div>
+                <div class="error-text"></div>
+                <input maxlength="7" type="number" class="log-numeric">
+              </div>
+
+              <div class="property-log-row timespan template">
+                <input type="hidden" class="property-name">
+                <input type="hidden" class="property-type">
+                <div class="property-enter-text"></div>
+                <div class="error-text"></div>
+                <input max="23" type="number" name="hh" size="2" placeholder="HH" class="log-timespan"> :
+                <input max="59" type="number" name="MM" size="2" placeholder="MM" class="log-timespan"> :
+                <input max="59" type="number" name="ss" size="2" placeholder="SS" class="log-timespan">
+              </div>
+
+              <div class="property-log-row text template">
+                <input type="hidden" class="property-name">
+                <input type="hidden" class="property-type">
+                <div class="property-enter-text"></div>
+                <div class="error-text"></div>
+                <textarea class="log-text"></textarea>
+              </div>
 
     <!-- Analytics -->
     <script>

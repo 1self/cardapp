@@ -10,6 +10,7 @@ function executeOnLoadTasks() {
 
 	$('.back-button').hide();
 
+	setUpUserActivities();
     setUpEventHandlers();
 
     buildUserActivities();
@@ -142,16 +143,13 @@ function hide(classId) {
 
 function buildUserActivities() {
 	$logContent = $('.log-content');
-	for (var i = 0; i < userActivities.length; i++) {
+	var storedUserActivities = getUserActivities();
+	for (var i = 0; i < storedUserActivities.length; i++) {
 		
-		var activityText = userActivities[i].activityCategory;
-		if (userActivities[i].activityName)
-			activityText += ' - ' + userActivities[i].activityName;
-
 		var $listItem = $('.log-row.template').clone();
 		$listItem.removeClass('template');
-		$listItem.find('.activity-data').val(encodeURIComponent(JSON.stringify(userActivities[i])));
-		$listItem.find('.log-item-name div').text(activityText);
+		$listItem.find('.activity-data').val(encodeURIComponent(JSON.stringify(storedUserActivities[i])));
+		$listItem.find('.log-item-name div').text(formatActivityText(storedUserActivities[i]));
 		$listItem.click(logItemClickHandler);
 		$logContent.append($listItem);
 	}
@@ -199,6 +197,21 @@ function buildPropertiesSelect() {
 	}
 }
 
+function buildPropertyLogRows(activityData) {
+	$rowContainer = $('.activity-property-log .property-log-rows');
+	$rowContainer.empty();
+	for (var i = 0; i < activityData.properties.length; i++) {
+		var propertyObj = getPropertyObjFromName(activityData.properties[i]);
+		var selector = '.property-log-row.' + propertyObj.type + '.template';
+		var $listItem = $(selector).clone();
+		$listItem.removeClass('template');
+		$listItem.find('.property-enter-text').text('Enter ' + activityData.properties[i]);
+		$listItem.find('.property-name').val(propertyObj.typeName);
+		$listItem.find('.property-type').val(propertyObj.type);
+		$rowContainer.append($listItem);
+	}	
+}
+
 function logItemClickHandler(properties) {
 	var activityDataVal = $(this).find('.activity-data').val();
 	var activityData;
@@ -210,31 +223,104 @@ function logItemClickHandler(properties) {
 		doPostLogActions(activityData);
 	} else {
 		$('.add-new-log-item').hide();
+		$('.new-activity-section.activity-property-log .new-activity-sub-header').text(formatActivityText(activityData));
 		$('.new-activity-section.activity-property-log .activity-data').val(activityDataVal);
+		buildPropertyLogRows(activityData);
     	show('.new-activity-section.activity-property-log');
     	show('.log-overlay');
 	}
 }
 
 function logDataFromProperties() {
+	var properties = {};
+	var propertyVal;
 	var activityData = $('.new-activity-section.activity-property-log .activity-data').val();
 	activityData = decodeURIComponent(activityData);
 	activityData = JSON.parse(activityData);
 
-	var q = $('.property-log-row.quantity input').val();
-	var properties = { quantity: q };
-	logTo1Self(activityData, properties);
-	doPostLogActions(activityData);
+	var propertyRows = $('.activity-property-log .property-log-row');
+
+	for (var i = 0; i < propertyRows.length; i++) {
+		var $propertyRow = $(propertyRows[i]);
+		var errorText;
+		var propertyName = $propertyRow.find('.property-name').val();
+		var propertyType = $propertyRow.find('.property-type').val();
+
+		if (propertyType === 'numeric') {
+			propertyVal = $propertyRow.find('input.log-numeric').val().trim();
+			errorText = validateInput(propertyName, propertyVal, propertyType);
+			if (errorText === '') {
+				propertyVal = +propertyVal;
+				properties[propertyName.toLowerCase()] = propertyVal;
+			} else {
+				$propertyRow.find('.error-text').text(errorText);
+			}
+
+		} else if (propertyType === 'timespan') {
+			var hh = $propertyRow.find('input[name="hh"]').val().trim();
+			var MM = $propertyRow.find('input[name="MM"]').val().trim();
+			var ss = $propertyRow.find('input[name="ss"]').val().trim();
+
+			errorText = validateInput(propertyName, hh, propertyType);
+			if (errorText === '') {
+				hh = hh === '' ? 0 : +hh;
+				errorText = validateInput(propertyName, MM, propertyType);
+			}
+			if (errorText === '') {
+				MM = MM === '' ? 0 : +MM;
+				errorText = validateInput(propertyName, ss, propertyType);
+			}
+			if (errorText === '') {
+				ss = ss === '' ? 0 : +ss;
+				propertyVal = ss + (MM * 60) + (hh * 3600);
+				properties[propertyName.toLowerCase()] = propertyVal;
+			}
+
+			if (errorText !== '')
+				$propertyRow.find('.error-text').text(errorText);
+
+		} else if (propertyType === 'text') {
+			propertyVal = $propertyRow.find('textarea.log-text').val().trim();
+			errorText = validateInput(propertyName, propertyVal, propertyType);
+			if (errorText === '') {
+				if (propertyVal !== '') {
+					properties[propertyName.toLowerCase()] = propertyVal;
+				}
+			} else {
+				$propertyRow.find('.error-text').text(errorText);
+			}
+		}
+	}
+
+	// logTo1Self(activityData, properties);
+	// doPostLogActions(activityData);
+}
+
+function validateInput(propertyName, propertyVal, propertyType) {
+	var errorText = '';
+	if (propertyType === 'numeric') {
+		if (isNaN(propertyVal) || propertyVal === '' || propertyVal === '.') {
+			errorText = propertyName + ' must be numeric';
+		}
+	} else if (propertyType === 'timespan') {
+		if (propertyVal !== '') {
+			if (isNaN(propertyVal)) {
+				errorText = propertyName + ' fields must be numeric';
+			}
+		}
+	} else if (propertyType === 'text') {
+		if (propertyVal.length > 140) {
+			errorText = 'Maximum ' + propertyName + ' length is 140. Current length is ' + propertyVal.length;
+		}
+	}
+	console.log(errorText, propertyName);
+	return errorText;
 }
 
 function doPostLogActions(activityData) {
-	var activityText = activityData.activityCategory;
-	if (activityData.activityName) {
-		activityText += ' - ' + activityData.activityName;
-	}
 
 	var $notificationRow = $('.notification-row');
-	$notificationRow.find('.notification-name span').text(activityText);
+	$notificationRow.find('.notification-name span').text(formatActivityText(activityData));
 	hide('.new-activity-section.activity-property-log');
 	hide('.log-overlay');	
 	$notificationRow.slideDown();
@@ -244,7 +330,8 @@ function doPostLogActions(activityData) {
 function categoryClickHandler() {
 	var category = $(this).find('.list-item-text').text();
 	buildNamesSelect(category);
-	$('.activity-category-text').text(category);
+	$('.activity-name .activity-category-text').text('Activity names for "' + category + '"');
+	$('.activity-name-new .activity-category-text').text('New activity name for "' + category + '"');
 	hide('.new-activity-section.activity-category');
 	show('.new-activity-section.activity-name');
 	return false;
@@ -274,6 +361,39 @@ function setUp1selfLogger() {
     });	
 }
 
+function formatActivityText(activityData) {
+	var activityText = activityData.activityCategory;
+	if (activityData.activityName) {
+		activityText += ' - ' + activityData.activityName;
+	}
+	return activityText;
+}
+
+function getPropertyObjFromName(propertyName) {
+	for (var i = 0; i < propertyTypes.length; i++) {
+		if (propertyTypes[i].typeName === propertyName) {
+			return propertyTypes[i];
+		}
+	}
+	return null;
+}
+
+function setUpUserActivities() {
+	if (!localStorage.userActivities) {
+		localStorage.userActivities = JSON.stringify(userActivities);
+	}
+}
+
+function getUserActivities() {
+	var storedUserActivities = localStorage.userActivities;
+	if (storedUserActivities)
+		storedUserActivities = JSON.parse(storedUserActivities);
+	else
+		storedUserActivities = [];
+
+	return storedUserActivities;
+}
+
 var createEventToLog = function(actionTags, properties) {
     var eventToLog = {
         "source": config.appName,
@@ -296,7 +416,7 @@ var logTo1Self = function(activityData, properties) {
 	var actionTags = [];
 	var eventToLog;
 
-	actionTags.push(activityData.activityCategory);
+	actionTags.push(formatTag(activityData.activityCategory));
 
 	if (activityData.activityName) {
 		actionTags.push(activityData.activityName);
@@ -306,6 +426,12 @@ var logTo1Self = function(activityData, properties) {
 
     lib1self.sendEvent(eventToLog, stream);
 };
+
+function formatTag(tag) {
+	tag = tag.toLowerCase();
+	tag = tag.replace(' ', '-');
+	return tag;
+}
 
 var viewViz = function(actionTags) {
     var url = lib1self
@@ -324,21 +450,25 @@ var propertyTypes = [
 	{ typeName: 'Quantity', type: 'numeric'},
 	{ typeName: 'Volume', type: 'numeric'},
 	{ typeName: 'Price', type: 'numeric'},
-	{ typeName: 'Duration', type: 'timespan'}
+	{ typeName: 'Duration', type: 'timespan'},
+	{ typeName: 'Note', type: 'text'}
 ];
 
 var activities = [
-	{ activityCategory: 'Drink', names: [ 'Beer', 'Coffee', 'Squash', 'Tea', 'Water', 'Wine'] },
-	{ activityCategory: 'Fitness', names: [ 'Press ups', 'Chin ups', 'Sit ups' ] },
-	{ activityCategory: 'Health', names: [ 'Heartrate', 'Body temperature' ] },
+	{ activityCategory: 'Drink', names: [ 'Beer', 'Coffee', 'Coke', 'Squash', 'Tea', 'Water', 'Wine'] },
+	{ activityCategory: 'Exercise', names: [ 'Press ups', 'Chin ups', 'Sit ups', 'Stretching', 'Yoga' ] },
+	{ activityCategory: 'Health', names: [ 'Body temperature', 'Heartrate' ] },
 	{ activityCategory: 'Music', names: [ 'Gig attended' ] },
-	{ activityCategory: 'Work', names: [ 'Pomodoro', 'Meeting' ] }
+	{ activityCategory: 'Work', names: [ 'Meeting', 'Pomodoro' ] }
 ];
 
 var userActivities = [
 	{ activityCategory: 'Drink', activityName: 'Coffee' },
 	{ activityCategory: 'Drink', activityName: 'Tea' },
-	{ activityCategory: 'Drink', activityName: 'Water' },
-	{ activityCategory: 'Fitness', activityName: 'Press ups', properties: [ 'Quantity' ] },
-	{ activityCategory: 'Fitness', activityName: 'Chin ups', properties: [ 'Quantity' ] }
+	{ activityCategory: 'Drink', activityName: 'Water', properties: [ 'Volume' ] },
+	{ activityCategory: 'Exercise', activityName: 'Press ups', properties: [ 'Quantity', 'Duration', 'Note' ] },
+	{ activityCategory: 'Exercise', activityName: 'Chin ups', properties: [ 'Quantity' ] },
+	{ activityCategory: 'Exercise', properties: [ 'Duration' ] },
+	{ activityCategory: 'Work', activityName: 'Meeting', properties: [ 'Duration' ] },
+	{ activityCategory: 'Work', activityName: 'Pomodoro' }
 ];

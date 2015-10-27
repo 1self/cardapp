@@ -1064,6 +1064,10 @@ footer:before {
     width: 100%;
 }
 
+.error-text {
+    color: #cf4b9a;
+}
+
 .log .log-overlay {
     width: 100%;
     height: 100%;
@@ -1148,6 +1152,10 @@ footer:before {
 
 .log .property-type-text {
     font-size: 0.8em;
+}
+
+.log .activity-property-log .property-log-row {
+    margin-bottom: 15px;
 }
 
 /* Nav hamburger to close button -------------------- */
