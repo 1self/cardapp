@@ -118,10 +118,20 @@
               <div class="selection-list">      
               </div>
               <div class="button-row">
-                <div class="add-new-text">Nothing that matches?</div>
-                <div class="standard-button sub-button new-name-add">
-                  <div>
-                    <i class="fa fa-plus"></i>&nbsp;&nbsp;Add new name
+                <div class="left">
+                  <div class="add-new-text">Nothing that matches?</div>
+                  <div class="standard-button sub-button new-name-add">
+                    <div>
+                      <i class="fa fa-plus"></i>&nbsp;&nbsp;Add new name
+                    </div>
+                  </div>
+                </div>
+                <div class="left">
+                  <div class="add-new-text">Or</div>
+                  <div class="standard-button sub-button activity-name-skip">
+                    <div>
+                      <i class="fa fa-fast-forward"></i>&nbsp;&nbsp;Skip this
+                    </div>
                   </div>
                 </div>
               </div>
@@ -257,11 +267,11 @@
                 <div class="bottom-menu">
                     <div class="previous hide">
                     </div>
-                    <div class="standard-button add-new-log-item">
+                    <!-- <div class="standard-button add-new-log-item">
                       <div>
                         <i class="fa fa-plus"></i>&nbsp;&nbsp;Add new activity
                       </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>

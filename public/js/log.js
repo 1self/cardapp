@@ -33,13 +33,13 @@ function setUpEventHandlers() {
 
     });
 
-    $('.bottom-menu .add-new-log-item').click(function() {
-    	show('.new-activity-section.activity-category');
-    	show('.log-overlay');
-    	$('.back-button').show();
-    	hide('.page-title');
-    	show('.page-title-add');
-    });
+    // $('.bottom-menu .add-new-log-item').click(function() {
+    // 	show('.new-activity-section.activity-category');
+    // 	show('.log-overlay');
+    // 	$('.back-button').show();
+    // 	hide('.page-title');
+    // 	show('.page-title-add');
+    // });
 
     $('.notification-close').click(function() {
     	$('.notification-row').slideUp();
@@ -95,7 +95,7 @@ function setUpEventHandlers() {
     $('.property-log-cancel').click(function() {
     	hide('.new-activity-section.activity-property-log');
 		hide('.log-overlay');	
-		$('.add-new-log-item').show();
+		// $('.add-new-log-item').show();
     	return false;
     });
 
@@ -225,7 +225,7 @@ function logItemClickHandler(properties) {
 		logTo1Self(activityData);
 		doPostLogActions(activityData);
 	} else {
-		$('.add-new-log-item').hide();
+		// $('.add-new-log-item').hide();
 		$('.new-activity-section.activity-property-log .new-activity-sub-header').text(formatActivityText(activityData));
 		$('.new-activity-section.activity-property-log .activity-data').val(activityDataVal);
 		buildPropertyLogRows(activityData);
@@ -327,7 +327,7 @@ function doPostLogActions(activityData) {
 	hide('.new-activity-section.activity-property-log');
 	hide('.log-overlay');	
 	$notificationRow.slideDown();
-	$('.add-new-log-item').show();
+	// $('.add-new-log-item').show();
 }
 
 function categoryClickHandler() {
