@@ -82,6 +82,7 @@
         <div class="background"></div>
 
         <div class="log-overlay hide">
+          <input type="hidden" class="new-activity-data">
           <div class="new-activity-section activity-category hide">
             <div class="new-activity-sub-header">Select activity category</div>
             <div class="new-activity-content">

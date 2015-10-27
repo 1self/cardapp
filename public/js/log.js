@@ -83,9 +83,7 @@ function setUpEventHandlers() {
     });
 
     $('.activity-property .btn-finish').click(function() {
-    	hide('.new-activity-section.activity-property');
-    	hide('.log-overlay');
-    	show('.new-activity-section.activity-category');
+    	addActivityFinish();
     	return false;
     });
 
@@ -141,9 +139,14 @@ function hide(classId) {
 	$(classId).addClass('hide');
 }
 
-function buildUserActivities() {
+function buildUserActivities(storedUserActivities) {
 	$logContent = $('.log-content');
-	var storedUserActivities = getUserActivities();
+
+	if (!storedUserActivities)
+		storedUserActivities = getUserActivities();
+	else
+		$('.log-content .log-row').remove();
+	
 	for (var i = 0; i < storedUserActivities.length; i++) {
 		
 		var $listItem = $('.log-row.template').clone();
@@ -292,8 +295,8 @@ function logDataFromProperties() {
 		}
 	}
 
-	// logTo1Self(activityData, properties);
-	// doPostLogActions(activityData);
+	logTo1Self(activityData, properties);
+	doPostLogActions(activityData);
 }
 
 function validateInput(propertyName, propertyVal, propertyType) {
@@ -329,6 +332,8 @@ function doPostLogActions(activityData) {
 
 function categoryClickHandler() {
 	var category = $(this).find('.list-item-text').text();
+	var activity = { activityCategory: category };
+	writeDataToHidden('.log-overlay .new-activity-data', activity);
 	buildNamesSelect(category);
 	$('.activity-name .activity-category-text').text('Activity names for "' + category + '"');
 	$('.activity-name-new .activity-category-text').text('New activity name for "' + category + '"');
@@ -338,6 +343,13 @@ function categoryClickHandler() {
 }
 
 function nameClickHandler() {
+	console.log('her');
+	var activity = getDataFromHidden('.log-overlay .new-activity-data');
+	console.log(activity);
+	var name = $(this).find('.list-item-text').text();
+	console.log(name);
+	activity.activityName = name;
+	writeDataToHidden('.log-overlay .new-activity-data', activity);
 	hide('.new-activity-section.activity-name');
 	show('.new-activity-section.activity-property');
 	return false;
@@ -346,6 +358,27 @@ function nameClickHandler() {
 function propertyClickHandler() {
 	$(this).find('.selector').toggleClass('selected not-selected');
 	return false;
+}
+
+function addActivityFinish() {
+	var activity = getDataFromHidden('.log-overlay .new-activity-data');
+	var propertyRows = $('.activity-property .list-item.property');
+	var properties = [];
+	for (var i = 0; i < propertyRows.length; i++) {
+		var $propertyRow = $(propertyRows[i]);
+		if ($propertyRow.find('.selector.selected').length > 0) {
+			var propertyName = $propertyRow.find('.property-name-text').text();
+			properties.push(propertyName);
+		}
+	}
+	if (properties.length > 0) {
+		activity.properties = properties;
+	}
+	var storedActivities = addActivityToStorage(activity);
+	buildUserActivities(storedActivities);
+	hide('.new-activity-section.activity-property');
+	hide('.log-overlay');
+	// show('.new-activity-section.activity-category');
 }
 
 function setUp1selfLogger() {
@@ -378,10 +411,25 @@ function getPropertyObjFromName(propertyName) {
 	return null;
 }
 
+function writeDataToHidden(selector, JSONObj) {
+	$(selector).val(encodeURIComponent(JSON.stringify(JSONObj)));
+}
+
+function getDataFromHidden(selector) {
+	var data = $(selector).val();
+	data = decodeURIComponent(data);
+	data = JSON.parse(data);
+	return data;
+}
+
 function setUpUserActivities() {
 	if (!localStorage.userActivities) {
 		localStorage.userActivities = JSON.stringify(userActivities);
 	}
+}
+
+function saveUserActivities(userActivities) {
+	localStorage.userActivities = JSON.stringify(userActivities);
 }
 
 function getUserActivities() {
@@ -392,6 +440,13 @@ function getUserActivities() {
 		storedUserActivities = [];
 
 	return storedUserActivities;
+}
+
+function addActivityToStorage(activity) {
+	var storedActivities = getUserActivities();
+	storedActivities.push(activity);
+	saveUserActivities(storedActivities);
+	return storedActivities;
 }
 
 var createEventToLog = function(actionTags, properties) {
