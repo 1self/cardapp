@@ -16,13 +16,13 @@
         'dev': "http://api.1self.dev",
         'sandbox': "http://sandbox.1self.co",
         'production': "https://api.1self.co",
-        'staging' : 'http://api-staging.1self.co'
+        'staging' : 'https://api-staging.1self.co'
     };
     var appEndpoints = {
         'dev': "http://app.1self.dev",
         'sandbox': "http://sandbox.1self.co",
         'production': "https://app.1self.co",
-        'staging' : 'http://app-staging.1self.co'
+        'staging' : 'https://app-staging.1self.co'
     };
     var lock = false;
     var config = {};
