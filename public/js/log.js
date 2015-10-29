@@ -33,13 +33,13 @@ function setUpEventHandlers() {
 
     });
 
-    // $('.bottom-menu .add-new-log-item').click(function() {
-    // 	show('.new-activity-section.activity-category');
-    // 	show('.log-overlay');
-    // 	$('.back-button').show();
-    // 	hide('.page-title');
-    // 	show('.page-title-add');
-    // });
+    $('.bottom-menu .add-new-log-item').click(function() {
+    	show('.new-activity-section.activity-category');
+    	show('.log-overlay');
+    	$('.back-button').show();
+    	hide('.page-title');
+    	show('.page-title-add');
+    });
 
     $('.notification-close').click(function() {
     	$('.notification-row').slideUp();
@@ -53,6 +53,12 @@ function setUpEventHandlers() {
     });
 
     $('.activity-category-new .new-category-save').click(function() {
+    	var category = $('.activity-category-new input').val();
+		var activity = { activityCategory: category };
+		writeDataToHidden('.log-overlay .new-activity-data', activity);
+		// buildNamesSelect(category);
+		$('.activity-name .activity-category-text').text('Activity names for "' + category + '"');
+		$('.activity-name-new .activity-category-text').text('New activity name for "' + category + '"');
     	hide('.new-activity-section.activity-category-new');
     	show('.new-activity-section.activity-name-new');
     	return false;
@@ -64,9 +70,14 @@ function setUpEventHandlers() {
     	return false;
     });
 
+    $('.activity-name .activity-name-skip, .activity-name-new .activity-name-skip').click(function() {
+    	nameClickHandler(null);
+    	return false;
+    });
+
     $('.activity-name-new .new-name-save').click(function() {
-    	hide('.new-activity-section.activity-name-new');
-    	show('.new-activity-section.activity-property');
+    	var activityName = $('.activity-name-new input').val();
+    	nameClickHandler(activityName);
     	return false;
     });
 
@@ -95,7 +106,7 @@ function setUpEventHandlers() {
     $('.property-log-cancel').click(function() {
     	hide('.new-activity-section.activity-property-log');
 		hide('.log-overlay');	
-		// $('.add-new-log-item').show();
+		$('.add-new-log-item').show();
     	return false;
     });
 
@@ -225,7 +236,7 @@ function logItemClickHandler(properties) {
 		logTo1Self(activityData);
 		doPostLogActions(activityData);
 	} else {
-		// $('.add-new-log-item').hide();
+		$('.add-new-log-item').hide();
 		$('.new-activity-section.activity-property-log .new-activity-sub-header').text(formatActivityText(activityData));
 		$('.new-activity-section.activity-property-log .activity-data').val(activityDataVal);
 		buildPropertyLogRows(activityData);
@@ -327,7 +338,7 @@ function doPostLogActions(activityData) {
 	hide('.new-activity-section.activity-property-log');
 	hide('.log-overlay');	
 	$notificationRow.slideDown();
-	// $('.add-new-log-item').show();
+	$('.add-new-log-item').show();
 }
 
 function categoryClickHandler() {
@@ -342,15 +353,18 @@ function categoryClickHandler() {
 	return false;
 }
 
-function nameClickHandler() {
-	console.log('her');
-	var activity = getDataFromHidden('.log-overlay .new-activity-data');
-	console.log(activity);
-	var name = $(this).find('.list-item-text').text();
-	console.log(name);
-	activity.activityName = name;
-	writeDataToHidden('.log-overlay .new-activity-data', activity);
+function nameClickHandler(activityName) {
+	if (activityName !== null) {
+		if (activityName === undefined) {
+			activityName = $(this).find('.list-item-text').text();
+		}		
+		var activity = getDataFromHidden('.log-overlay .new-activity-data');
+		activity.activityName = activityName;
+		writeDataToHidden('.log-overlay .new-activity-data', activity);
+	}
+
 	hide('.new-activity-section.activity-name');
+	hide('.new-activity-section.activity-name-new');
 	show('.new-activity-section.activity-property');
 	return false;
 }

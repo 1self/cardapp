@@ -143,9 +143,18 @@
               <div class="new-activity-sub-header activity-category-text"></div>
               <input type="text" maxlength="25" size="25" placeholder="E.g. 'sit-up' or 'coffee'">
               <div class="button-row">
-                <div class="standard-button new-name-save">
-                  <div>
-                    <i class="fa fa-check"></i>&nbsp;&nbsp;Save
+                <div class="left">
+                  <div class="standard-button new-name-save">
+                    <div>
+                      <i class="fa fa-check"></i>&nbsp;&nbsp;Save
+                    </div>
+                  </div>
+                </div>
+                <div class="left">
+                  <div class="standard-button sub-button activity-name-skip">
+                    <div>
+                      <i class="fa fa-fast-forward"></i>&nbsp;&nbsp;Skip this
+                    </div>
                   </div>
                 </div>
               </div>
@@ -267,11 +276,11 @@
                 <div class="bottom-menu">
                     <div class="previous hide">
                     </div>
-                    <!-- <div class="standard-button add-new-log-item">
+                    <div class="standard-button add-new-log-item">
                       <div>
                         <i class="fa fa-plus"></i>&nbsp;&nbsp;Add new activity
                       </div>
-                    </div> -->
+                    </div>
                 </div>
             </div>
         </div>
