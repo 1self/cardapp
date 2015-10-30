@@ -3426,6 +3426,12 @@ footer:before {
     background-size: contain;
 }
 
+.admin .service.unknown-data-source {
+    background: url(../img/service-unknown-data-source.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
 .top-border.foursquare {
     border-top-style: solid;
     border-color: #fa4778;
