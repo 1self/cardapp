@@ -161,6 +161,7 @@
             </div>
           </div>
           <div class="new-activity-section activity-property hide">
+            <div class="new-activity-sub-header activity-text"></div>
             <div class="new-activity-sub-header">Select extra properties</div>
             <div class="new-activity-sub-header-note">Optional - choose none, one or some. These can be used to add extra information when you log an activity.</div>
             <div class="new-activity-content">
@@ -186,12 +187,13 @@
             </div>
           </div>
           <div class="new-activity-section activity-property-new hide">
-            <div class="new-activity-sub-header">Enter property name</div>
+            <div class="new-activity-sub-header">New property for </div>
             <div class="new-activity-content">
-              <input type="text" maxlength="25" placeholder="E.g. 'quantity' or 'volume'">
-            </div>
-            <div class="new-activity-sub-header">Select property type</div>
-            <div class="new-activity-content">
+              <div class="input-header-text">Enter property name</div>
+              <div class="property-name-error error-text"></div>
+              <input type="text" maxlength="25" placeholder="E.g. 'quantity'">
+              <div class="input-header-text">Select property type</div>
+              <div class="property-type-error error-text"></div>
               <div class="radio-input">
                 <input type="radio" name="property-name" value="numeric">
                 <span>Numeric</span>
@@ -201,13 +203,18 @@
                 <span>Text</span>
               </div>
               <div class="radio-input">
-              <input type="radio" name="property-name" value="text">
+              <input type="radio" name="property-name" value="timespan">
                 <span>Timespan</span>
               </div>
               <div class="button-row">
-                <div class="standard-button new-property-save">
+                <div class="standard-button new-property-save left">
                   <div>
                     <i class="fa fa-check"></i>&nbsp;&nbsp;Save
+                  </div>
+                </div>
+                <div class="standard-button sub-button new-property-cancel left">
+                  <div>
+                    <i class="fa fa-times"></i>&nbsp;&nbsp;Cancel
                   </div>
                 </div>
               </div>

@@ -1150,6 +1150,17 @@ footer:before {
     width: 75%;
 }*/
 
+.log .input-header-text {
+    margin-bottom: 5px;
+    margin-top: 20px;
+    font-weight: bold;
+    font-size: 0.9em;
+}
+
+.log .input-header-text:first-of-type {
+    margin-top: 0px;
+}
+
 .log .property-type-text {
     font-size: 0.8em;
 }

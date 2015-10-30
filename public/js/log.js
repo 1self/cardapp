@@ -11,6 +11,7 @@ function executeOnLoadTasks() {
 	$('.back-button').hide();
 
 	setUpUserActivities();
+	setUpUserProperties();
     setUpEventHandlers();
 
     buildUserActivities();
@@ -71,25 +72,34 @@ function setUpEventHandlers() {
     });
 
     $('.activity-name .activity-name-skip, .activity-name-new .activity-name-skip').click(function() {
-    	nameClickHandler(null);
+    	nameClickHandler(null, null);
     	return false;
     });
 
     $('.activity-name-new .new-name-save').click(function() {
     	var activityName = $('.activity-name-new input').val();
-    	nameClickHandler(activityName);
+    	nameClickHandler(null, activityName);
     	return false;
     });
 
     $('.activity-property .new-property-add').click(function() {
+    	var activity = getDataFromHidden('.log-overlay .new-activity-data');
+    	var headerText = 'New property for: ';
+    	headerText += formatActivityText(activity);
+    	$('.activity-property-new .new-activity-sub-header').text(headerText);
     	hide('.new-activity-section.activity-property');
     	show('.new-activity-section.activity-property-new');
     	return false;
     });
 
-    $('.activity-property-new .new-property-save').click(function() {
+    $('.activity-property-new .new-property-cancel').click(function() {
     	hide('.new-activity-section.activity-property-new');
     	show('.new-activity-section.activity-property');
+    	return false;
+    });
+
+    $('.activity-property-new .new-property-save').click(function() {
+    	saveNewProperty();
     	return false;
     });
 
@@ -200,15 +210,26 @@ function buildNamesSelect(category) {
 }
 
 function buildPropertiesSelect() {
-	$selectionList = $('.activity-property .selection-list');
-	for (var i = 0; i < propertyTypes.length; i++) {
+	var userProperties = getUserProperties();
+
+	var $selectionList = $('.activity-property .selection-list');
+	for (var i = 0; i < userProperties.length; i++) {
+		addNewPropertyToList($selectionList, userProperties[i], false);
+	}
+}
+
+function addNewPropertyToList($selectionList, propertyType, selected) {
 		var $listItem = $('.list-item.property.template').clone();
 		$listItem.removeClass('template');
-		$listItem.find('.property-name-text').text(propertyTypes[i].typeName);
-		$listItem.find('.property-type-text').text(propertyTypes[i].type);
+		$listItem.find('.property-name-text').text(propertyType.typeName);
+		$listItem.find('.property-type-text').text(propertyType.type);
+
+		if (selected) {
+			$listItem.find('.selector').toggleClass('selected not-selected');
+		}
+
 		$listItem.click(propertyClickHandler);
 		$selectionList.append($listItem);
-	}
 }
 
 function buildPropertyLogRows(activityData) {
@@ -341,7 +362,7 @@ function doPostLogActions(activityData) {
 	$('.add-new-log-item').show();
 }
 
-function categoryClickHandler() {
+function categoryClickHandler(e) {
 	var category = $(this).find('.list-item-text').text();
 	var activity = { activityCategory: category };
 	writeDataToHidden('.log-overlay .new-activity-data', activity);
@@ -353,15 +374,17 @@ function categoryClickHandler() {
 	return false;
 }
 
-function nameClickHandler(activityName) {
+function nameClickHandler(e, activityName) {
+	var activity = getDataFromHidden('.log-overlay .new-activity-data');
 	if (activityName !== null) {
 		if (activityName === undefined) {
 			activityName = $(this).find('.list-item-text').text();
 		}		
-		var activity = getDataFromHidden('.log-overlay .new-activity-data');
 		activity.activityName = activityName;
 		writeDataToHidden('.log-overlay .new-activity-data', activity);
 	}
+
+	$('.activity-property .activity-text').text(formatActivityText(activity));
 
 	hide('.new-activity-section.activity-name');
 	hide('.new-activity-section.activity-name-new');
@@ -369,10 +392,26 @@ function nameClickHandler(activityName) {
 	return false;
 }
 
-function propertyClickHandler() {
+function propertyClickHandler(e) {
 	$(this).find('.selector').toggleClass('selected not-selected');
 	return false;
 }
+
+function saveNewProperty() {
+	var propertyType = {};
+	propertyType.typeName = $('.activity-property-new input[type="text"]').val();
+	propertyType.type = $('.activity-property-new input[name="property-name"]:checked').val();
+	var error = validateNewPropertyInput(propertyType);
+
+	if (!error) {
+		var storedUserProperties = addPropertyTypeToStorage(propertyType);
+		$selectionList = $('.activity-property .selection-list');
+		addNewPropertyToList($selectionList, propertyType, true);
+
+		hide('.new-activity-section.activity-property-new');
+	    show('.new-activity-section.activity-property');	
+	}
+} 
 
 function addActivityFinish() {
 	var activity = getDataFromHidden('.log-overlay .new-activity-data');
@@ -417,9 +456,10 @@ function formatActivityText(activityData) {
 }
 
 function getPropertyObjFromName(propertyName) {
-	for (var i = 0; i < propertyTypes.length; i++) {
-		if (propertyTypes[i].typeName === propertyName) {
-			return propertyTypes[i];
+	var userProperties = getUserProperties();
+	for (var i = 0; i < userProperties.length; i++) {
+		if (userProperties[i].typeName === propertyName) {
+			return userProperties[i];
 		}
 	}
 	return null;
@@ -461,6 +501,53 @@ function addActivityToStorage(activity) {
 	storedActivities.push(activity);
 	saveUserActivities(storedActivities);
 	return storedActivities;
+}
+
+function setUpUserProperties() {
+	if (!localStorage.userProperties) {
+		localStorage.userProperties = JSON.stringify(propertySetup);
+	}
+}
+
+function saveUserProperties(userProperties) {
+	localStorage.userProperties = JSON.stringify(userProperties);
+}
+
+function getUserProperties() {
+	var storedUserProperties = localStorage.userProperties;
+	if (storedUserProperties)
+		storedUserProperties = JSON.parse(storedUserProperties);
+	else
+		storedUserProperties = [];
+
+	return storedUserProperties;
+}
+
+function addPropertyTypeToStorage(propertyType) {
+	var storedUserProperties = getUserProperties();
+	storedUserProperties.push(propertyType);
+	saveUserProperties(storedUserProperties);
+	return storedUserProperties;
+}
+
+function validateNewPropertyInput(propertyType) {
+	var error = false;
+
+	if (propertyType.typeName === '') {
+		$('.property-name-error').text('Please enter a property name');
+		error = true;
+	} else {
+		$('.property-name-error').text('');
+	}
+
+	if (propertyType.type === undefined) {
+		$('.property-type-error').text('Please select a property type');
+		error = true;
+	} else {
+		$('.property-type-error').text('');
+	}
+
+	return error;
 }
 
 var createEventToLog = function(actionTags, properties) {
@@ -515,13 +602,15 @@ var viewViz = function(actionTags) {
     window.open(url, "_system", "location=no");
 };
 
-var propertyTypes = [
+var propertySetup = [
 	{ typeName: 'Quantity', type: 'numeric'},
 	{ typeName: 'Volume', type: 'numeric'},
 	{ typeName: 'Price', type: 'numeric'},
 	{ typeName: 'Duration', type: 'timespan'},
 	{ typeName: 'Note', type: 'text'}
 ];
+
+var propertyTypes = [ 'numeric', 'timespan', 'text' ];
 
 var activities = [
 	{ activityCategory: 'Drink', names: [ 'Beer', 'Coffee', 'Coke', 'Squash', 'Tea', 'Water', 'Wine'] },
