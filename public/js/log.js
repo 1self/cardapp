@@ -10,36 +10,63 @@ function executeOnLoadTasks() {
 
 	$('.back-button').hide();
 
-	setUpUserActivities();
-	setUpUserProperties();
-    setUpEventHandlers();
+	var continueLoad = checkUrlValidity();
 
-    buildUserActivities();
-    buildCategoriesSelect();
-    buildPropertiesSelect();
+	if (continueLoad) {
+		setUpUserActivities();
+		setUpUserProperties();
+	    setUpEventHandlers();
 
-    setUp1selfLogger();
+	    buildUserActivities();
+	    buildCategoriesSelect();
+	    buildPropertiesSelect();
+
+	    setUp1selfLogger();
+	}
 }
+
+function checkUrlValidity() {
+	console.log('xxx', newActivityState);
+	if (newActivityState === '' || newActivityState === undefined) {
+		return true;
+	} else {
+		window.location.href = '/log';
+		return false;
+	}
+}
+
+/*
+
+/log/new/select-activity-category
+/log/new/new-activity-category
+/log/new/select-activity-name
+/log/new/new-activity-name
+/log/new/select-properties
+/log/new/new-property
+/log/do-log/:activityCategory
+/log/do-log/:activityCategory/name/:activityName
+/log/do-log/:activityCategory/properties/:properties
+/log/do-log/:activityCategory/name/:activityName/properties/:properties
+
+ */
 
 function setUpEventHandlers() {
 
+	window.addEventListener('popstate', function(e) {
+		console.log('popstate', window.location.href, e);
+		var newState;
+		if (e.state) {
+			newState = e.state;
+		} else {
+			newState = { name: '' };
+		}
+		newState.doPush = false;
+		renderNewState(newState);
+	});
 	
     $('.back-button').click(function() {
-    	goBack();
+    	history.back();
     	return false;
-    });
-	
-    $('.log-row').click(function() {
-    	console.log(this);
-
-    });
-
-    $('.bottom-menu .add-new-log-item').click(function() {
-    	show('.new-activity-section.activity-category');
-    	show('.log-overlay');
-    	$('.back-button').show();
-    	hide('.page-title');
-    	show('.page-title-add');
     });
 
     $('.notification-close').click(function() {
@@ -47,27 +74,31 @@ function setUpEventHandlers() {
     	return false;
     });
 
+    $('.bottom-menu .add-new-log-item').click(function() {
+    	renderNewState({ name: 'select-activity-category' });
+    });
+
     $('.activity-category .new-category-add').click(function() {
-    	hide('.new-activity-section.activity-category');
-    	show('.new-activity-section.activity-category-new');
+    	renderNewState({ name: 'new-activity-category' });
     	return false;
     });
 
     $('.activity-category-new .new-category-save').click(function() {
     	var category = $('.activity-category-new input').val();
 		var activity = { activityCategory: category };
+		var state = {};
+		state.category = category;
+		state.name = 'new-activity-name';
+
 		writeDataToHidden('.log-overlay .new-activity-data', activity);
-		// buildNamesSelect(category);
-		$('.activity-name .activity-category-text').text('Activity names for "' + category + '"');
-		$('.activity-name-new .activity-category-text').text('New activity name for "' + category + '"');
-    	hide('.new-activity-section.activity-category-new');
-    	show('.new-activity-section.activity-name-new');
+		renderNewState(state);
     	return false;
     });
 
     $('.activity-name .new-name-add').click(function() {
-    	hide('.new-activity-section.activity-name');
-    	show('.new-activity-section.activity-name-new');
+    	renderNewState({ name: 'new-activity-name' });
+    	// hide('.new-activity-section.activity-name');
+    	// show('.new-activity-section.activity-name-new');
     	return false;
     });
 
@@ -84,17 +115,15 @@ function setUpEventHandlers() {
 
     $('.activity-property .new-property-add').click(function() {
     	var activity = getDataFromHidden('.log-overlay .new-activity-data');
-    	var headerText = 'New property for: ';
-    	headerText += formatActivityText(activity);
-    	$('.activity-property-new .new-activity-sub-header').text(headerText);
-    	hide('.new-activity-section.activity-property');
-    	show('.new-activity-section.activity-property-new');
+    	var state = {};
+    	state.name = 'new-property';
+    	state.activity = activity;
+    	renderNewState(state);
     	return false;
     });
 
     $('.activity-property-new .new-property-cancel').click(function() {
-    	hide('.new-activity-section.activity-property-new');
-    	show('.new-activity-section.activity-property');
+    	history.back();
     	return false;
     });
 
@@ -114,38 +143,90 @@ function setUpEventHandlers() {
     });
 
     $('.property-log-cancel').click(function() {
-    	hide('.new-activity-section.activity-property-log');
-		hide('.log-overlay');	
-		$('.add-new-log-item').show();
+    	history.back();
+  //   	hide('.new-activity-section.activity-property-log');
+		// hide('.log-overlay');	
+		// $('.add-new-log-item').show();
     	return false;
     });
 
 
 }
 
-function goBack() {
-	if (isVisible('.new-activity-section.activity-category')) {
+function renderNewState(newState) {
+	var urlRoot = window.location.href;
+	urlRootArray = urlRoot.split('/log');
+	urlRoot = urlRootArray[0] + '/log';
+    var newUrl;
+    var doPush = newState.doPush === undefined ? true : false;
+
+    if (!doPush) {
+    	doPush = false;
+    	newState.name = '';
+    	if (urlRootArray.length > 1 && urlRootArray[1].indexOf('/new/') >= 0) {
+    		newState.name = urlRootArray[1].split('/new/')[1];
+    	}
+    }
+
+    console.log('state', newState);
+
+    if (newState.name === '') {
 		hide('.page-title-add');
 		show('.page-title');
 		hide('.log-overlay');
 		hide('.new-activity-section.activity-category');
+    	hide('.new-activity-section.activity-property');
 		$('.back-button').hide();
-	} else if (isVisible('.new-activity-section.activity-category-new')) {
-		show('.new-activity-section.activity-category');
-		hide('.new-activity-section.activity-category-new');
-	} else if (isVisible('.new-activity-section.activity-name')) {
-		show('.new-activity-section.activity-category');
+		doPush = false;
+    } else if (newState.name === 'select-activity-category') {
+    	hide('.new-activity-section.activity-category-new');
 		hide('.new-activity-section.activity-name');
-	} else if (isVisible('.new-activity-section.activity-name-new')) {
-		show('.new-activity-section.activity-name');
-		hide('.new-activity-section.activity-name-new');
-	} else if (isVisible('.new-activity-section.activity-property')) {
-		show('.new-activity-section.activity-name');
+    	show('.new-activity-section.activity-category');
+    	show('.log-overlay');
+    	$('.back-button').show();
+    	hide('.page-title');
+    	show('.page-title-add');
+    } else if (newState.name === 'new-activity-category') {
+    	hide('.new-activity-section.activity-category');
+    	hide('.new-activity-section.activity-name-new');
+    	show('.new-activity-section.activity-category-new');
+    } else if (newState.name === 'select-activity-name') {
+    	if (newState.category) {
+	    	$('.activity-name .activity-category-text').text('Activity names for "' + newState.category + '"');
+			$('.activity-name-new .activity-category-text').text('New activity name for "' + newState.category + '"');
+		}
+		hide('.new-activity-section.activity-category');
 		hide('.new-activity-section.activity-property');
-	} else if (isVisible('.new-activity-section.activity-property-new')) {
+    	hide('.new-activity-section.activity-name-new');
+		show('.new-activity-section.activity-name');
+    } else if (newState.name === 'new-activity-name') {
+    	if (newState.category) {
+			$('.activity-name .activity-category-text').text('Activity names for "' + newState.category + '"');
+			$('.activity-name-new .activity-category-text').text('New activity name for "' + newState.category + '"');
+		}
+		hide('.new-activity-section.activity-name');
+    	hide('.new-activity-section.activity-category-new');
+		hide('.new-activity-section.activity-property');
+    	show('.new-activity-section.activity-name-new');
+	} else if (newState.name === 'select-properties') {
+		if (newState.activity)
+			$('.activity-property .activity-text').text(formatActivityText(newState.activity));
+		hide('.new-activity-section.activity-name');
+		hide('.new-activity-section.activity-name-new');
+    	hide('.new-activity-section.activity-property-new');
 		show('.new-activity-section.activity-property');
-		hide('.new-activity-section.activity-property-new');
+	} else if (newState.name === 'new-property') {
+		var headerText = 'New property for: ';
+    	headerText += formatActivityText(newState.activity);
+    	$('.activity-property-new .new-activity-sub-header').text(headerText);
+    	hide('.new-activity-section.activity-property');
+    	show('.new-activity-section.activity-property-new');
 	}
+
+	if (doPush) {
+		newUrl = urlRoot + '/new/' + newState.name;
+    	history.pushState(newState, newState.name, newUrl);
+    }
 }
 
 function isVisible(classId) {
@@ -373,28 +454,41 @@ function categoryClickHandler(e) {
 	var activity = { activityCategory: category };
 	writeDataToHidden('.log-overlay .new-activity-data', activity);
 	buildNamesSelect(category);
-	$('.activity-name .activity-category-text').text('Activity names for "' + category + '"');
-	$('.activity-name-new .activity-category-text').text('New activity name for "' + category + '"');
-	hide('.new-activity-section.activity-category');
-	show('.new-activity-section.activity-name');
+	var state = {};
+	state.name = 'select-activity-name';
+	state.category = category;
+	renderNewState(state);
+	// $('.activity-name .activity-category-text').text('Activity names for "' + category + '"');
+	// $('.activity-name-new .activity-category-text').text('New activity name for "' + category + '"');
+	// hide('.new-activity-section.activity-category');
+	// show('.new-activity-section.activity-name');
 	return false;
 }
 
 function nameClickHandler(e, activityName) {
 	var activity = getDataFromHidden('.log-overlay .new-activity-data');
-	if (activityName !== null) {
+	if (activityName === null) {
+		activity = { activityCategory: activity.activityCategory };
+	} else {
 		if (activityName === undefined) {
 			activityName = $(this).find('.list-item-text').text();
 		}		
 		activity.activityName = activityName;
-		writeDataToHidden('.log-overlay .new-activity-data', activity);
 	}
 
-	$('.activity-property .activity-text').text(formatActivityText(activity));
+	writeDataToHidden('.log-overlay .new-activity-data', activity);
 
-	hide('.new-activity-section.activity-name');
-	hide('.new-activity-section.activity-name-new');
-	show('.new-activity-section.activity-property');
+	var state = {};
+	state.name = 'select-properties';
+	state.activity = activity;
+
+	renderNewState(state);
+
+	// $('.activity-property .activity-text').text(formatActivityText(activity));
+
+	// hide('.new-activity-section.activity-name');
+	// hide('.new-activity-section.activity-name-new');
+	// show('.new-activity-section.activity-property');
 	return false;
 }
 
@@ -414,8 +508,10 @@ function saveNewProperty() {
 		$selectionList = $('.activity-property .selection-list');
 		addNewPropertyToList($selectionList, propertyType, true);
 
-		hide('.new-activity-section.activity-property-new');
-	    show('.new-activity-section.activity-property');	
+		var state = { name: 'select-properties' };
+		renderNewState(state);
+		// hide('.new-activity-section.activity-property-new');
+	 //    show('.new-activity-section.activity-property');	
 	}
 } 
 
@@ -435,9 +531,10 @@ function addActivityFinish() {
 	}
 	var storedActivities = addActivityToStorage(activity);
 	buildUserActivities(storedActivities);
-	hide('.new-activity-section.activity-property');
-	hide('.log-overlay');
-	// show('.new-activity-section.activity-category');
+	window.location.href = '/log';
+	// renderNewState({ name: '' });
+	// hide('.new-activity-section.activity-property');
+	// hide('.log-overlay');
 }
 
 function setUp1selfLogger() {

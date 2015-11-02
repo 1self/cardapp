@@ -102,7 +102,7 @@ var renderPrivacy = function(req, res, next) {
 };
 
 var renderLog = function(req, res, next) {
-	res.render('log');
+	res.render('log', { newActivityState: req.params.newActivityState });
 };
 
 /* ---------------- */
@@ -439,6 +439,10 @@ router.get('/info/privacy',
 );
 
 router.get('/log',
+	renderLog
+);
+
+router.get('/log/new/:newActivityState',
 	renderLog
 );
 

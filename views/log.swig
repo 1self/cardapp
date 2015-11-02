@@ -35,15 +35,17 @@
     <!--icons -->
     <!--Android address bar styling -->
     <meta name="theme-color" content="#ffffff">
-    <script src="js/modernizr.custom.19789.js"></script>
-    <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
-    <script src="js/utils.js"></script>
+    <script src="/js/modernizr.custom.19789.js"></script>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+    <script src="/js/utils.js"></script>
 
     <script>
 
       var registeredOn;
       var username;
+      var newActivityState = '{{newActivityState}}';
+    
     </script>
     <!--[if lt IE 9]> <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script> <![endif]-->
 </head>
@@ -360,13 +362,13 @@
         ga('send', 'pageview');
     </script>
     
-    <script src="js/jquery-2.1.4.min.js"></script>
+    <script src="/js/jquery-2.1.4.min.js"></script>
     <script>
-    window.jQuery || document.write('<script src="js/jquery-2.1.4.min.js"><\/script>')
+    window.jQuery || document.write('<script src="/js/jquery-2.1.4.min.js"><\/script>')
     </script>
-    <script src="js/lib1self-client.js"></script>
-    <script src="js/main.js"></script>
-    <script src="js/log.js"></script>
+    <script src="/js/lib1self-client.js"></script>
+    <script src="/js/main.js"></script>
+    <script src="/js/log.js"></script>
    
 </body>
 
