@@ -107,6 +107,7 @@
             <div class="integration-loading"><i class="fa fa-circle-o-notch fa-spin"></i>&nbsp;&nbsp;Loading - just a tic</div>
 
             <div class="integrations-section template">
+                <a class="section-header-anchor">
                 <div class="section-header">
                     Productivity
                 </div>

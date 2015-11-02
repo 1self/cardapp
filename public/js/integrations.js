@@ -6,7 +6,14 @@ function executeOnLoadTasks() {
 
     var onGotData = function(integrationsJSON) {
         renderIntegrationsList(integrationsJSON);
+
+        renderSectionExpansion();
     };
+
+    window.addEventListener("popstate", function(e) {
+        console.log('popstate', location.pathname, e);
+        renderSectionExpansion();
+    });
 
     getIntegrationsInCategories(onGotData);
 
@@ -43,19 +50,24 @@ function renderIntegrationsList(integrationsJSON) {
 
         $categorySection.click(function() {
             var $clickedSection = $(this);
-            // console.log($clickedSection);
-            $clickedSection.find('.section-content-collapse').slideToggle();
-            $clickedSection.find('.section-content-expand').slideToggle();
+            var headerText = $clickedSection.find('.section-header').text();
+            // var newUrl = window.location.href + '/' + $clickedSection.find('.section-header').text().replace(' ', '-');
+            // history.pushState(null, null, newUrl);
+            // console.log($clickedSection.find('.section-header').text());
+            window.location.hash = formatHash(headerText);
+            // renderSectionExpansion(headerText);
+            // $clickedSection.find('.section-content-collapse').slideToggle();
+            // $clickedSection.find('.section-content-expand').slideToggle();
 
-            var sections = $('.integrations-section');
+            // var sections = $('.integrations-section');
 
-            for (var i = 0; i < sections.length; i++) {
-                var $section = $(sections[i]);
-                if ($section.find('.section-header').text() !== $clickedSection.find('.section-header').text()) {
-                    $section.find('.section-content-collapse').slideDown();
-                    $section.find('.section-content-expand').slideUp();
-                }
-            }
+            // for (var i = 0; i < sections.length; i++) {
+            //     var $section = $(sections[i]);
+            //     if ($section.find('.section-header').text() !== $clickedSection.find('.section-header').text()) {
+            //         $section.find('.section-content-collapse').slideDown();
+            //         $section.find('.section-content-expand').slideUp();
+            //     }
+            // }
 
         });
     });
@@ -64,11 +76,40 @@ function renderIntegrationsList(integrationsJSON) {
     $('.integration-loading').addClass('hide');
 }
 
+function renderSectionExpansion(expandedSection) {
+    if (expandedSection === undefined) {
+        if (window.location.hash !== undefined && window.location.hash !== '') {
+            expandedSection = window.location.hash;
+            expandedSection = expandedSection.split('#');
+            expandedSection = expandedSection[1];
+            expandedSection = unFormatHash(expandedSection);
+        }
+    }
+
+    var sections = $('.integrations-section');
+
+    for (var i = 0; i < sections.length; i++) {
+        var $section = $(sections[i]);
+        if (expandedSection === undefined || $section.find('.section-header').text() !== expandedSection) {
+            if ($section.find('.section-content-expand').is(':visible')) {
+                $section.find('.section-content-collapse').slideDown();
+                $section.find('.section-content-expand').slideUp();                
+            }
+        } else if (expandedSection !== undefined && $section.find('.section-header').text() === expandedSection) {
+            // if ($section.find('.section-content-expand').is(':visible')) {
+            $section.find('.section-content-collapse').slideToggle();
+            $section.find('.section-content-expand').slideToggle();
+            // }            
+        }
+    }
+}
+
 function buildCategorySection(category, $sectionTemplate, $smallServiceTemplate, $integrationCardTemplate) {
     var $section = $sectionTemplate.clone();
     $section.removeClass('template');
 
     $section.find('.section-header').text(category.categoryName);
+    $section.find('.section-header-anchor').prop('name', formatHash(category.categoryName));
 
     category.integrations.forEach(function (integration) {
         var $collapseItem = buildServiceCollapseItem(integration, $smallServiceTemplate);
@@ -78,6 +119,18 @@ function buildCategorySection(category, $sectionTemplate, $smallServiceTemplate,
     });
 
     return $section;
+}
+
+function formatHash(toFormat) {
+    toFormat = toFormat.replace(' ', '-');
+    toFormat = encodeURIComponent(toFormat);
+    return toFormat;
+}
+
+function unFormatHash(toUnFormat) {
+    toUnFormat = decodeURIComponent(toUnFormat);
+    toUnFormat = toUnFormat.replace('-', ' ');
+    return toUnFormat;
 }
 
 function buildServiceCollapseItem(integration, $smallServiceTemplate) {
