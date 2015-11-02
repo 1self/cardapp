@@ -174,6 +174,12 @@ function buildUserActivities(storedUserActivities) {
 		$listItem.removeClass('template');
 		$listItem.find('.activity-data').val(encodeURIComponent(JSON.stringify(storedUserActivities[i])));
 		$listItem.find('.log-item-name div').text(formatActivityText(storedUserActivities[i]));
+
+		if (storedUserActivities[i].properties && storedUserActivities[i].properties.length > 0)
+			$listItem.find('.log-item-button .log-button div').text('Next >');
+		else
+			$listItem.find('.log-item-button .log-button div').text('Log it');
+		
 		$listItem.click(logItemClickHandler);
 		$logContent.append($listItem);
 	}

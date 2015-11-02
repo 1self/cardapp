@@ -1146,6 +1146,16 @@ footer:before {
     margin-bottom: 5px;
 }
 
+.log .log-item-button .log-button {
+    width: 75px;
+    font-size: 0.9em;
+    text-align: center;
+}
+
+.log .log-item-button .log-button div {
+    width: 75px;
+}
+
 /*.log .new-activity-content input[type="text"] {
     width: 75%;
 }*/
@@ -3123,7 +3133,7 @@ footer:before {
 
 .log .log-item-button {
     height: 30px;
-    width: 30px;
+    width: 75px;
     display: table;
     background-color: #00B597;
     border-radius: 15px;

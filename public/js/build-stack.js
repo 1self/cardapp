@@ -18,6 +18,8 @@ function buildStack (stack) {
         var introCards = getUnseenIntroCards(numberOfIntroCards);
         cardsArray = introCards.concat(cardsArray);
 
+        sendGAEvent('cards-loaded', username, cardsArray.length);
+
     	globalCardsArray = cardsArray;
 
         $('.loading-div-bottom').remove();

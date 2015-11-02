@@ -309,6 +309,11 @@
           <div class="log-row template">
             <input type="hidden" class="activity-data">
             <div class="log-item-name left"><div></div></div>
+            <div class="log-item-button right">
+              <div>
+                <div class="standard-button log-button"><div></div></div>
+              </div>
+            </div>
           </div>
 
 
