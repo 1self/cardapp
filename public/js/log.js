@@ -26,7 +26,6 @@ function executeOnLoadTasks() {
 }
 
 function checkUrlValidity() {
-	console.log('xxx', newActivityState);
 	if (newActivityState === '' || newActivityState === undefined) {
 		return true;
 	} else {
@@ -444,9 +443,16 @@ function doPostLogActions(activityData) {
 	var $notificationRow = $('.notification-row');
 	$notificationRow.find('.notification-name span').text(formatActivityText(activityData));
 	hide('.new-activity-section.activity-property-log');
-	hide('.log-overlay');	
-	$notificationRow.slideDown();
-	$('.add-new-log-item').show();
+	hide('.log-overlay');
+    $('.log-content').animate({
+        scrollTop: $('.notification-row').offset().top
+    }, 500, function() {
+    	setTimeout(function() {
+    		$notificationRow.slideDown();
+			$('.add-new-log-item').show();    	
+    	}, 500);
+    });
+
 }
 
 function categoryClickHandler(e) {
