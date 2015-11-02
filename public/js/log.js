@@ -445,7 +445,7 @@ function doPostLogActions(activityData) {
 	hide('.new-activity-section.activity-property-log');
 	hide('.log-overlay');
     $('.log-content').animate({
-        scrollTop: $('.notification-row').offset().top
+        scrollTop: $notificationRow.offset().top
     }, 500, function() {
     	setTimeout(function() {
     		$notificationRow.slideDown();
