@@ -85,11 +85,9 @@ function renderSectionExpansion() {
                 $section.find('.section-content-expand').slideUp();                
             }
         } else if (expandedSection !== undefined && $section.find('.section-header').text().toLowerCase() === expandedSection) {
-            // if ($section.find('.section-content-expand').is(':visible')) {
             $section.find('.section-content-collapse').slideToggle();
             $section.find('.section-content-expand').slideToggle();
             $scrollToSection = $section;
-            // }            
         }
     }
 
