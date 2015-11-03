@@ -1147,7 +1147,8 @@ footer:before {
 }
 
 .log .log-item-button .log-button {
-    width: 75px;
+    width: 25%;
+    max-width: 75px;
     font-size: 0.9em;
     text-align: center;
 }
@@ -1177,6 +1178,14 @@ footer:before {
 
 .log .activity-property-log .property-log-row {
     margin-bottom: 15px;
+}
+
+.log .spark-bar-container {
+    height: 100%;
+    width: 22%;
+    max-width: 90px;
+    margin-right: 2%;
+    border: 1px solid #00B597;
 }
 
 /* Nav hamburger to close button -------------------- */
@@ -2396,7 +2405,7 @@ footer:before {
 }
 
 .intro-card .card-menu .more span {
-    border: solid 1px #00Bb97;
+    border: solid 1px #00B597;
     color: #00B597;
     background-color: #fff;
 }
@@ -3122,7 +3131,7 @@ footer:before {
 
 .log .log-item-name {
     height: 100%;
-    width: 80%;
+    width: 50%;
     display: table;
 }
 

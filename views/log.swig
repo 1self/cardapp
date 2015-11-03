@@ -318,6 +318,8 @@
                 <div class="standard-button log-button"><div></div></div>
               </div>
             </div>
+            <div class="spark-bar-container right"></div>
+            <div class="clear"></div>
           </div>
 
 
@@ -368,7 +370,9 @@
     <script>
     window.jQuery || document.write('<script src="/js/jquery-2.1.4.min.js"><\/script>')
     </script>
+    <script src="/js/d3.min.js"></script>
     <script src="/js/lib1self-client.js"></script>
+    <script src="/js/lib1self-charting.js"></script>
     <script src="/js/main.js"></script>
     <script src="/js/log.js"></script>
    

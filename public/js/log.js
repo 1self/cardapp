@@ -17,11 +17,11 @@ function executeOnLoadTasks() {
 		setUpUserProperties();
 	    setUpEventHandlers();
 
+	    setUp1selfLogger();
+
 	    buildUserActivities();
 	    buildCategoriesSelect();
 	    buildPropertiesSelect();
-
-	    setUp1selfLogger();
 	}
 }
 
@@ -179,8 +179,6 @@ function renderNewState(newState) {
     	}
     }
 
-    console.log('state', newState);
-
     if (newState.name === '') {
 		hide('.page-title-add');
 		show('.page-title');
@@ -263,6 +261,7 @@ function buildUserActivities(storedUserActivities) {
 	for (var i = 0; i < storedUserActivities.length; i++) {
 		
 		var $listItem = $('.log-row.template').clone();
+		var $sparkBarContainer = $listItem.find('.spark-bar-container');
 		$listItem.removeClass('template');
 		$listItem.find('.activity-data').val(encodeURIComponent(JSON.stringify(storedUserActivities[i])));
 		$listItem.find('.log-item-name div').text(formatActivityText(storedUserActivities[i]));
@@ -271,10 +270,30 @@ function buildUserActivities(storedUserActivities) {
 			$listItem.find('.log-item-button .log-button div').text('Next >');
 		else
 			$listItem.find('.log-item-button .log-button div').text('Log it');
+
+		$sparkBarContainer.addClass('spark-bar-container-' + i);
+		getChartDataUrl(['self'], constructActionTags(storedUserActivities[i]), 'quantity', '090909');
+		renderSparkBar($sparkBarContainer);
 		
 		$listItem.click(logItemClickHandler);
 		$logContent.append($listItem);
 	}
+}
+
+function constructActionTags(activity) {
+	var actionTags = [];
+	actionTags.push(formatTag(activity.activityCategory));
+	if (activity.activityName) actionTags.push(formatTag(activity.activityName));
+	return actionTags;
+}
+
+function renderSparkBar($targetElement) {
+
+	var onGotData = function(dataset) {
+		drawChart(dataset, { lineColour: '#00B597' }, $targetElement, 'spark-bar');
+	};
+
+	getData('', onGotData);
 }
 
 function buildCategoriesSelect() {
@@ -476,10 +495,6 @@ function categoryClickHandler(e) {
 	state.name = 'select-activity-name';
 	state.category = category;
 	renderNewState(state);
-	// $('.activity-name .activity-category-text').text('Activity names for "' + category + '"');
-	// $('.activity-name-new .activity-category-text').text('New activity name for "' + category + '"');
-	// hide('.new-activity-section.activity-category');
-	// show('.new-activity-section.activity-name');
 	return false;
 }
 
@@ -501,12 +516,6 @@ function nameClickHandler(e, activityName) {
 	state.activity = activity;
 
 	renderNewState(state);
-
-	// $('.activity-property .activity-text').text(formatActivityText(activity));
-
-	// hide('.new-activity-section.activity-name');
-	// hide('.new-activity-section.activity-name-new');
-	// show('.new-activity-section.activity-property');
 	return false;
 }
 
@@ -553,19 +562,6 @@ function addActivityFinish() {
 	// renderNewState({ name: '' });
 	// hide('.new-activity-section.activity-property');
 	// hide('.log-overlay');
-}
-
-function setUp1selfLogger() {
-	config = {
-        appId: "app-id-weblogae4feb02fh3hfy37c83c4k74gy",
-        appSecret: "app-secret",
-        "appName": "co.1self.web-log",
-        "appVersion": "0.0.1"
-    };
-    lib1self = new Lib1selfClient(config, "staging");
-    lib1self.fetchStream(function(err, response) {
-        stream = response;
-    });	
 }
 
 function formatActivityText(activityData) {
@@ -687,6 +683,19 @@ function validateNewPropertyInput(propertyType) {
 	return error;
 }
 
+function setUp1selfLogger() {
+	config = {
+        appId: "app-id-weblogae4feb02fh3hfy37c83c4k74gy",
+        appSecret: "app-secret",
+        "appName": "co.1self.web-log",
+        "appVersion": "0.0.1"
+    };
+    lib1self = new Lib1selfClient(config, "staging");
+    lib1self.fetchStream(function(err, response) {
+        stream = response;
+    });	
+}
+
 var createEventToLog = function(actionTags, properties) {
     var eventToLog = {
         "source": config.appName,
@@ -712,7 +721,7 @@ var logTo1Self = function(activityData, properties) {
 	actionTags.push(formatTag(activityData.activityCategory));
 
 	if (activityData.activityName) {
-		actionTags.push(activityData.activityName);
+		actionTags.push(formatTag(activityData.activityName));
 	}
 
 	eventToLog = createEventToLog(actionTags, properties);
@@ -724,6 +733,19 @@ function formatTag(tag) {
 	tag = tag.toLowerCase();
 	tag = tag.replace(' ', '-');
 	return tag;
+}
+
+function getChartDataUrl(objectTags, actionTags, sumName, colour) {
+    var url = lib1self
+        .objectTags(objectTags)
+        .actionTags(actionTags)
+        .count()
+        .barChart()
+        .backgroundColor(colour)
+        .url(stream);
+
+    console.log(url);
+    return url;
 }
 
 var viewViz = function(actionTags) {
