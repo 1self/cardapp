@@ -84,13 +84,19 @@ function setUpEventHandlers() {
 
     $('.activity-category-new .new-category-save').click(function() {
     	var category = $('.activity-category-new input').val();
-		var activity = { activityCategory: category };
-		var state = {};
-		state.category = category;
-		state.name = 'new-activity-name';
 
-		writeDataToHidden('.log-overlay .new-activity-data', activity);
-		renderNewState(state);
+    	var errorText = validateNewCategoryInput(category);
+    	$('.activity-category-error').text(errorText);
+
+    	if (errorText === '') {
+			var activity = { activityCategory: category };
+			var state = {};
+			state.category = category;
+			state.name = 'new-activity-name';
+
+			writeDataToHidden('.log-overlay .new-activity-data', activity);
+			renderNewState(state);
+		}
     	return false;
     });
 
@@ -108,7 +114,13 @@ function setUpEventHandlers() {
 
     $('.activity-name-new .new-name-save').click(function() {
     	var activityName = $('.activity-name-new input').val();
-    	nameClickHandler(null, activityName);
+
+    	var errorText = validateNewNameInput(activityName);
+    	$('.activity-name-error').text(errorText);
+    	
+    	if (errorText === '')
+    		nameClickHandler(null, activityName);
+    	
     	return false;
     });
 
@@ -639,6 +651,22 @@ function addPropertyTypeToStorage(propertyType) {
 	return storedUserProperties;
 }
 
+function validateNewCategoryInput(category) {
+	var errorText = '';
+	if (category === '') {
+		errorText = 'Please enter a category name';
+	}
+	return errorText;
+}
+
+function validateNewNameInput(name) {
+	var errorText = '';
+	if (name === '') {
+		errorText = 'Please enter an activity name or "skip" to ignore';
+	}
+	return errorText;
+}
+
 function validateNewPropertyInput(propertyType) {
 	var error = false;
 
@@ -733,7 +761,7 @@ var userActivities = [
 	{ activityCategory: 'Drink', activityName: 'Coffee' },
 	{ activityCategory: 'Drink', activityName: 'Tea' },
 	{ activityCategory: 'Drink', activityName: 'Water', properties: [ 'Volume' ] },
-	{ activityCategory: 'Exercise', activityName: 'Press ups', properties: [ 'Quantity', 'Duration', 'Note' ] },
+	{ activityCategory: 'Exercise', activityName: 'Press ups', properties: [ 'Quantity' ] },
 	{ activityCategory: 'Exercise', activityName: 'Chin ups', properties: [ 'Quantity' ] },
 	{ activityCategory: 'Exercise', properties: [ 'Duration' ] },
 	{ activityCategory: 'Work', activityName: 'Meeting', properties: [ 'Duration' ] },

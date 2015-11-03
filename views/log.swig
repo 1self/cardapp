@@ -102,6 +102,7 @@
           <div class="new-activity-section activity-category-new hide">
             <div class="new-activity-sub-header">Enter category name</div>
             <div class="new-activity-content">
+              <div class="activity-category-error error-text"></div>
               <input type="text" maxlength="25" placeholder="E.g. Health">
               <div class="button-row">
                 <div class="standard-button new-category-save">
@@ -143,6 +144,7 @@
             <div class="new-activity-sub-header">Enter activity name</div>
             <div class="new-activity-content">
               <div class="new-activity-sub-header activity-category-text"></div>
+              <div class="activity-name-error error-text"></div>
               <input type="text" maxlength="25" size="25" placeholder="E.g. 'sit-up' or 'coffee'">
               <div class="button-row">
                 <div class="left">
