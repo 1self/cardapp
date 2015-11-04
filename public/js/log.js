@@ -102,8 +102,6 @@ function setUpEventHandlers() {
 
     $('.activity-name .new-name-add').click(function() {
     	renderNewState({ name: 'new-activity-name' });
-    	// hide('.new-activity-section.activity-name');
-    	// show('.new-activity-section.activity-name-new');
     	return false;
     });
 
@@ -155,9 +153,6 @@ function setUpEventHandlers() {
 
     $('.property-log-cancel').click(function() {
     	history.back();
-  //   	hide('.new-activity-section.activity-property-log');
-		// hide('.log-overlay');	
-		// $('.add-new-log-item').show();
     	return false;
     });
 
@@ -386,6 +381,7 @@ function logItemClickHandler(properties) {
 function logDataFromProperties() {
 	var properties = {};
 	var propertyVal;
+	var error = false;
 	var activityData = $('.new-activity-section.activity-property-log .activity-data').val();
 	activityData = decodeURIComponent(activityData);
 	activityData = JSON.parse(activityData);
@@ -403,8 +399,9 @@ function logDataFromProperties() {
 			errorText = validateInput(propertyName, propertyVal, propertyType);
 			if (errorText === '') {
 				propertyVal = +propertyVal;
-				properties[propertyName.toLowerCase()] = propertyVal;
+				properties[formatTag(propertyName.toLowerCase())] = propertyVal;
 			} else {
+				error = true;
 				$propertyRow.find('.error-text').text(errorText);
 			}
 
@@ -425,27 +422,32 @@ function logDataFromProperties() {
 			if (errorText === '') {
 				ss = ss === '' ? 0 : +ss;
 				propertyVal = ss + (MM * 60) + (hh * 3600);
-				properties[propertyName.toLowerCase()] = propertyVal;
+				properties[formatTag(propertyName.toLowerCase())] = propertyVal;
 			}
 
-			if (errorText !== '')
+			if (errorText !== '') {
+				error = true;
 				$propertyRow.find('.error-text').text(errorText);
+			}
 
 		} else if (propertyType === 'text') {
 			propertyVal = $propertyRow.find('textarea.log-text').val().trim();
 			errorText = validateInput(propertyName, propertyVal, propertyType);
 			if (errorText === '') {
 				if (propertyVal !== '') {
-					properties[propertyName.toLowerCase()] = propertyVal;
+					properties[formatTag(propertyName.toLowerCase())] = propertyVal;
 				}
 			} else {
+				error = true;
 				$propertyRow.find('.error-text').text(errorText);
 			}
 		}
 	}
 
-	logTo1Self(activityData, properties);
-	doPostLogActions(activityData);
+	if (!error) {
+		logTo1Self(activityData, properties);
+		doPostLogActions(activityData);		
+	}
 }
 
 function validateInput(propertyName, propertyVal, propertyType) {
@@ -731,7 +733,8 @@ var logTo1Self = function(activityData, properties) {
 
 function formatTag(tag) {
 	tag = tag.toLowerCase();
-	tag = tag.replace(' ', '-');
+	var regex = new RegExp(' ', 'g');
+	tag = tag.replace(regex, '-');
 	return tag;
 }
 
