@@ -105,6 +105,22 @@ var renderLog = function(req, res, next) {
 	res.render('log', { newActivityState: req.params.newActivityState });
 };
 
+var renderDataExplorer = function(req, res, next) {
+//	/explore/chart/streams/:streamId/:objectTags/:actionTags/:aggregator/:aggregatePeriod/:chartType/:fromDate/:toDate
+	res.render('data-explorer', 
+		{
+			streamId: req.params.streamId,
+			objectTags: req.params.objectTags,
+			actionTags: req.params.actionTags,
+			aggregator: req.params.aggregator,
+			aggregatePeriod: req.params.aggregatePeriod,
+			chartType: req.params.chartType,
+			fromDate: req.params.fromDate,
+			toDate: req.params.toDate,
+			readToken: req.params.readToken
+		});
+};
+
 /* ---------------- */
 
 
@@ -416,6 +432,10 @@ router.get('/data/integrations',
 	checkForSession, 
 	getIntegrationsData, 
 	sendIntegrationsData
+);
+
+router.get('/explore/chart/streams/:streamId/:objectTags/:actionTags/:aggregator/:aggregatePeriod/:chartType/:fromDate/:toDate',
+	renderDataExplorer
 );
 
 router.get('/info/unite-data',

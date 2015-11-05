@@ -1,27 +1,39 @@
 // http://bl.ocks.org/stepheneb/1182434
 
-var offline = true; // getQSParam().offline === "true";
+var offline = false; // getQSParam().offline === "true";
 
-function drawChart(data, dataConfig, $targetElement, chartType) {
+function drawChart(data, dataConfig, $targetElement) {
 
-    var dataset = stripNullValues(data);
-    if (!dataConfig.lineColour) dataConfig.lineColour = '#000000';
+    if (data.length > 0) {
+        if (!dataConfig.lineColour) dataConfig.lineColour = '#000000';
 
-    $targetElement.ready(function() {
+        $targetElement.ready(function() {
 
-        var width = $targetElement.width();
-        var height = $targetElement.height();
-        var selector = '.' + $targetElement.attr('class').split(' ').join('.');
+            var width = $targetElement.width();
+            var height = $targetElement.height();
+            var selector = '.' + $targetElement.attr('class').split(' ').join('.');
 
-        dataConfig = getConfiguration(dataset, dataConfig, width, height);
+            dataConfig = getConfiguration(data, dataConfig, width, height);
 
-        if (chartType === 'spark-bar') {
-            drawSparkBar(dataset, dataConfig, width, height, selector);
-        } else if (chartType === 'line') {
-            drawLine(dataset, dataConfig, width, height, selector);
-        }
+            // Adds the svg canvas
+            var svg = createSvg(dataConfig, selector);
 
-    });
+            if (dataConfig.xAxis.showAxis)
+                drawXAxis(dataConfig, svg);
+
+            if (dataConfig.yAxis.showAxis)
+                drawYAxis(dataConfig, svg);
+
+            if (dataConfig.chartType === 'spark-column') {
+                drawSparkColumn(data, dataConfig, svg, selector);
+            } else if (dataConfig.chartType === 'column') {
+                drawColumn(data, dataConfig, svg, selector);
+            } else if (dataConfig.chartType === 'line') {
+                drawLine(data, dataConfig, svg, selector);
+            }
+
+        });
+    }
 }
 
 function stripNullValues(dataArray) {
@@ -86,12 +98,11 @@ function getData(dataSrc, callback) {
             "property": "pushId"
         };
 
-        dataset = stripNullValues(data.data);
-        dataset.sort(sort_by_date);
-        callback(dataset);
+        data = stripNullValues(data.data);
+        data.sort(sort_by_date);
+        callback(data);
     } else {
         var apiURL = dataSrc;
-        // alert(apiURL);
         var jqxhr = $.getJSON(apiURL,
                 function() {
 
@@ -99,9 +110,9 @@ function getData(dataSrc, callback) {
             .done(function(data) {
 
                 console.log('chart data', data);
-                dataset = stripNullValues(data.data);
-                dataset.sort(sort_by_date);
-                callback(dataset);
+                data = stripNullValues(data);
+                data.sort(sort_by_date);
+                callback(data);
             })
             .fail(function(data) {
                 console.log('error getting chart data', data);
@@ -127,7 +138,12 @@ function getConfiguration(chartData, dataConfig, width, height) {
     dataConfig.width = width;
     dataConfig.height = height;
 
-    dataConfig.parseDate = d3.time.format("%Y-%m-%d").parse;
+    if (!dataConfig.xAxis) dataConfig.xAxis = {};
+    if (!dataConfig.xAxis.parseFormat) dataConfig.xAxis.parseFormat = '%Y-%m-%d';
+
+    if (!dataConfig.yAxis) dataConfig.yAxis = {};
+
+    dataConfig.parseDate = d3.time.format(dataConfig.xAxis.parseFormat).parse;
     dataConfig.formatDate = d3.time.format("%d-%b");
     dataConfig.bisectDate = d3.bisector(function(d) { return d.date; }).left;
     dataConfig.formatHighlightDate = d3.time.format("%a %e %b");
@@ -138,11 +154,17 @@ function getConfiguration(chartData, dataConfig, width, height) {
         d.value = +d.value;
     });
 
-    dataConfig.x = d3.time.scale()
-        .domain(d3.extent(chartData, function(d) {
-            return d.date;
-        }))
-        .range([0, dataConfig.width]);
+    if (dataConfig.chartType === 'column') {
+        dataConfig.x = d3.scale.ordinal()
+            .domain(chartData.map(function(d) { return d.date; }))
+            .rangeRoundBands([0, dataConfig.width], 0.1);
+    } else {
+        dataConfig.x = d3.time.scale()
+            .domain(d3.extent(chartData, function(d) {
+                return d.date;
+            }))
+            .range([0, dataConfig.width]);
+    }
 
     dataConfig.y = d3.scale.linear()
         .domain([0, d3.max(chartData, function(d) {
@@ -174,14 +196,44 @@ function createSvg(dataConfig, targetElementSelector) {
     return svg;  
 }
 
-function drawLine(chartData, dataConfig, width, height, targetElementSelector) {
+function drawXAxis(dataConfig, svg) {
+    dataConfig.xAxis = d3.svg.axis()
+        .scale(dataConfig.x)
+        .orient("bottom");
+
+    dataConfig.xAxis.tickFormat(function (d) {
+        var formatDate = d3.time.format("%d-%b");
+        return formatDate(d);
+    });
+
+    var g = svg.append("g")
+        .attr("class", "x axis")
+        .call(dataConfig.xAxis);
+
+    dataConfig.xAxis.height = g.node().getBBox().height;
+    dataConfig.margin.bottom += dataConfig.xAxis.height;
+    dataConfig.height -= dataConfig.xAxis.height;
+
+    g.attr("transform", "translate(0," + dataConfig.height + ")");
+}
+
+function drawYAxis(dataConfig, svg) {
+    // dataConfig.xAxis = d3.svg.axis()
+    //     .scale(dataConfig.x)
+    //     .orient("bottom");
+
+    // svg.append("g")
+    //     .attr("class", "x axis")
+    //     .attr("transform", "translate(0," + dataConfig.height + ")")
+    //     .call(dataConfig.xAxis);
+}
+
+function drawLine(chartData, dataConfig, svg, targetElementSelector) {
 
     var line = d3.svg.line()
         .x(function(d) { return dataConfig.x(d.date); })
         .y(function(d) { return dataConfig.y(d.value); });
 
-    // Adds the svg canvas
-    var svg = createSvg(dataConfig, targetElementSelector);
 
     svg.append("path")
         .datum(chartData)
@@ -191,21 +243,38 @@ function drawLine(chartData, dataConfig, width, height, targetElementSelector) {
         .attr("d", line);
 }
 
-function drawSparkBar(chartData, dataConfig, width, height, targetElementSelector) {
-
-    // Adds the svg canvas
-    var svg = createSvg(dataConfig, targetElementSelector);
+function drawSparkColumn(chartData, dataConfig, svg, targetElementSelector) {
 
     var container = svg.append("g");
 
-    container.selectAll(".bar-spark")
+    container.selectAll(".column-spark")
         .data(chartData)
         .enter().append("line")
-        .attr("class", "bar-spark")
+        .attr("class", "column-spark")
         .style("stroke", dataConfig.lineColour)
         .attr("y1", dataConfig.height)
         .attr("y2", dataConfig.yMap)
         .attr("x1", dataConfig.xMap)
         .attr("x2", dataConfig.xMap);
 
+}
+
+function drawColumn(chartData, dataConfig, svg, targetElementSelector) {
+
+    var container = svg.append("g");
+
+    container.selectAll(".column")
+        .data(chartData)
+        .enter().append("rect")
+        .attr("class", "column")
+        .attr("x", function(d) { return dataConfig.x(d.date); })
+        .attr("width", dataConfig.x.rangeBand())
+        .attr("y", function(d) { return dataConfig.y(d.value); })
+        .attr("height", function(d) { return dataConfig.height - dataConfig.y(d.value); });
+}
+
+
+
+function availableChartTypes() {
+    return ['spark-column', 'line', 'column' ];
 }

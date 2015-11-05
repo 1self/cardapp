@@ -1180,12 +1180,30 @@ footer:before {
     margin-bottom: 15px;
 }
 
-.log .spark-bar-container {
+.log .spark-column-box {
     height: 100%;
     width: 22%;
     max-width: 90px;
     margin-right: 2%;
-    border: 1px solid #00B597;
+    border: 1px solid lightgray;
+    background-color: #fff;
+    padding: 2px;
+    position: relative;
+}
+
+.log .spark-column-container {
+    height: 100%;
+    width: 100%;
+}
+
+.log .spark-column-container-cover {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    cursor: pointer;
+    background-color: transparent;
 }
 
 /* Nav hamburger to close button -------------------- */
@@ -2839,7 +2857,7 @@ footer:before {
     box-shadow: 1px 1px 5px #CCC;
 }
 
-.integrations main, .profile main, .admin main, .log main {
+.integrations main, .profile main, .admin main, .log main, .data-explorer main {
     padding-top: 0px;
     height: 70%;
 }
@@ -3057,7 +3075,7 @@ footer:before {
     padding: 20px;
 }
 
-.log .log-content {
+.log .log-content, .data-explorer .main-content {
     position: absolute;
     top: 0px;
     height: 100%;
@@ -3153,6 +3171,30 @@ footer:before {
     text-align: center;
     vertical-align: middle;
     color: #fff;
+}
+
+.data-explorer .header-row {
+    padding: 10px;
+    height: 10%;
+    width: 100%;
+}
+
+.data-explorer .chart-row {
+    height: 60%;
+    width: 100%;
+    padding: 10px;
+}
+
+.data-explorer .chart-options-row {
+    height: 30%;
+    width: 100%;
+    padding: 10px;
+}
+
+.data-explorer .chart {
+    height: 100%;
+    width: 100%;
+    padding: 10px;
 }
 
 .integrations .integration-card .service, .integrations .integration-detail .service {

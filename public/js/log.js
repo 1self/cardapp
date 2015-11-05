@@ -256,8 +256,9 @@ function buildUserActivities(storedUserActivities) {
 	for (var i = 0; i < storedUserActivities.length; i++) {
 		
 		var $listItem = $('.log-row.template').clone();
-		var $sparkBarContainer = $listItem.find('.spark-bar-container');
 		$listItem.removeClass('template');
+		var $sparkBarContainer = $listItem.find('.spark-column-container');
+		var $sparkBarContainerCover = $listItem.find('.spark-column-container-cover');
 		$listItem.find('.activity-data').val(encodeURIComponent(JSON.stringify(storedUserActivities[i])));
 		$listItem.find('.log-item-name div').text(formatActivityText(storedUserActivities[i]));
 
@@ -266,11 +267,12 @@ function buildUserActivities(storedUserActivities) {
 		else
 			$listItem.find('.log-item-button .log-button div').text('Log it');
 
-		$sparkBarContainer.addClass('spark-bar-container-' + i);
-		getChartDataUrl(['self'], constructActionTags(storedUserActivities[i]), 'quantity', '090909');
-		renderSparkBar($sparkBarContainer);
+		$sparkBarContainer.addClass('spark-column-container-' + i);
+		var dataUrl = getChartDataUrl(storedUserActivities[i]);
+		renderSparkBar($sparkBarContainer, dataUrl);
 		
 		$listItem.click(logItemClickHandler);
+		$sparkBarContainerCover.click(sparkBarClickHandler);
 		$logContent.append($listItem);
 	}
 }
@@ -282,13 +284,19 @@ function constructActionTags(activity) {
 	return actionTags;
 }
 
-function renderSparkBar($targetElement) {
+function renderSparkBar($targetElement, dataUrl) {
 
 	var onGotData = function(dataset) {
-		drawChart(dataset, { lineColour: '#00B597' }, $targetElement, 'spark-bar');
+		var dataConfig = {
+			chartType: 'spark-column',
+			xAxis: { parseFormat: "%m/%d/%Y" },
+			lineColour: '#00B597',
+			margin: { top: 0, right: 0, bottom: 0, left: 0 }
+		};
+		drawChart(dataset, dataConfig, $targetElement);
 	};
-
-	getData('', onGotData);
+	console.log('dataUrl: ', dataUrl);
+	getData(dataUrl, onGotData);
 }
 
 function buildCategoriesSelect() {
@@ -359,7 +367,7 @@ function buildPropertyLogRows(activityData) {
 	}	
 }
 
-function logItemClickHandler(properties) {
+function logItemClickHandler() {
 	var activityDataVal = $(this).find('.activity-data').val();
 	var activityData;
 	activityData = decodeURIComponent(activityDataVal);
@@ -376,6 +384,28 @@ function logItemClickHandler(properties) {
     	show('.new-activity-section.activity-property-log');
     	show('.log-overlay');
 	}
+}
+
+function sparkBarClickHandler() {
+	console.log(this);
+
+	var $logRow = $(this).parents('.log-row');
+
+	var activityDataVal = $logRow.find('.activity-data').val();
+	var activityData;
+	activityData = decodeURIComponent(activityDataVal);
+	activityData = JSON.parse(activityData);
+
+	var url = getExplorePageUrl(activityData);
+	window.location.href = url;
+	// https://api-staging.1self.co/v1/streams/MVIBQAXRNFXHIYQR/events/self/work,meeting/count/daily/type/json?readToken=5577db06e6b0fa0ed1f24b56b40e64431dd691d6d252&bgColor=&from=2015-10-05T23:00:00.000Z&to=2015-11-05T00:00:00.000Z
+	// https://app.1self.co/v1/users/m/events/ycombinator/browse/sum(times-visited)/daily/barchart?shareToken=6bd7ed4425976820758e741be415dca9327305cb4285c298959ff5dac80dd3cc&bgColor=ff6600&from=2015-10-29T00:00:00.000Z&to=2015-11-04T23:59:59.999Z
+	// 
+	// /explore/chart/streams/:streamId/:objectTags/:actionTags/:aggregator/:aggregatePeriod/:chartType/:fromDate/:toDate
+	
+
+
+	return false;
 }
 
 function logDataFromProperties() {
@@ -738,31 +768,61 @@ function formatTag(tag) {
 	return tag;
 }
 
-function getChartDataUrl(objectTags, actionTags, sumName, colour) {
+function getChartDataUrl(activity) {
+
+	var actionTags = constructActionTags(activity);
+	var objectTags = ['self'];
+
     var url = lib1self
         .objectTags(objectTags)
         .actionTags(actionTags)
         .count()
-        .barChart()
-        .backgroundColor(colour)
+        .json()
+        // .backgroundColor(colour)
         .url(stream);
 
-    console.log(url);
+    url += '&from=' + createDate(-30);
+    url += '&to=' + createDate(0);
+
     return url;
 }
 
-var viewViz = function(actionTags) {
-    var url = lib1self
-        .objectTags(["self"])
-        .actionTags(actionTags)
-        .sum("quantity")
-        .barChart()
-        .backgroundColor("ddcc19")
-        .url(stream);
-    console.info(url);
-    $(".logActivityTemplate").hide();
-    window.open(url, "_system", "location=no");
-};
+function getExplorePageUrl(activity) {
+	var streamId = stream.streamid();
+	var objectTags = ['self'];
+	var actionTags = constructActionTags(activity);
+	var aggregator = 'count';
+	var aggregatePeriod = 'daily';
+	var chartType = 'column';
+	var fromDate = createDate(-30);
+	var toDate = createDate(0);
+
+	var url = '/explore/chart/streams';
+	url += '/' + streamId;
+	url += '/' + encodeURIComponent(objectTags.join(','));
+	url += '/' + encodeURIComponent(actionTags.join(','));
+	url += '/' + aggregator;
+	url += '/' + aggregatePeriod;
+	url += '/' + chartType;
+	url += '/' + encodeURIComponent(fromDate);
+	url += '/' + encodeURIComponent(toDate);
+
+	return url;
+
+// https://api-staging.1self.co/v1/streams/MVIBQAXRNFXHIYQR/events/self/work,meeting/count/daily/type/json?readToken=5577db06e6b0fa0ed1f24b56b40e64431dd691d6d252&bgColor=&from=2015-10-05T23:00:00.000Z&to=2015-11-05T00:00:00.000Z
+	// /explore/chart/streams/:streamId/:objectTags/:actionTags/:aggregator/:aggregatePeriod/:chartType/:fromDate/:toDate
+}
+
+function createDate(daysAgo) {
+	var now = new XDate();
+	var tonight = new XDate(now.getFullYear(), now.getMonth(), now.getDate());
+	tonight.addDays(1);
+	tonight.addDays(daysAgo);
+	var dateStr = tonight.toISOString();
+	dateStr = dateStr.split('Z');
+	dateStr = dateStr[0] + '.000Z';
+	return dateStr;
+}
 
 var propertySetup = [
 	{ typeName: 'Quantity', type: 'numeric'},
