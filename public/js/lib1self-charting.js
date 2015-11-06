@@ -18,22 +18,27 @@ function drawChart(data, dataConfig, $targetElement) {
             // Adds the svg canvas
             var svg = createSvg(dataConfig, selector);
             var xAxisElem;
+            var yAxisElem;
 
-            if (dataConfig.xAxis.showAxis)
-                xAxisElem = drawXAxis(dataConfig, svg);
+            if (dataConfig.chartType !== 'pie') {
+                if (dataConfig.xAxis.showAxis)
+                    xAxisElem = drawXAxis(dataConfig, svg);
 
-            if (dataConfig.yAxis.showAxis)
-                yAxisElem = drawYAxis(dataConfig, svg, xAxisElem);
-
-            if (dataConfig.chartType === 'spark-column') {
-                drawSparkColumn(data, dataConfig, svg, selector);
-            } else if (dataConfig.chartType === 'column') {
-                drawColumn(data, dataConfig, svg, selector);
-            } else if (dataConfig.chartType === 'line') {
-                drawLine(data, dataConfig, svg, selector);
+                if (dataConfig.yAxis.showAxis)
+                    yAxisElem = drawYAxis(dataConfig, svg, xAxisElem);
             }
 
-            if (dataConfig.yAxis.showAxis)
+            if (dataConfig.chartType === 'spark-column') {
+                drawSparkColumn(data, dataConfig, svg);
+            } else if (dataConfig.chartType === 'column') {
+                drawColumn(data, dataConfig, svg);
+            } else if (dataConfig.chartType === 'line') {
+                drawLine(data, dataConfig, svg);
+            } else if (dataConfig.chartType === 'pie') {
+                drawPie(data, dataConfig, svg);
+            }
+
+            if (dataConfig.yAxis.showAxis && yAxisElem !== undefined)
                 appendYAxisLabel(yAxisElem, dataConfig);
 
         });
@@ -158,37 +163,54 @@ function getConfiguration(chartData, dataConfig, width, height) {
         d.value = +d.value;
     });
 
-    if (dataConfig.chartType === 'column') {
-        dataConfig.x = d3.scale.ordinal()
-            .domain(chartData.map(function(d) { return d.date; }));
-            // .rangeRoundBands([0, dataConfig.width], 0.1);
+    if (dataConfig.chartType === 'pie') {
+        dataConfig.radius = Math.min(dataConfig.width, dataConfig.height) / 2;
+
+    dataConfig.color = d3.scale.ordinal()
+        .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
+
+    dataConfig.arc = d3.svg.arc()
+        .outerRadius(dataConfig.radius - 10)
+        .innerRadius(0);
+
+    dataConfig.pie = d3.layout.pie()
+        .sort(null)
+        .value(function(d) { return d.value; });
+
     } else {
-        dataConfig.x = d3.time.scale()
-            .domain(d3.extent(chartData, function(d) {
-                return d.date;
-            }));
-            // .range([0, dataConfig.width]);
+
+        if (dataConfig.chartType === 'column') {
+            dataConfig.x = d3.scale.ordinal()
+                .domain(chartData.map(function(d) { return d.date; }));
+                // .rangeRoundBands([0, dataConfig.width], 0.1);
+        } else {
+            dataConfig.x = d3.time.scale()
+                .domain(d3.extent(chartData, function(d) {
+                    return d.date;
+                }));
+                // .range([0, dataConfig.width]);
+        }
+
+        setRange(dataConfig.x, 'x', dataConfig);
+
+        dataConfig.y = d3.scale.linear()
+            .domain([0, d3.max(chartData, function(d) {
+                return d.value;
+            })]);
+            // .range([dataConfig.height, 0]);
+
+        setRange(dataConfig.y, 'y', dataConfig);
+
+        // setup x 
+        dataConfig.xMap = function(d) {
+            return dataConfig.x(d.date);
+        }; // data -> display
+
+        // setup y
+        dataConfig.yMap = function(d) {
+            return dataConfig.y(d.value);
+        }; // data -> display        
     }
-
-    setRange(dataConfig.x, 'x', dataConfig);
-
-    dataConfig.y = d3.scale.linear()
-        .domain([0, d3.max(chartData, function(d) {
-            return d.value;
-        })]);
-        // .range([dataConfig.height, 0]);
-
-    setRange(dataConfig.y, 'y', dataConfig);
-
-    // setup x 
-    dataConfig.xMap = function(d) {
-        return dataConfig.x(d.date);
-    }; // data -> display
-
-    // setup y
-    dataConfig.yMap = function(d) {
-        return dataConfig.y(d.value);
-    }; // data -> display
 
     return dataConfig;
 }
@@ -212,8 +234,13 @@ function createSvg(dataConfig, targetElementSelector) {
         .append("svg")
         .attr("width", dataConfig.width + dataConfig.margin.left + dataConfig.margin.right)
         .attr("height", dataConfig.height + dataConfig.margin.top + dataConfig.margin.bottom)
-        .append("g")
-        .attr("transform", "translate(" + dataConfig.margin.left + "," + dataConfig.margin.top + ")");
+        .append("g");
+
+    if (dataConfig.chartType === 'pie') {
+        svg.attr("transform", "translate(" + dataConfig.width / 2 + "," + dataConfig.height / 2 + ")");
+    } else {
+        svg.attr("transform", "translate(" + dataConfig.margin.left + "," + dataConfig.margin.top + ")");
+    }
 
     return svg;  
 }
@@ -280,7 +307,7 @@ function appendYAxisLabel(yElem, dataConfig) {
         .text(dataConfig.yAxis.label);
 }
 
-function drawLine(chartData, dataConfig, svg, targetElementSelector) {
+function drawLine(chartData, dataConfig, svg) {
 
     var line = d3.svg.line()
         .x(function(d) { return dataConfig.x(d.date); })
@@ -295,7 +322,7 @@ function drawLine(chartData, dataConfig, svg, targetElementSelector) {
         .attr("d", line);
 }
 
-function drawSparkColumn(chartData, dataConfig, svg, targetElementSelector) {
+function drawSparkColumn(chartData, dataConfig, svg) {
 
     var container = svg.append("g");
 
@@ -311,7 +338,7 @@ function drawSparkColumn(chartData, dataConfig, svg, targetElementSelector) {
 
 }
 
-function drawColumn(chartData, dataConfig, svg, targetElementSelector) {
+function drawColumn(chartData, dataConfig, svg) {
 
     var container = svg.append("g");
 
@@ -325,12 +352,31 @@ function drawColumn(chartData, dataConfig, svg, targetElementSelector) {
         .attr("height", function(d) { return dataConfig.height - dataConfig.y(d.value); });
 }
 
+function drawPie(chartData, dataConfig, svg) {
+
+    var g = svg.selectAll(".arc")
+        .data(dataConfig.pie(chartData))
+    .enter().append("g")
+        .attr("class", "arc");
+
+    g.append("path")
+        .attr("d", dataConfig.arc)
+        .style("fill", function(d) { return dataConfig.color(d.data.date); });
+
+    g.append("text")
+        .attr("transform", function(d) { return "translate(" + dataConfig.arc.centroid(d) + ")"; })
+        .attr("dy", ".35em")
+        .style("text-anchor", "middle")
+        .text(function(d) { return dataConfig.formatDate(d.data.date); });
+}
+
 
 
 function getAvailableChartTypes() {
     return [
         { name: 'Spark column', identifier: 'spark-column', displayType: 'small' },
         { name: 'Line', identifier: 'line', displayType: 'any' }, 
-        { name: 'Column', identifier: 'column', displayType: 'large' }
+        { name: 'Column', identifier: 'column', displayType: 'large' },
+        { name: 'Pie', identifier: 'pie', displayType: 'large' }
     ];
 }
