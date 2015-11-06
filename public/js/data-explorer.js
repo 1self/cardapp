@@ -140,6 +140,7 @@ function onAggregatorClick(e) {
 	var aggFn = $(this).find('div').text();
 
 	gChartParams.aggregator.fn = aggFn;
+	gChartParams.aggregator.text = aggFn;
 
 	if (aggFn !== 'count' && gChartParams.aggregator.vars.length === 0) {
 		var $aggregateOns = $('.aggregate-ons .standard-button.selected');
@@ -296,9 +297,9 @@ function renderChart(chartParams) {
 		var dataConfig = {
 			chartType: chartParams.chartType,
 			xAxis: { parseFormat: "%m/%d/%Y", showAxis: true },
-			yAxis: { showAxis: true },
+			yAxis: { showAxis: true, label: getYAxisLabel(chartParams) },
 			lineColour: '#00B597',
-			margin: { top: 0, right: 0, bottom: 0, left: 0 }
+			margin: { top: 10, right: 10, bottom: 10, left: 10 }
 		};
 		$('.chart').empty();
 		drawChart(dataset, dataConfig, $('.data-explorer .chart'));
@@ -309,7 +310,12 @@ function renderChart(chartParams) {
 	getData(chartDataUrl, onGotData);
 }
 
-
+function getYAxisLabel(chartParams) {
+	var label = chartParams.aggregator.text;
+	if (chartParams.aggregator.vars.length > 0)
+		label += ' of ' + chartParams.aggregator.vars.join(', ');
+	return label;
+} 
 
 function setUp1selfLogger() {
 	config = {

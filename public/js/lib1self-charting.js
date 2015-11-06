@@ -17,12 +17,13 @@ function drawChart(data, dataConfig, $targetElement) {
 
             // Adds the svg canvas
             var svg = createSvg(dataConfig, selector);
+            var xAxisElem;
 
             if (dataConfig.xAxis.showAxis)
-                drawXAxis(dataConfig, svg);
+                xAxisElem = drawXAxis(dataConfig, svg);
 
             if (dataConfig.yAxis.showAxis)
-                drawYAxis(dataConfig, svg);
+                yAxisElem = drawYAxis(dataConfig, svg, xAxisElem);
 
             if (dataConfig.chartType === 'spark-column') {
                 drawSparkColumn(data, dataConfig, svg, selector);
@@ -31,6 +32,9 @@ function drawChart(data, dataConfig, $targetElement) {
             } else if (dataConfig.chartType === 'line') {
                 drawLine(data, dataConfig, svg, selector);
             }
+
+            if (dataConfig.yAxis.showAxis)
+                appendYAxisLabel(yAxisElem, dataConfig);
 
         });
     }
@@ -135,8 +139,8 @@ function getConfiguration(chartData, dataConfig, width, height) {
         };        
     }
 
-    dataConfig.width = width;
-    dataConfig.height = height;
+    dataConfig.width = width - dataConfig.margin.left - dataConfig.margin.right;
+    dataConfig.height = height - dataConfig.margin.top - dataConfig.margin.bottom;
 
     if (!dataConfig.xAxis) dataConfig.xAxis = {};
     if (!dataConfig.xAxis.parseFormat) dataConfig.xAxis.parseFormat = '%Y-%m-%d';
@@ -156,21 +160,25 @@ function getConfiguration(chartData, dataConfig, width, height) {
 
     if (dataConfig.chartType === 'column') {
         dataConfig.x = d3.scale.ordinal()
-            .domain(chartData.map(function(d) { return d.date; }))
-            .rangeRoundBands([0, dataConfig.width], 0.1);
+            .domain(chartData.map(function(d) { return d.date; }));
+            // .rangeRoundBands([0, dataConfig.width], 0.1);
     } else {
         dataConfig.x = d3.time.scale()
             .domain(d3.extent(chartData, function(d) {
                 return d.date;
-            }))
-            .range([0, dataConfig.width]);
+            }));
+            // .range([0, dataConfig.width]);
     }
+
+    setRange(dataConfig.x, 'x', dataConfig);
 
     dataConfig.y = d3.scale.linear()
         .domain([0, d3.max(chartData, function(d) {
             return d.value;
-        })])
-        .range([height, 0]);
+        })]);
+        // .range([dataConfig.height, 0]);
+
+    setRange(dataConfig.y, 'y', dataConfig);
 
     // setup x 
     dataConfig.xMap = function(d) {
@@ -185,6 +193,20 @@ function getConfiguration(chartData, dataConfig, width, height) {
     return dataConfig;
 }
 
+function setRange(objectToRange, xOrY, dataConfig) {
+    var rangeStart;
+    if (xOrY === 'x') {
+        rangeStart = dataConfig.yAxis.width === undefined ? 0 : dataConfig.yAxis.width;
+        if (dataConfig.chartType === 'column') {
+            objectToRange.rangeRoundBands([rangeStart, dataConfig.width], 0.1);
+        } else {
+            objectToRange.range([rangeStart, dataConfig.width]);
+        }
+    } else {
+        objectToRange.range([dataConfig.height, 0]);
+    }
+}
+
 function createSvg(dataConfig, targetElementSelector) {
     var svg = d3.select(targetElementSelector)
         .append("svg")
@@ -197,35 +219,65 @@ function createSvg(dataConfig, targetElementSelector) {
 }
 
 function drawXAxis(dataConfig, svg) {
-    dataConfig.xAxis = d3.svg.axis()
+    dataConfig.xAxis.fn = d3.svg.axis()
         .scale(dataConfig.x)
         .orient("bottom");
 
-    dataConfig.xAxis.tickFormat(function (d) {
+    dataConfig.xAxis.fn.tickFormat(function (d) {
         var formatDate = d3.time.format("%d-%b");
         return formatDate(d);
     });
 
     var g = svg.append("g")
         .attr("class", "x axis")
-        .call(dataConfig.xAxis);
+        .call(dataConfig.xAxis.fn);
 
     dataConfig.xAxis.height = g.node().getBBox().height;
     dataConfig.margin.bottom += dataConfig.xAxis.height;
     dataConfig.height -= dataConfig.xAxis.height;
 
+    setRange(dataConfig.y, 'y', dataConfig);
+
     g.attr("transform", "translate(0," + dataConfig.height + ")");
+
+    return g;
 }
 
-function drawYAxis(dataConfig, svg) {
-    // dataConfig.xAxis = d3.svg.axis()
-    //     .scale(dataConfig.x)
-    //     .orient("bottom");
+function drawYAxis(dataConfig, svg, xElem) {
+    dataConfig.yAxis.fn = d3.svg.axis()
+        .scale(dataConfig.y)
+        .orient("left")
+        .ticks(10);
 
-    // svg.append("g")
-    //     .attr("class", "x axis")
-    //     .attr("transform", "translate(0," + dataConfig.height + ")")
-    //     .call(dataConfig.xAxis);
+    var g = svg.append("g")
+        .attr("class", "y axis")
+        .call(dataConfig.yAxis.fn);
+
+    console.log(dataConfig);
+
+    dataConfig.yAxis.width = g.node().getBBox().width;
+    dataConfig.margin.left += dataConfig.yAxis.width;
+    dataConfig.width -= dataConfig.yAxis.width;
+
+    setRange(dataConfig.x, 'x', dataConfig);
+
+    console.log(dataConfig);
+
+    g.attr("transform", "translate(" + dataConfig.yAxis.width + ",0)");
+
+    if (xElem !== undefined)
+        xElem.call(dataConfig.xAxis.fn);
+
+    return g;
+}
+
+function appendYAxisLabel(yElem, dataConfig) {
+    yElem.append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 6)
+        .attr("dy", ".71em")
+        .style("text-anchor", "end")
+        .text(dataConfig.yAxis.label);
 }
 
 function drawLine(chartData, dataConfig, svg, targetElementSelector) {
