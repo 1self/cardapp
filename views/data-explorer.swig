@@ -108,7 +108,7 @@
             <div class="aggregation-options">
               <div class="aggregators"></div>
               <div class="aggregate-ons"></div>
-              <div class="aggregation-periods"></div>
+              <div class="aggregation-periods"><div class="standard-button"><div>Daily</div></div></div>
               <div class="chart-types"></div>
             </div>
           </div>

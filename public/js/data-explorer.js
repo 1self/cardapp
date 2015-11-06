@@ -4,6 +4,12 @@ var config;
 var gChartParams;
 var availableChartTypes = getAvailableChartTypes();
 
+var aggregationTypes = [
+		{ typeName: 'count', requiresVar: false },
+		{ typeName: 'sum', requiresVar: true },
+		{ typeName: 'mean', requiresVar: true }
+	];
+
 $(document).ready(function() {
     executeOnLoadTasks();
 });
@@ -59,9 +65,11 @@ function renderPage(chartParams, doPushState) {
     	history.pushState(null, null, url);		
 	}
 
+	var aggregateOnTypes = getAggregateOnTypes(chartParams);
+
 	renderChart(chartParams);
-    buildAggregators(chartParams);
-    buildAggregateOns(chartParams);
+    buildAggregators(chartParams, aggregateOnTypes);
+    buildAggregateOns(chartParams, aggregateOnTypes);
     buildChartTypes(chartParams);
 }
 
@@ -104,26 +112,27 @@ function renderNewState(newState) {
     }
 }
 
-function buildAggregators(chartParams) {
+function buildAggregators(chartParams, aggregateOnTypes) {
 	var $aggregators = $('.aggregators');
 	$aggregators.empty();
 
-	var aggTypes = ['count', 'sum', 'mean'];
+	for (var i = 0; i < aggregationTypes.length; i++) {
+		if (!aggregationTypes[i].requiresVar || aggregateOnTypes.length > 0) {
+			var $button = $('.standard-button.template').clone();
+			$button.removeClass('template');
+			$button.addClass('left');
+			$button.find('div').text(aggregationTypes[i].typeName);
 
-	for (var i = 0; i < aggTypes.length; i++) {
-		var $button = $('.standard-button.template').clone();
-		$button.removeClass('template');
-		$button.addClass('left');
-		$button.find('div').text(aggTypes[i]);
+			if (aggregationTypes[i].typeName !== chartParams.aggregator.fn) {
+				$button.addClass('sub-button');
+			} else {
+				$button.addClass('selected');
+			}
 
-		if (aggTypes[i] !== chartParams.aggregator.fn) {
-			$button.addClass('sub-button');
-		} else {
-			$button.addClass('selected');
+			$button.click(onAggregatorClick);
+			$aggregators.append($button);			
 		}
 
-		$button.click(onAggregatorClick);
-		$aggregators.append($button);
 	}
 }
 
@@ -145,19 +154,17 @@ function onAggregatorClick(e) {
 	renderPage(gChartParams, true);
 }
 
-function buildAggregateOns(chartParams) {
+function buildAggregateOns(chartParams, aggregateOnTypes) {
 	var $aggregateOns = $('.aggregate-ons');
 	$aggregateOns.empty();
 
-	var aggTypes = getAggregateOnTypes(chartParams);
-
-	for (var i = 0; i < aggTypes.length; i++) {
+	for (var i = 0; i < aggregateOnTypes.length; i++) {
 		var $button = $('.standard-button.template').clone();
 		$button.removeClass('template');
 		$button.addClass('left');
-		$button.find('div').text(aggTypes[i]);
+		$button.find('div').text(aggregateOnTypes[i]);
 
-		if (chartParams.aggregator.vars.indexOf(formatTag(aggTypes[i])) < 0) {
+		if (chartParams.aggregator.vars.indexOf(formatTag(aggregateOnTypes[i])) < 0) {
 			$button.addClass('sub-button');
 		} else {
 			$button.addClass('selected');
@@ -380,7 +387,7 @@ function getExplorePageUrl(chartParams) {
 }
 
 function parseUrl(url) {
-	url = url.split('/explore/chart/').split('/');
+	url = (url.split('/explore/chart/')[1]).split('/');
 	return createChartParams(url);
 }
 
