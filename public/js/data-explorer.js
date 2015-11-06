@@ -1,6 +1,8 @@
 var lib1self;
 var stream;
 var config;
+var gChartParams;
+var availableChartTypes = getAvailableChartTypes();
 
 $(document).ready(function() {
     executeOnLoadTasks();
@@ -14,7 +16,9 @@ function executeOnLoadTasks() {
 	    setUpEventHandlers();
 	    setUp1selfLogger();
 
-	    renderChart();
+		gChartParams = createChartParams();
+
+		renderPage(gChartParams, false);
 	}
 }
 
@@ -28,27 +32,37 @@ function checkUrlValidity() {
 	// }
 }
 
+// https://api-staging.1self.co/v1/streams/MVIBQAXRNFXHIYQR/events/exercise/self/count/daily/type/json?readToken=5577db06e6b0fa0ed1f24b56b40e64431dd691d6d252&bgColor=&from=undefined&to=undefined
 
 
 function setUpEventHandlers() {
 
-	// window.addEventListener('popstate', function(e) {
-	// 	console.log('popstate', window.location.href, e);
-	// 	var newState;
-	// 	if (e.state) {
-	// 		newState = e.state;
-	// 	} else {
-	// 		newState = { name: '' };
-	// 	}
-	// 	newState.doPush = false;
-	// 	renderNewState(newState);
-	// });
+	window.addEventListener('popstate', function(e) {
+		console.log('popstate', window.location.href, e);
+		gChartParams = parseUrl(window.location.href);
+		renderPage(gChartParams);
+	});
 	
     $('.back-button').click(function() {
     	history.back();
     	return false;
     });
 
+}
+
+function renderPage(chartParams, doPushState) {
+
+	if (doPushState) {
+		var urlRoot = window.location.href;
+		var url = urlRoot.split('/explore')[0];
+		url += getExplorePageUrl(chartParams);
+    	history.pushState(null, null, url);		
+	}
+
+	renderChart(chartParams);
+    buildAggregators(chartParams);
+    buildAggregateOns(chartParams);
+    buildChartTypes(chartParams);
 }
 
 function renderNewState(newState) {
@@ -90,36 +104,196 @@ function renderNewState(newState) {
     }
 }
 
-function isVisible(classId) {
-	return !$(classId).hasClass('hide');
+function buildAggregators(chartParams) {
+	var $aggregators = $('.aggregators');
+	$aggregators.empty();
+
+	var aggTypes = ['count', 'sum', 'mean'];
+
+	for (var i = 0; i < aggTypes.length; i++) {
+		var $button = $('.standard-button.template').clone();
+		$button.removeClass('template');
+		$button.addClass('left');
+		$button.find('div').text(aggTypes[i]);
+
+		if (aggTypes[i] !== chartParams.aggregator.fn) {
+			$button.addClass('sub-button');
+		} else {
+			$button.addClass('selected');
+		}
+
+		$button.click(onAggregatorClick);
+		$aggregators.append($button);
+	}
 }
 
-function show(classId) {
-	$(classId).removeClass('hide');
+function onAggregatorClick(e) {
+	var aggFn = $(this).find('div').text();
+
+	gChartParams.aggregator.fn = aggFn;
+
+	if (aggFn !== 'count' && gChartParams.aggregator.vars.length === 0) {
+		var $aggregateOns = $('.aggregate-ons .standard-button.selected');
+		if ($aggregateOns.length === 0) {
+			$aggregateOns = $('.aggregate-ons .standard-button');
+			var $button = $($aggregateOns[0]);
+			$button.toggleClass('selected sub-button');
+			gChartParams.aggregator.vars.push(formatTag($button.find('div').text()));
+		}
+	}
+
+	renderPage(gChartParams, true);
 }
 
-function hide(classId) {
-	$(classId).addClass('hide');
+function buildAggregateOns(chartParams) {
+	var $aggregateOns = $('.aggregate-ons');
+	$aggregateOns.empty();
+
+	var aggTypes = getAggregateOnTypes(chartParams);
+
+	for (var i = 0; i < aggTypes.length; i++) {
+		var $button = $('.standard-button.template').clone();
+		$button.removeClass('template');
+		$button.addClass('left');
+		$button.find('div').text(aggTypes[i]);
+
+		if (chartParams.aggregator.vars.indexOf(formatTag(aggTypes[i])) < 0) {
+			$button.addClass('sub-button');
+		} else {
+			$button.addClass('selected');
+		}
+
+		$button.click(onAggregateOnClick);
+		$aggregateOns.append($button);
+	}
 }
 
-function constructActionTags(activity) {
-	var actionTags = [];
-	actionTags.push(formatTag(activity.activityCategory));
-	if (activity.activityName) actionTags.push(formatTag(activity.activityName));
-	return actionTags;
+function onAggregateOnClick(e) {
+	// var aggFn = $(this).find('div').text();
+
+	// gChartParams.aggregator.fn = aggFn;
+
+	// renderPage(gChartParams, true);
 }
 
-function renderChart() {
-	var chartDataUrl = getChartDataUrl();
+function getAggregateOnTypes(chartParams) {
+	var userActivities = getUserActivities();
+	var matchedActivity;
+
+	for (var i = 0; i < userActivities.length; i++) {
+		var activity = userActivities[i];
+		if (chartParams.actionTags.indexOf(formatTag(activity.activityCategory)) >= 0) {
+			if (activity.activityName !== undefined) {
+				if (chartParams.actionTags.indexOf(formatTag(activity.activityName)) >= 0) {
+					matchedActivity = activity;
+					break;
+				}
+			} else {
+				if (chartParams.actionTags.length === 1) {
+					matchedActivity = activity;
+					break;
+				}
+			}
+		}
+	}
+
+	if (matchedActivity !== undefined && matchedActivity.properties !== undefined) {
+		return matchedActivity.properties;
+	} else {
+		return [];
+	}
+}
+
+function buildChartTypes(chartParams) {
+	var $chartTypes = $('.chart-types');
+	$chartTypes.empty();
+
+	for (var i = 0; i < availableChartTypes.length; i++) {
+		if (availableChartTypes[i].displayType !== 'small') {
+			var $button = $('.standard-button.template').clone();
+			$button.removeClass('template');
+			$button.addClass('left');
+			$button.addClass(availableChartTypes[i].identifier);
+			$button.find('div').text(availableChartTypes[i].name);
+
+			if (chartParams.chartType !== availableChartTypes[i].identifier) {
+				$button.addClass('sub-button');
+			} else {
+				$button.addClass('selected');
+			}
+
+			$button.click(onChartTypeClick);
+			$chartTypes.append($button);			
+		}
+
+	}
+}
+
+function onChartTypeClick(e) {
+	var $button = $(this);
+
+	if (!$button.hasClass('selected')) {
+		var chartIdentifier = $button.attr('class');
+
+		console.log(chartIdentifier);
+
+		chartIdentifier = chartIdentifier.replace('standard-button', '');
+		chartIdentifier = chartIdentifier.replace('sub-button', '');
+		chartIdentifier = chartIdentifier.replace('selected', '');
+		chartIdentifier = chartIdentifier.replace('left', '');
+		chartIdentifier = chartIdentifier.trim();
+
+		console.log(chartIdentifier);
+
+		gChartParams.chartType = chartIdentifier;
+		renderPage(gChartParams, true);		
+	}
+
+}
+
+function getUserActivities() {
+	var storedUserActivities = localStorage.userActivities;
+	if (storedUserActivities)
+		storedUserActivities = JSON.parse(storedUserActivities);
+	else
+		storedUserActivities = [];
+
+	return storedUserActivities;
+}
+
+// [{"activityCategory":"Drink","activityName":"Coffee"},{"activityCategory":"Drink","activityName":"Tea"},{"activityCategory":"Drink","activityName":"Water","properties":["Volume"]},{"activityCategory":"Exercise","activityName":"Press ups","properties":["Quantity"]},{"activityCategory":"Exercise","activityName":"Chin ups","properties":["Quantity"]},{"activityCategory":"Exercise","properties":["Duration"]},{"activityCategory":"Work","activityName":"Meeting","properties":["Duration"]},{"activityCategory":"Work","activityName":"Pomodoro"},{"activityCategory":"test spaces cat","activityName":"mre test spaces","properties":["here too ?"]},{"activityCategory":"Exercise","activityName":"Stretching","properties":["Note"]}]
+
+// function isVisible(classId) {
+// 	return !$(classId).hasClass('hide');
+// }
+
+// function show(classId) {
+// 	$(classId).removeClass('hide');
+// }
+
+// function hide(classId) {
+// 	$(classId).addClass('hide');
+// }
+
+// function constructActionTags(activity) {
+// 	var actionTags = [];
+// 	actionTags.push(formatTag(activity.activityCategory));
+// 	if (activity.activityName) actionTags.push(formatTag(activity.activityName));
+// 	return actionTags;
+// }
+
+function renderChart(chartParams) {
+	var chartDataUrl = getChartDataUrl(chartParams);
 
 	var onGotData = function(dataset) {
 		var dataConfig = {
-			chartType: chartTypeParam,
+			chartType: chartParams.chartType,
 			xAxis: { parseFormat: "%m/%d/%Y", showAxis: true },
 			yAxis: { showAxis: true },
 			lineColour: '#00B597',
 			margin: { top: 0, right: 0, bottom: 0, left: 0 }
 		};
+		$('.chart').empty();
 		drawChart(dataset, dataConfig, $('.data-explorer .chart'));
 	};
 
@@ -143,23 +317,104 @@ function setUp1selfLogger() {
     });	
 }
 
-function getChartDataUrl() {
+function createChartParams(paramsArray) {
+	var chartParams = {};
+
+	if (paramsArray !== undefined) {
+		objectTagsParam = paramsArray[2];
+		actionTagsParam = paramsArray[3];
+		aggregatorParam = paramsArray[4];
+		aggregatePeriodParam = paramsArray[5];
+		chartTypeParam = paramsArray[6];
+		fromDateParam = paramsArray[7];
+		toDateParam = paramsArray[8];
+	}
+
+	var aggregator = splitAggregator(aggregatorParam);
+
+	chartParams.objectTags = decodeURIComponent(objectTagsParam).split(',');
+	chartParams.actionTags = decodeURIComponent(actionTagsParam).split(',');
+	chartParams.aggregator = aggregator;
+	chartParams.aggregatePeriod = aggregatePeriodParam;
+	chartParams.chartType = chartTypeParam;
+	chartParams.fromDate = decodeURIComponent(fromDateParam);
+	chartParams.toDate = decodeURIComponent(toDateParam);
+
+	console.log('chartParams', chartParams);
+
+	return chartParams;
+}
+
+function splitAggregator(strAggregator) {
+	var aggregator = {};
+	aggregator.text = strAggregator;
+
+	var splitAgg = strAggregator.split('(');
+
+	if (splitAgg.length === 1) {
+		aggregator.fn = strAggregator;
+		aggregator.vars = [];
+	} else {
+		aggregator.text = strAggregator;
+		aggregator.fn = splitAgg[0];
+		aggregator.vars = (splitAgg[1].split(')')[0]).split(',');
+	}
+
+	return aggregator;
+}
+
+function getExplorePageUrl(chartParams) {
+
+	var url = '/explore/chart/streams';
+	url += '/' + stream.streamid();
+	url += '/' + encodeURIComponent(chartParams.objectTags.join(','));
+	url += '/' + encodeURIComponent(chartParams.actionTags.join(','));
+	url += '/' + chartParams.aggregator.text;
+	url += '/' + chartParams.aggregatePeriod;
+	url += '/' + chartParams.chartType;
+	url += '/' + encodeURIComponent(chartParams.fromDate);
+	url += '/' + encodeURIComponent(chartParams.toDate);
+
+	return url;
+	// /explore/chart/streams/:streamId/:objectTags/:actionTags/:aggregator/:aggregatePeriod/:chartType/:fromDate/:toDate
+}
+
+function parseUrl(url) {
+	url = url.split('/explore/chart/').split('/');
+	return createChartParams(url);
+}
+
+function getChartDataUrl(chartParams) {
 
 	var actionTags = decodeURIComponent(actionTagsParam).split(',');
 	var objectTags = decodeURIComponent(objectTagsParam).split(',');
 
     var url = lib1self
-        .objectTags(objectTags)
-        .actionTags(actionTags)
-        .count()
-        .json()
-        // .backgroundColor(colour)
+        .objectTags(chartParams.objectTags)
+        .actionTags(chartParams.actionTags);
+
+    if (chartParams.aggregator.fn === 'count') 
+    	url = url.count();
+    else if (chartParams.aggregator.fn === 'sum')
+    	url = url.sum(chartParams.aggregator.vars.join(','));
+    else if (chartParams.aggregator.fn === 'mean')
+    	url = url.mean(chartParams.aggregator.vars.join(','));
+
+    url = url
+    	.json()
         .url(stream);
 
-    url += '&from=' + decodeURIComponent(fromDateParam);
-    url += '&to=' + decodeURIComponent(toDateParam);
+    url += '&from=' + chartParams.fromDate;
+    url += '&to=' + chartParams.toDate;
 
     return url;
+}
+
+function formatTag(tag) {
+	tag = tag.toLowerCase();
+	var regex = new RegExp(' ', 'g');
+	tag = tag.replace(regex, '-');
+	return tag;
 }
 
 // var createEventToLog = function(actionTags, properties) {

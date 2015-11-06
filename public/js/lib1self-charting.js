@@ -275,6 +275,10 @@ function drawColumn(chartData, dataConfig, svg, targetElementSelector) {
 
 
 
-function availableChartTypes() {
-    return ['spark-column', 'line', 'column' ];
+function getAvailableChartTypes() {
+    return [
+        { name: 'Spark column', identifier: 'spark-column', displayType: 'small' },
+        { name: 'Line', identifier: 'line', displayType: 'any' }, 
+        { name: 'Column', identifier: 'column', displayType: 'large' }
+    ];
 }

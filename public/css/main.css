@@ -3191,6 +3191,13 @@ footer:before {
     padding: 10px;
 }
 
+.data-explorer .aggregation-options>div {
+    width: 100%;
+    height: 33px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+
 .data-explorer .chart {
     height: 100%;
     width: 100%;

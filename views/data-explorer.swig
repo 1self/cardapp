@@ -106,9 +106,10 @@
               <div class="action-tags"></div>
             </div>
             <div class="aggregation-options">
-              <div class="aggregation-type"></div>
-              <div class="aggregate-on"></div>
-              <div class="aggregation-period"></div>
+              <div class="aggregators"></div>
+              <div class="aggregate-ons"></div>
+              <div class="aggregation-periods"></div>
+              <div class="chart-types"></div>
             </div>
           </div>
         </div>
