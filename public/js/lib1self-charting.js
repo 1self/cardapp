@@ -20,7 +20,7 @@ function drawChart(data, dataConfig, $targetElement) {
             var xAxisElem;
             var yAxisElem;
 
-            if (dataConfig.chartType !== 'pie') {
+            if (dataConfig.chartTypeObj.xSeriesType !== 'arc') {
                 if (dataConfig.xAxis.showAxis)
                     xAxisElem = drawXAxis(dataConfig, svg);
 
@@ -134,7 +134,9 @@ function getData(dataSrc, callback) {
 
 function getConfiguration(chartData, dataConfig, width, height) {
     if (!dataConfig)
-        dataConfig = {};
+        dataConfig = { chartType: 'line' };
+
+    dataConfig.chartTypeObj = getAvailableChartTypes(dataConfig.chartType);
 
     // Set the dimensions of the canvas / graph
     if (!dataConfig.margin) {
@@ -165,32 +167,30 @@ function getConfiguration(chartData, dataConfig, width, height) {
         d.value = +d.value;
     });
 
-    if (dataConfig.chartType === 'pie') {
+    if (dataConfig.chartTypeObj.xSeriesType === 'arc') {
         dataConfig.radius = Math.min(dataConfig.width, dataConfig.height) / 2;
 
-    dataConfig.color = d3.scale.ordinal()
-        .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
+        dataConfig.color = d3.scale.ordinal()
+            .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
 
-    dataConfig.arc = d3.svg.arc()
-        .outerRadius(dataConfig.radius - 10)
-        .innerRadius(0);
+        dataConfig.arc = d3.svg.arc()
+            .outerRadius(dataConfig.radius - 10)
+            .innerRadius(0);
 
-    dataConfig.pie = d3.layout.pie()
-        .sort(null)
-        .value(function(d) { return d.value; });
+        dataConfig.pie = d3.layout.pie()
+            .sort(null)
+            .value(function(d) { return d.value; });
 
     } else {
 
-        if (dataConfig.chartType === 'column') {
+        if (dataConfig.chartTypeObj.xSeriesType === 'discrete') {
             dataConfig.x = d3.scale.ordinal()
                 .domain(chartData.map(function(d) { return d.date; }));
-                // .rangeRoundBands([0, dataConfig.width], 0.1);
         } else {
             dataConfig.x = d3.time.scale()
                 .domain(d3.extent(chartData, function(d) {
                     return d.date;
                 }));
-                // .range([0, dataConfig.width]);
         }
 
         setRange(dataConfig.x, 'x', dataConfig);
@@ -199,7 +199,6 @@ function getConfiguration(chartData, dataConfig, width, height) {
             .domain([0, d3.max(chartData, function(d) {
                 return d.value;
             })]);
-            // .range([dataConfig.height, 0]);
 
         setRange(dataConfig.y, 'y', dataConfig);
 
@@ -221,7 +220,7 @@ function setRange(objectToRange, xOrY, dataConfig) {
     var rangeStart;
     if (xOrY === 'x') {
         rangeStart = dataConfig.yAxis.width === undefined ? 0 : dataConfig.yAxis.width;
-        if (dataConfig.chartType === 'column') {
+        if (dataConfig.chartTypeObj.xSeriesType === 'discrete') {
             objectToRange.rangeRoundBands([rangeStart, dataConfig.width], 0.1);
         } else {
             objectToRange.range([rangeStart, dataConfig.width]);
@@ -399,12 +398,22 @@ function drawPie(chartData, dataConfig, svg) {
 
 
 
-function getAvailableChartTypes() {
-    return [
-        { name: 'Spark histogram', identifier: 'spark-histogram', displayType: 'small' },
-        { name: 'Line', identifier: 'line', displayType: 'any' }, 
-        { name: 'Column', identifier: 'column', displayType: 'large' },
-        { name: 'Pie', identifier: 'pie', displayType: 'large' },
-        { name: 'Match sticks', identifier: 'match-sticks', displayType: 'large' }
+function getAvailableChartTypes(chartType) {
+    var chartTypes = [
+        { name: 'Spark histogram', identifier: 'spark-histogram', displayType: 'small', xSeriesType: 'continuous' },
+        { name: 'Line', identifier: 'line', displayType: 'any', xSeriesType: 'continuous' }, 
+        { name: 'Column', identifier: 'column', displayType: 'large', xSeriesType: 'discrete' },
+        { name: 'Pie', identifier: 'pie', displayType: 'large', xSeriesType: 'arc' },
+        { name: 'Match sticks', identifier: 'match-sticks', displayType: 'large', xSeriesType: 'continuous' }
     ];
+
+    if (chartType === undefined) {
+        return chartTypes;
+    } else {
+        for (var i = 0; i < chartTypes.length; i++) {
+            if (chartTypes[i].identifier === chartType) {
+                return chartTypes[i];
+            }
+        }
+    }
 }

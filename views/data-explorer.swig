@@ -101,15 +101,30 @@
             <div class="chart"></div>
           </div>
           <div class="chart-options-row">
-            <div class="tag-options">
-              <div class="action-tags"></div>
-              <div class="clear"></div>
+            <div class="aggregation-sections clear">
+              <div class="aggregation-options collapsed">
+                <div class="aggregation-header">...</div>
+                <div class="action-tags"></div>
+                <div class="aggregators"></div>
+                <div class="aggregate-ons"></div>
+                <div class="aggregation-periods">
+                  <div class="standard-button"><div>Daily</div></div>
+                </div>
+                <div class="chart-types"></div>
+              </div>
+              <div class="aggregation-options aggregation-options-0 expanded">
+                <div class="aggregation-header">New series</div>
+                <div class="action-tags"></div>
+                <div class="aggregators"></div>
+                <div class="aggregate-ons"></div>
+                <div class="aggregation-periods">
+                  <div class="standard-button"><div>Daily</div></div>
+                </div>
+                <div class="chart-types"></div>
+              </div>
             </div>
-            <div class="aggregation-options">
-              <div class="aggregators"></div>
-              <div class="aggregate-ons"></div>
-              <div class="aggregation-periods"><div class="standard-button"><div>Daily</div></div></div>
-              <div class="chart-types"></div>
+            <div class="versus-button-section">
+              <div class="standard-button add-versus"><div>Add versus</div></div>
             </div>
           </div>
         </div>

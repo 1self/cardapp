@@ -53,6 +53,11 @@ function setUpEventHandlers() {
     	history.back();
     	return false;
     });
+	
+    $('.add-versus').click(function() {
+    	addVersusSection();
+    	return false;
+    });
 
 }
 
@@ -66,8 +71,6 @@ function renderPage(chartParams, doPushState) {
 	}
 
 	var userActivities = getUserActivities();
-
-console.log(userActivities);
 
 	var aggregateOnTypes = getAggregateOnTypes(chartParams, userActivities);
 
@@ -107,16 +110,11 @@ function buildActionTags(chartParams, userActivities) {
 function onActionTagClick(e) {
 	var $button = $(this);
 	var actionTag = formatTag($button.find('div span').text());
-	console.log(actionTag);
 
 	if ($button.hasClass('selected')) {
 		var idx = gChartParams.actionTags.indexOf(actionTag);
-		console.log(gChartParams.actionTags);
-		console.log(idx);
 		if (idx >= 0) {
-			var test = gChartParams.actionTags.splice(idx, 1);
-			// console.log(test);
-			// gChartParams.actionTags = test;
+			var removedTags = gChartParams.actionTags.splice(idx, 1);
 		}
 	} else {
 		gChartParams.actionTags.push(actionTag);
@@ -124,23 +122,6 @@ function onActionTagClick(e) {
 
 	renderPage(gChartParams, true);
 
-	// $button.toggleClass('selected sub-button');
-	// $button.find('i').toggleClass('fa-times fa-circle');
-
-	// gChartParams.aggregator.fn = aggFn;
-	// gChartParams.aggregator.text = aggFn;
-
-	// if (aggFn !== 'count' && gChartParams.aggregator.vars.length === 0) {
-	// 	var $aggregateOns = $('.aggregate-ons .standard-button.selected');
-	// 	if ($aggregateOns.length === 0) {
-	// 		$aggregateOns = $('.aggregate-ons .standard-button');
-	// 		var $button = $($aggregateOns[0]);
-	// 		$button.toggleClass('selected sub-button');
-	// 		gChartParams.aggregator.vars.push(formatTag($button.find('div').text()));
-	// 	}
-	// }
-
-	// renderPage(gChartParams, true);
 }
 
 function buildActionTagList(userActivities) {
@@ -185,7 +166,6 @@ function onAggregatorClick(e) {
 	var aggFn = $(this).find('div').text();
 
 	gChartParams.aggregator.fn = aggFn;
-	gChartParams.aggregator.text = aggFn;
 
 	if (aggFn !== 'count' && gChartParams.aggregator.vars.length === 0) {
 		var $aggregateOns = $('.aggregate-ons .standard-button.selected');
@@ -196,6 +176,8 @@ function onAggregatorClick(e) {
 			gChartParams.aggregator.vars.push(formatTag($button.find('div').text()));
 		}
 	}
+	
+	gChartParams.aggregator.text = buildAggregatorText(gChartParams.aggregator);
 
 	renderPage(gChartParams, true);
 }
@@ -293,6 +275,9 @@ function onChartTypeClick(e) {
 		chartIdentifier = chartIdentifier.replace('sub-button', '');
 		chartIdentifier = chartIdentifier.replace('selected', '');
 		chartIdentifier = chartIdentifier.replace('left', '');
+		chartIdentifier = chartIdentifier.replace('no-icon', '');
+		chartIdentifier = chartIdentifier.replace('icon-times', '');
+		chartIdentifier = chartIdentifier.replace('icon-dot', '');
 		chartIdentifier = chartIdentifier.trim();
 
 		console.log(chartIdentifier);
@@ -383,7 +368,7 @@ function setUp1selfLogger() {
 }
 
 function createChartParams(paramsArray) {
-	var chartParams = {};
+	var chartParams = { series: [] };
 
 	if (paramsArray !== undefined) {
 		objectTagsParam = paramsArray[2];
@@ -404,6 +389,15 @@ function createChartParams(paramsArray) {
 	chartParams.chartType = chartTypeParam;
 	chartParams.fromDate = decodeURIComponent(fromDateParam);
 	chartParams.toDate = decodeURIComponent(toDateParam);
+
+	var newSeries = {
+		objectTags: decodeURIComponent(objectTagsParam).split(','),
+		actionTags: decodeURIComponent(actionTagsParam).split(','),
+		aggregator: aggregator,
+		chartType: chartTypeParam
+	};
+
+	chartParams.series.push(newSeries);
 
 	console.log('chartParams', chartParams);
 
@@ -426,6 +420,10 @@ function splitAggregator(strAggregator) {
 	}
 
 	return aggregator;
+}
+
+function buildAggregatorText(aggregator) {
+	return aggregator.fn + '(' + aggregator.vars.join(',') + ')';
 }
 
 function getExplorePageUrl(chartParams) {
