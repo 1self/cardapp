@@ -3368,6 +3368,11 @@ footer:before {
     padding-right: 10px;
 }
 
+.standard-button.icon-times i, .standard-button.icon-dot i {
+    font-size: 0.6em;
+    font-weight: lighter;
+}
+
 .sub-button {
     color: #000;
     border: solid 1px #00B597;

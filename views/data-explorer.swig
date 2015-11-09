@@ -102,8 +102,8 @@
           </div>
           <div class="chart-options-row">
             <div class="tag-options">
-              <div class="object-tags"></div>
               <div class="action-tags"></div>
+              <div class="clear"></div>
             </div>
             <div class="aggregation-options">
               <div class="aggregators"></div>
@@ -115,7 +115,9 @@
         </div>
     </main>
 
-    <div class="standard-button template"><div></div></div>
+    <div class="standard-button no-icon template"><div></div></div>
+    <div class="standard-button icon-times selected template"><div><span></span>&nbsp;<i class="fa fa-times"></i></div></div>
+    <div class="standard-button icon-dot sub-button template"><div><span></span>&nbsp;<i class="fa fa-circle"></i></div></div>
 
     <footer>
         <div class="wrap">

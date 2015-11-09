@@ -282,7 +282,7 @@ function drawYAxis(dataConfig, svg, xElem) {
         .attr("class", "y axis")
         .call(dataConfig.yAxis.fn);
 
-    console.log(dataConfig);
+    // console.log(dataConfig);
 
     dataConfig.yAxis.width = g.node().getBBox().width;
     dataConfig.margin.left += dataConfig.yAxis.width;
@@ -290,7 +290,7 @@ function drawYAxis(dataConfig, svg, xElem) {
 
     setRange(dataConfig.x, 'x', dataConfig);
 
-    console.log(dataConfig);
+    // console.log(dataConfig);
 
     g.attr("transform", "translate(" + dataConfig.yAxis.width + ",0)");
 
