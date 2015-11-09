@@ -3493,7 +3493,7 @@ footer:before {
     background-size: contain;
 }
 
-.admin .service.visitCounter, .integrations .service.visitCounter {
+.admin .service.visitcounter, .integrations .service.visitcounter {
     background: url(../img/service-visitcounter.png);
     background-repeat: no-repeat;
     background-size: contain;

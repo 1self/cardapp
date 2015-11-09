@@ -1,10 +1,4 @@
-.column {
-  fill: steelblue;
-}
 
-.column:hover {
-  fill: brown;
-}
 
 .axis {
   font: 10px sans-serif;
