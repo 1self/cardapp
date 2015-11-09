@@ -1180,7 +1180,7 @@ footer:before {
     margin-bottom: 15px;
 }
 
-.log .spark-column-box {
+.log .spark-histogram-box {
     height: 100%;
     width: 22%;
     max-width: 90px;
@@ -1191,12 +1191,12 @@ footer:before {
     position: relative;
 }
 
-.log .spark-column-container {
+.log .spark-histogram-container {
     height: 100%;
     width: 100%;
 }
 
-.log .spark-column-container-cover {
+.log .spark-histogram-container-cover {
     width: 100%;
     height: 100%;
     position: absolute;

@@ -318,9 +318,9 @@
                 <div class="standard-button log-button"><div></div></div>
               </div>
             </div>
-            <div class="spark-column-box right">
-              <div class="spark-column-container"></div>
-              <div class="spark-column-container-cover"></div>
+            <div class="spark-histogram-box right">
+              <div class="spark-histogram-container"></div>
+              <div class="spark-histogram-container-cover"></div>
             </div>
             <div class="clear"></div>
           </div>

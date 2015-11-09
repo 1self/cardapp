@@ -28,7 +28,7 @@ function drawChart(data, dataConfig, $targetElement) {
                     yAxisElem = drawYAxis(dataConfig, svg, xAxisElem);
             }
 
-            if (dataConfig.chartType === 'spark-column') {
+            if (dataConfig.chartType === 'spark-histogram') {
                 drawSparkColumn(data, dataConfig, svg);
             } else if (dataConfig.chartType === 'column') {
                 drawColumn(data, dataConfig, svg);
@@ -326,10 +326,10 @@ function drawSparkColumn(chartData, dataConfig, svg) {
 
     var container = svg.append("g");
 
-    container.selectAll(".column-spark")
+    container.selectAll(".histogram-spark")
         .data(chartData)
         .enter().append("line")
-        .attr("class", "column-spark")
+        .attr("class", "histogram-spark")
         .style("stroke", dataConfig.lineColour)
         .attr("y1", dataConfig.height)
         .attr("y2", dataConfig.yMap)
@@ -374,7 +374,7 @@ function drawPie(chartData, dataConfig, svg) {
 
 function getAvailableChartTypes() {
     return [
-        { name: 'Spark column', identifier: 'spark-column', displayType: 'small' },
+        { name: 'Spark histogram', identifier: 'spark-histogram', displayType: 'small' },
         { name: 'Line', identifier: 'line', displayType: 'any' }, 
         { name: 'Column', identifier: 'column', displayType: 'large' },
         { name: 'Pie', identifier: 'pie', displayType: 'large' }

@@ -257,8 +257,8 @@ function buildUserActivities(storedUserActivities) {
 		
 		var $listItem = $('.log-row.template').clone();
 		$listItem.removeClass('template');
-		var $sparkBarContainer = $listItem.find('.spark-column-container');
-		var $sparkBarContainerCover = $listItem.find('.spark-column-container-cover');
+		var $sparkBarContainer = $listItem.find('.spark-histogram-container');
+		var $sparkBarContainerCover = $listItem.find('.spark-histogram-container-cover');
 		$listItem.find('.activity-data').val(encodeURIComponent(JSON.stringify(storedUserActivities[i])));
 		$listItem.find('.log-item-name div').text(formatActivityText(storedUserActivities[i]));
 
@@ -267,7 +267,7 @@ function buildUserActivities(storedUserActivities) {
 		else
 			$listItem.find('.log-item-button .log-button div').text('Log it');
 
-		$sparkBarContainer.addClass('spark-column-container-' + i);
+		$sparkBarContainer.addClass('spark-histogram-container-' + i);
 		var dataUrl = getChartDataUrl(storedUserActivities[i]);
 		renderSparkBar($sparkBarContainer, dataUrl);
 		
@@ -288,7 +288,7 @@ function renderSparkBar($targetElement, dataUrl) {
 
 	var onGotData = function(dataset) {
 		var dataConfig = {
-			chartType: 'spark-column',
+			chartType: 'spark-histogram',
 			xAxis: { parseFormat: "%m/%d/%Y" },
 			lineColour: '#00B597',
 			margin: { top: 0, right: 0, bottom: 0, left: 0 }

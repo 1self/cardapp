@@ -96,7 +96,7 @@
         <div class="background"></div>
 
         <div class="main-content">
-          <div class="header-row">header goes here</div>
+          <div class="header-row"></div>
           <div class="chart-row">
             <div class="chart"></div>
           </div>

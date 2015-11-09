@@ -68,6 +68,7 @@ function renderPage(chartParams, doPushState) {
 	var aggregateOnTypes = getAggregateOnTypes(chartParams);
 
 	renderChart(chartParams);
+	setPageHeader(chartParams);
     buildAggregators(chartParams, aggregateOnTypes);
     buildAggregateOns(chartParams, aggregateOnTypes);
     buildChartTypes(chartParams);
@@ -314,8 +315,16 @@ function getYAxisLabel(chartParams) {
 	var label = chartParams.aggregator.text;
 	if (chartParams.aggregator.vars.length > 0)
 		label += ' of ' + chartParams.aggregator.vars.join(', ');
+	else
+		label += ' of activities';
 	return label;
-} 
+}
+
+function setPageHeader(chartParams) {
+	var headerText = getYAxisLabel(chartParams);
+	headerText += ' by day';
+	$('.header-row').text(headerText);
+}
 
 function setUp1selfLogger() {
 	config = {
