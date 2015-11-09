@@ -66,6 +66,7 @@ function renderPage(chartParams, doPushState) {
 	}
 
 	var userActivities = getUserActivities();
+
 console.log(userActivities);
 
 	var aggregateOnTypes = getAggregateOnTypes(chartParams, userActivities);
@@ -78,45 +79,6 @@ console.log(userActivities);
     buildChartTypes(chartParams);
 }
 
-function renderNewState(newState) {
-	var urlRoot = window.location.href;
-	urlRootArray = urlRoot.split('/log');
-	urlRoot = urlRootArray[0] + '/log';
-    var newUrl;
-    var doPush = newState.doPush === undefined ? true : false;
-
-    if (!doPush) {
-    	doPush = false;
-    	newState.name = '';
-    	if (urlRootArray.length > 1 && urlRootArray[1].indexOf('/new/') >= 0) {
-    		newState.name = urlRootArray[1].split('/new/')[1];
-    	}
-    }
-
-    if (newState.name === '') {
-		hide('.page-title-add');
-		show('.page-title');
-		hide('.log-overlay');
-		hide('.new-activity-section.activity-category');
-    	hide('.new-activity-section.activity-property');
-		$('.back-button').hide();
-		doPush = false;
-    } else if (newState.name === 'select-activity-category') {
-    	hide('.new-activity-section.activity-category-new');
-		hide('.new-activity-section.activity-name');
-    	show('.new-activity-section.activity-category');
-    	show('.log-overlay');
-    	$('.back-button').show();
-    	hide('.page-title');
-    	show('.page-title-add');
-	}
-
-	if (doPush) {
-		newUrl = urlRoot + '/new/' + newState.name;
-    	history.pushState(newState, newState.name, newUrl);
-    }
-}
-
 function buildActionTags(chartParams, userActivities) {
 	var $actionTags = $('.action-tags');
 	$actionTags.empty();
@@ -127,9 +89,9 @@ function buildActionTags(chartParams, userActivities) {
 		var $button;
 
 		if (chartParams.actionTags.indexOf(formatTag(actionTagList[i])) < 0) {
-			$button = $('.standard-button.icon-dot.template').clone()
+			$button = $('.standard-button.icon-dot.template').clone();
 		} else {
-			$button = $('.standard-button.icon-times.template').clone()
+			$button = $('.standard-button.icon-times.template').clone();
 		}
 
 		$button.removeClass('template');
@@ -144,15 +106,26 @@ function buildActionTags(chartParams, userActivities) {
 
 function onActionTagClick(e) {
 	var $button = $(this);
+	var actionTag = formatTag($button.find('div span').text());
+	console.log(actionTag);
 
-	// if ($button.hasClass('selected')) {
-	// 	$button.removeClass('selected');
-	// 	$button.addClass('sub-button');
-	// 	$button.find('i').removeClass('fa-times');
-	// }
+	if ($button.hasClass('selected')) {
+		var idx = gChartParams.actionTags.indexOf(actionTag);
+		console.log(gChartParams.actionTags);
+		console.log(idx);
+		if (idx >= 0) {
+			var test = gChartParams.actionTags.splice(idx, 1);
+			// console.log(test);
+			// gChartParams.actionTags = test;
+		}
+	} else {
+		gChartParams.actionTags.push(actionTag);
+	}
 
-	$button.toggleClass('selected sub-button');
-	$button.find('i').toggleClass('fa-times fa-circle');
+	renderPage(gChartParams, true);
+
+	// $button.toggleClass('selected sub-button');
+	// $button.find('i').toggleClass('fa-times fa-circle');
 
 	// gChartParams.aggregator.fn = aggFn;
 	// gChartParams.aggregator.text = aggFn;
