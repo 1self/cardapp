@@ -121,6 +121,26 @@ var renderDataExplorer = function(req, res, next) {
 		});
 };
 
+var renderDataExplorerVs = function(req, res, next) {
+//	/explore/chart/streams/:streamId/:objectTags/:actionTags/:aggregator/:aggregatePeriod/:chartType/:fromDate/:toDate
+	res.render('data-explorer', 
+		{
+			streamId: req.params.streamId,
+			objectTags: req.params.objectTags,
+			actionTags: req.params.actionTags,
+			aggregator: req.params.aggregator,
+			aggregatePeriod: req.params.aggregatePeriod,
+			chartType: req.params.chartType,
+			fromDate: req.params.fromDate,
+			toDate: req.params.toDate,
+			objectTags1: req.params.objectTags1,
+			actionTags1: req.params.actionTags1,
+			aggregator1: req.params.aggregator1,
+			chartType1: req.params.chartType1,
+			readToken: req.params.readToken
+		});
+};
+
 /* ---------------- */
 
 
@@ -436,6 +456,10 @@ router.get('/data/integrations',
 
 router.get('/explore/chart/streams/:streamId/:objectTags/:actionTags/:aggregator/:aggregatePeriod/:chartType/:fromDate/:toDate',
 	renderDataExplorer
+);
+
+router.get('/explore/chart/streams/:streamId/:objectTags/:actionTags/:aggregator/:aggregatePeriod/:chartType/:fromDate/:toDate/vs/:objectTags1/:actionTags1/:aggregator1/:chartType1',
+	renderDataExplorerVs
 );
 
 router.get('/info/unite-data',

@@ -54,6 +54,10 @@
       var chartTypeParam = '{{chartType}}';
       var fromDateParam = '{{fromDate}}';
       var toDateParam = '{{toDate}}';
+      var objectTagsParam1 = '{{objectTags1}}';
+      var actionTagsParam1 = '{{actionTags1}}';
+      var aggregatorParam1 = '{{aggregator1}}';
+      var chartTypeParam1 = '{{chartType1}}';
       var readTokenParam = '{{readToken}}';
 
       console.log(streamIdParam);
@@ -102,18 +106,8 @@
           </div>
           <div class="chart-options-row">
             <div class="aggregation-sections clear">
-              <div class="aggregation-options collapsed">
-                <div class="aggregation-header">...</div>
-                <div class="action-tags"></div>
-                <div class="aggregators"></div>
-                <div class="aggregate-ons"></div>
-                <div class="aggregation-periods">
-                  <div class="standard-button"><div>Daily</div></div>
-                </div>
-                <div class="chart-types"></div>
-              </div>
               <div class="aggregation-options aggregation-options-0 expanded">
-                <div class="aggregation-header">New series</div>
+                <div class="aggregation-header"></div>
                 <div class="action-tags"></div>
                 <div class="aggregators"></div>
                 <div class="aggregate-ons"></div>
