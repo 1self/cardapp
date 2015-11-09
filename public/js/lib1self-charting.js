@@ -34,6 +34,8 @@ function drawChart(data, dataConfig, $targetElement) {
                 drawColumn(data, dataConfig, svg);
             } else if (dataConfig.chartType === 'line') {
                 drawLine(data, dataConfig, svg);
+            } else if (dataConfig.chartType === 'match-sticks') {
+                drawMatchSticks(data, dataConfig, svg);
             } else if (dataConfig.chartType === 'pie') {
                 drawPie(data, dataConfig, svg);
             }
@@ -280,7 +282,7 @@ function drawYAxis(dataConfig, svg, xElem) {
         .attr("class", "y axis")
         .call(dataConfig.yAxis.fn);
 
-    console.log(dataConfig);
+    // console.log(dataConfig);
 
     dataConfig.yAxis.width = g.node().getBBox().width;
     dataConfig.margin.left += dataConfig.yAxis.width;
@@ -288,7 +290,7 @@ function drawYAxis(dataConfig, svg, xElem) {
 
     setRange(dataConfig.x, 'x', dataConfig);
 
-    console.log(dataConfig);
+    // console.log(dataConfig);
 
     g.attr("transform", "translate(" + dataConfig.yAxis.width + ",0)");
 
@@ -310,8 +312,8 @@ function appendYAxisLabel(yElem, dataConfig) {
 function drawLine(chartData, dataConfig, svg) {
 
     var line = d3.svg.line()
-        .x(function(d) { return dataConfig.x(d.date); })
-        .y(function(d) { return dataConfig.y(d.value); });
+        .x(dataConfig.xMap)
+        .y(dataConfig.yMap);
 
 
     svg.append("path")
@@ -320,6 +322,30 @@ function drawLine(chartData, dataConfig, svg) {
         .style("stroke", dataConfig.lineColour)
         .style("fill", "none")
         .attr("d", line);
+}
+
+function drawMatchSticks(chartData, dataConfig, svg) {
+
+    svg.selectAll(".match-stick")
+        .data(chartData)
+        .enter().append("line")
+        .attr("class", "match-stick")
+        .style("stroke", dataConfig.lineColour )
+        .attr("y1", dataConfig.height)
+        .attr("y2", dataConfig.yMap)
+        .attr("x1", dataConfig.xMap)
+        .attr("x2", dataConfig.xMap);
+
+    // draw dots
+    svg.selectAll(".dot")
+        .data(chartData)
+        .enter().append("ellipse")
+        .attr("class", "dot")
+        .attr("rx", 3.5)
+        .attr("ry", 3.5)
+        .attr("cx", dataConfig.xMap)
+        .attr("cy", dataConfig.yMap)
+        .style("fill", dataConfig.lineColour );
 }
 
 function drawSparkColumn(chartData, dataConfig, svg) {
@@ -346,9 +372,10 @@ function drawColumn(chartData, dataConfig, svg) {
         .data(chartData)
         .enter().append("rect")
         .attr("class", "column")
-        .attr("x", function(d) { return dataConfig.x(d.date); })
+        .style("fill", dataConfig.lineColour)
+        .attr("x", dataConfig.xMap)
         .attr("width", dataConfig.x.rangeBand())
-        .attr("y", function(d) { return dataConfig.y(d.value); })
+        .attr("y", dataConfig.yMap)
         .attr("height", function(d) { return dataConfig.height - dataConfig.y(d.value); });
 }
 
@@ -377,6 +404,7 @@ function getAvailableChartTypes() {
         { name: 'Spark histogram', identifier: 'spark-histogram', displayType: 'small' },
         { name: 'Line', identifier: 'line', displayType: 'any' }, 
         { name: 'Column', identifier: 'column', displayType: 'large' },
-        { name: 'Pie', identifier: 'pie', displayType: 'large' }
+        { name: 'Pie', identifier: 'pie', displayType: 'large' },
+        { name: 'Match sticks', identifier: 'match-sticks', displayType: 'large' }
     ];
 }

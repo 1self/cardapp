@@ -65,10 +65,14 @@ function renderPage(chartParams, doPushState) {
     	history.pushState(null, null, url);		
 	}
 
-	var aggregateOnTypes = getAggregateOnTypes(chartParams);
+	var userActivities = getUserActivities();
+console.log(userActivities);
+
+	var aggregateOnTypes = getAggregateOnTypes(chartParams, userActivities);
 
 	renderChart(chartParams);
 	setPageHeader(chartParams);
+	buildActionTags(chartParams, userActivities);
     buildAggregators(chartParams, aggregateOnTypes);
     buildAggregateOns(chartParams, aggregateOnTypes);
     buildChartTypes(chartParams);
@@ -113,13 +117,80 @@ function renderNewState(newState) {
     }
 }
 
+function buildActionTags(chartParams, userActivities) {
+	var $actionTags = $('.action-tags');
+	$actionTags.empty();
+
+	var actionTagList = buildActionTagList(userActivities);
+
+	for (var i = 0; i < actionTagList.length; i++) {
+		var $button;
+
+		if (chartParams.actionTags.indexOf(formatTag(actionTagList[i])) < 0) {
+			$button = $('.standard-button.icon-dot.template').clone()
+		} else {
+			$button = $('.standard-button.icon-times.template').clone()
+		}
+
+		$button.removeClass('template');
+		$button.addClass('left');
+		$button.find('div span').text(actionTagList[i]);
+
+		$button.click(onActionTagClick);
+		$actionTags.append($button);			
+
+	}
+}
+
+function onActionTagClick(e) {
+	var $button = $(this);
+
+	// if ($button.hasClass('selected')) {
+	// 	$button.removeClass('selected');
+	// 	$button.addClass('sub-button');
+	// 	$button.find('i').removeClass('fa-times');
+	// }
+
+	$button.toggleClass('selected sub-button');
+	$button.find('i').toggleClass('fa-times fa-circle');
+
+	// gChartParams.aggregator.fn = aggFn;
+	// gChartParams.aggregator.text = aggFn;
+
+	// if (aggFn !== 'count' && gChartParams.aggregator.vars.length === 0) {
+	// 	var $aggregateOns = $('.aggregate-ons .standard-button.selected');
+	// 	if ($aggregateOns.length === 0) {
+	// 		$aggregateOns = $('.aggregate-ons .standard-button');
+	// 		var $button = $($aggregateOns[0]);
+	// 		$button.toggleClass('selected sub-button');
+	// 		gChartParams.aggregator.vars.push(formatTag($button.find('div').text()));
+	// 	}
+	// }
+
+	// renderPage(gChartParams, true);
+}
+
+function buildActionTagList(userActivities) {
+	var actionTagList = [];
+	for (var i = 0; i < userActivities.length; i++) {
+		var activity = userActivities[i];
+		if (actionTagList.indexOf(activity.activityCategory) < 0) {
+			actionTagList.push(activity.activityCategory);
+		}
+		if (activity.activityName !== undefined && actionTagList.indexOf(activity.activityName) < 0) {
+			actionTagList.push(activity.activityName);
+		}
+	}
+	return actionTagList;
+}
+
 function buildAggregators(chartParams, aggregateOnTypes) {
 	var $aggregators = $('.aggregators');
 	$aggregators.empty();
 
 	for (var i = 0; i < aggregationTypes.length; i++) {
 		if (!aggregationTypes[i].requiresVar || aggregateOnTypes.length > 0) {
-			var $button = $('.standard-button.template').clone();
+			var $button = $('.standard-button.no-icon.template').clone();
 			$button.removeClass('template');
 			$button.addClass('left');
 			$button.find('div').text(aggregationTypes[i].typeName);
@@ -161,7 +232,7 @@ function buildAggregateOns(chartParams, aggregateOnTypes) {
 	$aggregateOns.empty();
 
 	for (var i = 0; i < aggregateOnTypes.length; i++) {
-		var $button = $('.standard-button.template').clone();
+		var $button = $('.standard-button.no-icon.template').clone();
 		$button.removeClass('template');
 		$button.addClass('left');
 		$button.find('div').text(aggregateOnTypes[i]);
@@ -185,8 +256,7 @@ function onAggregateOnClick(e) {
 	// renderPage(gChartParams, true);
 }
 
-function getAggregateOnTypes(chartParams) {
-	var userActivities = getUserActivities();
+function getAggregateOnTypes(chartParams, userActivities) {
 	var matchedActivity;
 
 	for (var i = 0; i < userActivities.length; i++) {
@@ -219,7 +289,7 @@ function buildChartTypes(chartParams) {
 
 	for (var i = 0; i < availableChartTypes.length; i++) {
 		if (availableChartTypes[i].displayType !== 'small') {
-			var $button = $('.standard-button.template').clone();
+			var $button = $('.standard-button.no-icon.template').clone();
 			$button.removeClass('template');
 			$button.addClass('left');
 			$button.addClass(availableChartTypes[i].identifier);
