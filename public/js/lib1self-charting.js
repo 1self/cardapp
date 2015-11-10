@@ -3,52 +3,60 @@
 var offline = false; // getQSParam().offline === "true";
 
 function drawChart(datasets, dataConfig, $targetElement) {
+    var svg;
+    var width, height, selector;
 
-    for (var i = 0; i < datasets.length; i++) {
-        var data = datasets[i];
+    $targetElement.ready(function() {
 
-        if (data !== undefined && data.length > 0) {
-            if (!dataConfig.series[i].lineColour) dataConfig.series[i].lineColour = '#000000';
+        for (var i = 0; i < datasets.length; i++) {
+            var data = datasets[i];
 
-            $targetElement.ready(function() {
+            if (data !== undefined && data.length > 0) {
+                if (!dataConfig.series[i].lineColour) dataConfig.series[i].lineColour = '#000000';
 
-                var width = $targetElement.width();
-                var height = $targetElement.height();
-                var selector = '.' + $targetElement.attr('class').split(' ').join('.');
 
-                dataConfig = getConfiguration(data, dataConfig, i, width, height);
+                    if (i === 0) {
+                        width = $targetElement.width();
+                        height = $targetElement.height();
+                        selector = '.' + $targetElement.attr('class').split(' ').join('.');
+                    }
 
-                // Adds the svg canvas
-                var svg = createSvg(dataConfig, selector);
-                var xAxisElem;
-                var yAxisElem;
+                    dataConfig = getConfiguration(data, dataConfig, i, width, height);
 
-                if (dataConfig.series[i].chartTypeObj.xSeriesType !== 'arc') {
-                    if (dataConfig.xAxis.showAxis)
-                        xAxisElem = drawXAxis(dataConfig, svg, i);
+                    // Adds the svg canvas
+                    if (i === 0) {
+                        svg = createSvg(dataConfig, selector);
 
-                    if (dataConfig.yAxis.showAxis)
-                        yAxisElem = drawYAxis(dataConfig, svg, xAxisElem, i);
-                }
+                        var xAxisElem;
+                        var yAxisElem;
 
-                if (dataConfig.series[i].chartType === 'spark-histogram') {
-                    drawSparkColumn(data, dataConfig, i, svg);
-                } else if (dataConfig.series[i].chartType === 'column') {
-                    drawColumn(data, dataConfig, i, svg);
-                } else if (dataConfig.series[i].chartType === 'line') {
-                    drawLine(data, dataConfig, i, svg);
-                } else if (dataConfig.series[i].chartType === 'match-sticks') {
-                    drawMatchSticks(data, dataConfig, i, svg);
-                } else if (dataConfig.series[i].chartType === 'pie') {
-                    drawPie(data, dataConfig, svg);
-                }
+                        if (dataConfig.series[i].chartTypeObj.xSeriesType !== 'arc') {
+                            if (dataConfig.xAxis.showAxis)
+                                xAxisElem = drawXAxis(dataConfig, svg, i);
 
-                // if (dataConfig.yAxis.showAxis && yAxisElem !== undefined)
-                    // appendYAxisLabel(yAxisElem, dataConfig);
+                            if (dataConfig.yAxis.showAxis)
+                                yAxisElem = drawYAxis(dataConfig, svg, xAxisElem, i);
+                        }
+                    }
 
-            });
+                    if (dataConfig.series[i].chartType === 'spark-histogram') {
+                        drawSparkColumn(data, dataConfig, i, svg);
+                    } else if (dataConfig.series[i].chartType === 'column') {
+                        drawColumn(data, dataConfig, i, svg);
+                    } else if (dataConfig.series[i].chartType === 'line') {
+                        drawLine(data, dataConfig, i, svg);
+                    } else if (dataConfig.series[i].chartType === 'match-sticks') {
+                        drawMatchSticks(data, dataConfig, i, svg);
+                    } else if (dataConfig.series[i].chartType === 'pie') {
+                        drawPie(data, dataConfig, svg);
+                    }
+
+                    // if (dataConfig.yAxis.showAxis && yAxisElem !== undefined)
+                        // appendYAxisLabel(yAxisElem, dataConfig);
+            }
         }
-    }
+
+    });
 }
 
 function stripNullValues(dataArray) {
@@ -222,7 +230,6 @@ function getConfiguration(chartData, dataConfig, seriesId, width, height) {
 
 function setRange(objectToRange, xOrY, dataConfig, seriesId) {
     var rangeStart;
-    console.log('xx', xOrY, dataConfig, seriesId);
     if (xOrY === 'x') {
         rangeStart = dataConfig.yAxis.width === undefined ? 0 : dataConfig.yAxis.width;
         if (dataConfig.series[seriesId].chartTypeObj.xSeriesType === 'discrete') {

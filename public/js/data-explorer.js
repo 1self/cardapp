@@ -118,7 +118,7 @@ function buildSelectionSections(chartParams, userActivities, aggregateOnTypes) {
 
 function buildActionTags($appendTo, actionTagParams, userActivities) {
 	var $actionTags = $appendTo.find('.action-tags');
-	var showInactiveButtons = $appendTo.hasClass('expanded');
+	var sectionIsExpanded = $appendTo.hasClass('expanded');
 	$actionTags.empty();
 
 	var actionTagList = buildActionTagList(userActivities);
@@ -128,7 +128,7 @@ function buildActionTags($appendTo, actionTagParams, userActivities) {
 		var buttonIsActive;
 
 		if (actionTagParams.indexOf(formatTag(actionTagList[i])) >= 0) {
-			buttonIsActive = true
+			buttonIsActive = true;
 			$button = $('.standard-button.icon-times.template').clone();
 		} else {
 			buttonIsActive = false;
@@ -137,11 +137,11 @@ function buildActionTags($appendTo, actionTagParams, userActivities) {
 
 		$button.removeClass('template');
 
-		if (showInactiveButtons) {
+		if (sectionIsExpanded) {
 			$button.click(onActionTagClick);
 		}
 
-		if (showInactiveButtons || buttonIsActive) {
+		if (sectionIsExpanded || buttonIsActive) {
 			$button.addClass('left');
 			$button.find('div span').text(actionTagList[i]);
 
@@ -196,6 +196,9 @@ function buildActionTagList(userActivities) {
 
 function buildAggregators($appendTo, aggregator, aggregateOnTypes) {
 	var $aggregators = $appendTo.find('.aggregators');
+	var sectionIsExpanded = $appendTo.hasClass('expanded');
+	var isActive;
+
 	$aggregators.empty();
 
 	for (var i = 0; i < aggregationTypes.length; i++) {
@@ -206,13 +209,18 @@ function buildAggregators($appendTo, aggregator, aggregateOnTypes) {
 			$button.find('div').text(aggregationTypes[i].typeName);
 
 			if (aggregationTypes[i].typeName !== aggregator.fn) {
+				isActive = false;
 				$button.addClass('sub-button');
 			} else {
+				isActive = true;
 				$button.addClass('selected');
 			}
 
-			$button.click(onAggregatorClick);
-			$aggregators.append($button);			
+			if (sectionIsExpanded)
+				$button.click(onAggregatorClick);
+
+			if (sectionIsExpanded || isActive)
+				$aggregators.append($button);			
 		}
 
 	}
@@ -242,6 +250,9 @@ function onAggregatorClick(e) {
 
 function buildAggregateOns($appendTo, aggregator, aggregateOnTypes) {
 	var $aggregateOns = $appendTo.find('.aggregate-ons');
+	var sectionIsExpanded = $appendTo.hasClass('expanded');
+	var isActive;
+
 	$aggregateOns.empty();
 
 	for (var i = 0; i < aggregateOnTypes.length; i++) {
@@ -251,13 +262,18 @@ function buildAggregateOns($appendTo, aggregator, aggregateOnTypes) {
 		$button.find('div').text(aggregateOnTypes[i]);
 
 		if (aggregator.vars.indexOf(formatTag(aggregateOnTypes[i])) < 0) {
+			isActive = false;
 			$button.addClass('sub-button');
 		} else {
+			isActive = true;
 			$button.addClass('selected');
 		}
 
-		$button.click(onAggregateOnClick);
-		$aggregateOns.append($button);
+		if (sectionIsExpanded)
+			$button.click(onAggregateOnClick);
+
+		if (sectionIsExpanded || isActive)
+			$aggregateOns.append($button);
 	}
 }
 
@@ -299,6 +315,9 @@ function getAggregateOnTypes(chartParams, userActivities) {
 
 function buildChartTypes($appendTo, chartType) {
 	var $chartTypes = $appendTo.find('.chart-types');
+	var sectionIsExpanded = $appendTo.hasClass('expanded');
+	var isActive;
+
 	$chartTypes.empty();
 
 	for (var i = 0; i < availableChartTypes.length; i++) {
@@ -310,13 +329,18 @@ function buildChartTypes($appendTo, chartType) {
 			$button.find('div').text(availableChartTypes[i].name);
 
 			if (chartType !== availableChartTypes[i].identifier) {
+				isActive = false;
 				$button.addClass('sub-button');
 			} else {
+				isActive = true;
 				$button.addClass('selected');
 			}
 
-			$button.click(onChartTypeClick);
-			$chartTypes.append($button);			
+			if (sectionIsExpanded)
+				$button.click(onChartTypeClick);
+
+			if (sectionIsExpanded || isActive)
+				$chartTypes.append($button);			
 		}
 
 	}
@@ -376,7 +400,6 @@ function getUserActivities() {
 // }
 
 function renderChart(chartParams) {
-	var seriesId = 0;
 	var seriesCount = 0;
 	var cloneCount = 0;
 	var dataConfig;
@@ -420,7 +443,7 @@ function renderChart(chartParams) {
 
 			var chartDataUrl = getChartDataUrl(chartParams, i);
 			console.log('dataUrl: ', chartDataUrl);
-			getData(chartDataUrl, onGotData, seriesId);
+			getData(chartDataUrl, onGotData, i);
 		} else {
 			onGotData([], i, true);
 		}
@@ -512,11 +535,13 @@ function createChartParams(paramsArray, queryString) {
 	}
 
 	if (queryString !== undefined && queryString !== '') {
-		activeSeries = getQSParamFromQS(queryString)[activeSeries]
+		activeSeries = getQSParamFromQS(queryString).activeSeries;
+	} else {
+		activeSeries = getQSParam().activeSeries;
 	}
 
 	if (!isNaN(activeSeries) && activeSeries < chartParams.series.length && activeSeries >= 0)
-		chartParams.activeSeries = activeSeries;
+		chartParams.activeSeries = +activeSeries;
 	else
 		chartParams.activeSeries = 0;
 
