@@ -127,12 +127,12 @@ function buildActionTags($appendTo, actionTagParams, userActivities) {
 		var $button = null;
 		var buttonIsActive;
 
-		if (actionTagParams.indexOf(formatTag(actionTagList[i])) < 0) {
+		if (actionTagParams.indexOf(formatTag(actionTagList[i])) >= 0) {
 			buttonIsActive = true
-			$button = $('.standard-button.icon-dot.template').clone();
+			$button = $('.standard-button.icon-times.template').clone();
 		} else {
 			buttonIsActive = false;
-			$button = $('.standard-button.icon-times.template').clone();
+			$button = $('.standard-button.icon-dot.template').clone();
 		}
 
 		$button.removeClass('template');
@@ -377,27 +377,57 @@ function getUserActivities() {
 
 function renderChart(chartParams) {
 	var seriesId = 0;
-	var chartDataUrl = getChartDataUrl(chartParams, seriesId);
+	var seriesCount = 0;
+	var cloneCount = 0;
+	var dataConfig;
+	var datasets = [];
 
-	var onGotData = function(dataset) {
-		var dataConfig = {
-			chartType: chartParams.series[seriesId].chartType,
-			xAxis: { parseFormat: "%m/%d/%Y", showAxis: true },
-			yAxis: { showAxis: true, label: getYAxisLabel(chartParams) },
-			lineColour: '#00B597',
-			margin: { top: 10, right: 10, bottom: 10, left: 10 }
-		};
-		$('.chart').empty();
-		drawChart(dataset, dataConfig, $('.data-explorer .chart'));
+	var onGotData = function(dataset, seriesId, isClone) {
+		if (seriesCount === 0) {
+			dataConfig = {
+				series: [],
+				// chartType: chartParams.series[seriesId].chartType,
+				xAxis: { parseFormat: "%m/%d/%Y", showAxis: true },
+				yAxis: { showAxis: true, label: getYAxisLabel(chartParams.series[0].aggregator) },
+				// lineColour: '#00B597',
+				margin: { top: 10, right: 10, bottom: 10, left: 10 }
+			};
+		}
+
+		if (isClone) {
+			cloneCount++;
+		} else {
+			if (dataConfig.series[seriesId] === undefined)
+				dataConfig.series[seriesId] = {};
+
+			dataConfig.series[seriesId].chartType = chartParams.series[seriesId].chartType;
+			dataConfig.series[seriesId].lineColour = seriesId === 0 ? '#00B597' : '#ff0000';
+			dataConfig.series[seriesId].dataLabel = getYAxisLabel(chartParams.series[seriesId].aggregator);
+
+			datasets[seriesId] = dataset;
+
+			seriesCount++;
+		}
+
+		if (seriesCount + cloneCount === chartParams.series.length) {
+			$('.chart').empty();
+			drawChart(datasets, dataConfig, $('.data-explorer .chart'));
+		}
 	};
 
-	console.log('dataUrl: ', chartDataUrl);
+	for (var i = 0; i < chartParams.series.length; i++) {
+		if (!chartParams.series[i].isClone) {
 
-	getData(chartDataUrl, onGotData);
+			var chartDataUrl = getChartDataUrl(chartParams, i);
+			console.log('dataUrl: ', chartDataUrl);
+			getData(chartDataUrl, onGotData, seriesId);
+		} else {
+			onGotData([], i, true);
+		}
+	}
 }
 
-function getYAxisLabel(chartParams) {
-	var aggregator = chartParams.series[0].aggregator;
+function getYAxisLabel(aggregator) {
 	var label = aggregator.text;
 	if (aggregator.vars.length > 0)
 		label += ' of ' + aggregator.vars.join(', ');
@@ -407,7 +437,7 @@ function getYAxisLabel(chartParams) {
 }
 
 function setPageHeader(chartParams) {
-	var headerText = getYAxisLabel(chartParams);
+	var headerText = getYAxisLabel(chartParams.series[0].aggregator);
 	headerText += ' by day';
 	$('.header-row').text(headerText);
 
@@ -427,8 +457,9 @@ function setUp1selfLogger() {
     });	
 }
 
-function createChartParams(paramsArray) {
+function createChartParams(paramsArray, queryString) {
 	var chartParams = { series: [] };
+	var activeSeries;
 
 	if (paramsArray !== undefined) {
 		objectTagsParam = paramsArray[2];
@@ -480,7 +511,14 @@ function createChartParams(paramsArray) {
 		chartParams.series.push(newSeries1);
 	}
 
-	chartParams.activeSeries = 0;
+	if (queryString !== undefined && queryString !== '') {
+		activeSeries = getQSParamFromQS(queryString)[activeSeries]
+	}
+
+	if (!isNaN(activeSeries) && activeSeries < chartParams.series.length && activeSeries >= 0)
+		chartParams.activeSeries = activeSeries;
+	else
+		chartParams.activeSeries = 0;
 
 	console.log('chartParams', chartParams);
 
@@ -529,13 +567,16 @@ function getExplorePageUrl(chartParams) {
 		url += '/' + chartParams.series[1].chartType;
 	}
 
+	url += '?activeSeries=' + chartParams.activeSeries;
+
 	return url;
 	// /explore/chart/streams/:streamId/:objectTags/:actionTags/:aggregator/:aggregatePeriod/:chartType/:fromDate/:toDate/vs/:objectTags1/:actionTags1/:aggregator1/:chartType1
 }
 
 function parseUrl(url) {
-	url = (url.split('/explore/chart/')[1]).split('/');
-	return createChartParams(url);
+	url = (url.split('/explore/chart/')[1]).split('?');
+	var urlParams = url[0].split('/');
+	return createChartParams(urlParams, url[1]);
 }
 
 function getChartDataUrl(chartParams, seriesId) {

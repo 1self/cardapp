@@ -3210,12 +3210,12 @@ footer:before {
 }
 
 .data-explorer .aggregation-options.expanded {
-    width: 85%;
+    width: 75%;
     overflow-x: auto;
 }
 
 .data-explorer .aggregation-options.collapsed {
-    width: 15%;
+    width: 25%;
     overflow-x: auto;
 }
 

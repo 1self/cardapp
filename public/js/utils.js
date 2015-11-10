@@ -18,9 +18,24 @@ function tryParseJSON (jsonString){
 }
 
 function getQSParam() {
+    // var vars = [],
+    //     hash;
+    // var q = document.location.search.split('?')[1];
+    // if (q != undefined) {
+    //     q = q.split('&');
+    //     for (var i = 0; i < q.length; i++) {
+    //         hash = q[i].split('=');
+    //         vars.push(hash[1]);
+    //         vars[hash[0]] = hash[1];
+    //     }
+    // }
+    return getQSParamFromQS(document.location.search);
+}
+
+function getQSParamFromQS(queryString) {
     var vars = [],
         hash;
-    var q = document.location.search.split('?')[1];
+    var q = queryString.split('?')[1];
     if (q != undefined) {
         q = q.split('&');
         for (var i = 0; i < q.length; i++) {
