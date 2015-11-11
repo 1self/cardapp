@@ -117,7 +117,7 @@
                 <div class="chart-types"></div>
               </div>
             </div>
-            <div class="versus-button-section">
+            <div class="versus-button-section hide">
               <div class="standard-button add-versus"><div>Add versus</div></div>
             </div>
           </div>

@@ -75,26 +75,25 @@ function renderPage(chartParams, doPushState) {
 	var aggregateOnTypes = getAggregateOnTypes(chartParams, userActivities);
 
 	renderChart(chartParams);
-	setPageHeader(chartParams);
 
 	buildSelectionSections(chartParams, userActivities, aggregateOnTypes);
 
 }
 
 function addVersusSection() {
-	var newSeries = gChartParams.series[0];
+	var newSeries = jQuery.extend(true, {}, gChartParams.series[0]);
 	newSeries.isClone = true;
 	gChartParams.series.push(newSeries);
 	gChartParams.activeSeries = 1;
+	console.log(gChartParams.series[0] === gChartParams.series[1]);
 	renderPage(gChartParams, true);
 }
 
 function buildSelectionSections(chartParams, userActivities, aggregateOnTypes) {
 	for (var i = 0; i < chartParams.series.length; i++) {
-		var $appendTo;
-		if (i === 0) {
-			$appendTo = $('.aggregation-options.aggregation-options-0');
-		} else {
+		var $appendTo = $('.aggregation-options.aggregation-options-' + i);
+
+		if ($appendTo.length === 0) {
 			$appendTo = $('.aggregation-options.aggregation-options-0').clone();
 			$appendTo.removeClass('aggregation-options-0');
 			$appendTo.addClass('aggregation-options-' + i);
@@ -109,10 +108,20 @@ function buildSelectionSections(chartParams, userActivities, aggregateOnTypes) {
 			$appendTo.removeClass('expanded');			
 		}
 
+		setSectionHeader(chartParams, i);
+
 		buildActionTags($appendTo, chartParams.series[i].actionTags, userActivities);
 	    buildAggregators($appendTo, chartParams.series[i].aggregator, aggregateOnTypes);
 	    buildAggregateOns($appendTo, chartParams.series[i].aggregator, aggregateOnTypes);
-	    buildChartTypes($appendTo, chartParams.series[i].chartType);	
+	    buildChartTypes($appendTo, chartParams.series[i].chartType, chartParams.series[0].chartType, chartParams.series.length);	
+	}
+
+	var chartTypeObj = getAvailableChartTypes(chartParams.series[0].chartType);
+	console.log(chartTypeObj, 'jajja');
+	if (chartParams.series.length === 1 && chartTypeObj.xSeriesType === 'continuous') {
+		$('.versus-button-section').removeClass('hide');
+	} else {
+		$('.versus-button-section').addClass('hide');
 	}
 }
 
@@ -166,6 +175,8 @@ function onActionTagClick(e) {
 	console.log($button.parents('.aggregation-options').attr('class'));
 
 	var seriesId = getSeriesIdFromButton($button);
+
+	gChartParams.series[seriesId].isClone = false;
 
 	if ($button.hasClass('selected')) {
 		var idx = gChartParams.series[seriesId].actionTags.indexOf(actionTag);
@@ -313,22 +324,30 @@ function getAggregateOnTypes(chartParams, userActivities) {
 	}
 }
 
-function buildChartTypes($appendTo, chartType) {
+function buildChartTypes($appendTo, chartType, baseChartType, seriesLength) {
 	var $chartTypes = $appendTo.find('.chart-types');
 	var sectionIsExpanded = $appendTo.hasClass('expanded');
 	var isActive;
+	var filteredChartTypes;
 
+	if (seriesLength > 1) {
+		var baseTypeObj = getAvailableChartTypes(baseChartType);
+		filteredChartTypes = filterChartTypesBySeriesType(baseTypeObj.xSeriesType);
+	} else {
+		filteredChartTypes = availableChartTypes;
+	}
+	
 	$chartTypes.empty();
 
-	for (var i = 0; i < availableChartTypes.length; i++) {
-		if (availableChartTypes[i].displayType !== 'small') {
+	for (var i = 0; i < filteredChartTypes.length; i++) {
+		if (filteredChartTypes[i].displayType !== 'small') {
 			var $button = $('.standard-button.no-icon.template').clone();
 			$button.removeClass('template');
 			$button.addClass('left');
-			$button.addClass(availableChartTypes[i].identifier);
-			$button.find('div').text(availableChartTypes[i].name);
+			$button.addClass(filteredChartTypes[i].identifier);
+			$button.find('div').text(filteredChartTypes[i].name);
 
-			if (chartType !== availableChartTypes[i].identifier) {
+			if (chartType !== filteredChartTypes[i].identifier) {
 				isActive = false;
 				$button.addClass('sub-button');
 			} else {
@@ -459,12 +478,21 @@ function getYAxisLabel(aggregator) {
 	return label;
 }
 
-function setPageHeader(chartParams) {
-	var headerText = getYAxisLabel(chartParams.series[0].aggregator);
-	headerText += ' by day';
-	$('.header-row').text(headerText);
+function setSectionHeader(chartParams, seriesId) {
+	var headerText;
+	var $sectionHeader = $('.aggregation-options-' + seriesId + ' .aggregation-header');
 
-	$('.aggregation-options-0 .aggregation-header').text(headerText);
+	if (chartParams.activeSeries === seriesId) {
+		headerText = getYAxisLabel(chartParams.series[seriesId].aggregator);
+		headerText += ' by day';		
+	} else {
+		headerText = '...';
+	}
+
+	$sectionHeader.text(headerText);
+
+	if (seriesId !== 0)
+		$sectionHeader.css('background-color', '#ff0000');
 }
 
 function setUp1selfLogger() {

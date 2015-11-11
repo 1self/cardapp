@@ -6,6 +6,9 @@ function drawChart(datasets, dataConfig, $targetElement) {
     var svg;
     var width, height, selector;
 
+    datasets.merged = mergeDatasets(datasets);
+    console.log('datasets are', datasets);
+
     $targetElement.ready(function() {
 
         for (var i = 0; i < datasets.length; i++) {
@@ -15,48 +18,86 @@ function drawChart(datasets, dataConfig, $targetElement) {
                 if (!dataConfig.series[i].lineColour) dataConfig.series[i].lineColour = '#000000';
 
 
-                    if (i === 0) {
-                        width = $targetElement.width();
-                        height = $targetElement.height();
-                        selector = '.' + $targetElement.attr('class').split(' ').join('.');
+                if (i === 0) {
+                    width = $targetElement.width();
+                    height = $targetElement.height();
+                    selector = '.' + $targetElement.attr('class').split(' ').join('.');
+                }
+
+                dataConfig = getConfiguration(datasets, dataConfig, i, width, height);
+
+                // Adds the svg canvas
+                if (i === 0) {
+                    svg = createSvg(dataConfig, selector);
+
+                    var xAxisElem;
+                    var yAxisElem;
+
+                    if (dataConfig.series[i].chartTypeObj.xSeriesType !== 'arc') {
+                        if (dataConfig.xAxis.showAxis)
+                            xAxisElem = drawXAxis(dataConfig, svg, i);
+
+                        if (dataConfig.yAxis.showAxis)
+                            yAxisElem = drawYAxis(dataConfig, svg, xAxisElem, i);
                     }
+                }
 
-                    dataConfig = getConfiguration(data, dataConfig, i, width, height);
+                if (dataConfig.series[i].chartType === 'spark-histogram') {
+                    drawSparkColumn(data, dataConfig, i, svg);
 
-                    // Adds the svg canvas
-                    if (i === 0) {
-                        svg = createSvg(dataConfig, selector);
+                } else if (dataConfig.series[i].chartType === 'column') {
+                    drawColumn(data, dataConfig, i, svg);
 
-                        var xAxisElem;
-                        var yAxisElem;
+                } else if (dataConfig.series[i].chartType === 'line') {
+                    drawLine(data, dataConfig, i, svg);
 
-                        if (dataConfig.series[i].chartTypeObj.xSeriesType !== 'arc') {
-                            if (dataConfig.xAxis.showAxis)
-                                xAxisElem = drawXAxis(dataConfig, svg, i);
+                } else if (dataConfig.series[i].chartType === 'match-sticks') {
+                    drawMatchSticks(data, dataConfig, i, svg);
+                    
+                } else if (dataConfig.series[i].chartType === 'pie') {
+                    drawPie(data, dataConfig, i, svg);
+                }
 
-                            if (dataConfig.yAxis.showAxis)
-                                yAxisElem = drawYAxis(dataConfig, svg, xAxisElem, i);
-                        }
-                    }
-
-                    if (dataConfig.series[i].chartType === 'spark-histogram') {
-                        drawSparkColumn(data, dataConfig, i, svg);
-                    } else if (dataConfig.series[i].chartType === 'column') {
-                        drawColumn(data, dataConfig, i, svg);
-                    } else if (dataConfig.series[i].chartType === 'line') {
-                        drawLine(data, dataConfig, i, svg);
-                    } else if (dataConfig.series[i].chartType === 'match-sticks') {
-                        drawMatchSticks(data, dataConfig, i, svg);
-                    } else if (dataConfig.series[i].chartType === 'pie') {
-                        drawPie(data, dataConfig, svg);
-                    }
-
-                    // if (dataConfig.yAxis.showAxis && yAxisElem !== undefined)
-                        // appendYAxisLabel(yAxisElem, dataConfig);
+                // if (dataConfig.yAxis.showAxis && yAxisElem !== undefined)
+                    // appendYAxisLabel(yAxisElem, dataConfig);
             }
         }
 
     });
+}
+
+function mergeDatasets(datasets) {
+    var merged = [];
+    for (var i = 0; i < datasets.length; i++) {
+        var dataset = datasets[i];
+        for (var j = 0; j < dataset.length; j++) {
+            var dataObj = findByDate(merged, dataset[j].date);
+            var value = +dataset[j].value;
+            if (dataObj === undefined) {
+                dataObj = { date: dataset[j].date, values: [] };
+                dataObj.values[i] = value;
+                dataObj.maxValue = value;
+                dataObj.minValue = value;
+                merged.push(dataObj);
+            } else {
+                dataObj.maxValue = Math.max(dataObj.maxValue, value);
+                dataObj.minValue = Math.max(dataObj.minValue, value);
+                dataObj.values[i] = value;
+            }
+        }
+    }
+    return merged;
+}
+
+function findByDate(valuesArray, dateStr) {
+    var returnObj;
+    for (var i = 0; i < valuesArray.length; i++) {
+        if (valuesArray[i].date === dateStr) {
+            returnObj = valuesArray[i];
+            break;
+        }
+    }
+    return returnObj;
 }
 
 function stripNullValues(dataArray) {
@@ -144,11 +185,16 @@ function getData(dataSrc, callback, bounceback) {
     }
 }
 
-function getConfiguration(chartData, dataConfig, seriesId, width, height) {
-    if (!dataConfig)
-        dataConfig = { chartType: 'line' };
+function getConfiguration(datasets, dataConfig, seriesId, width, height) {
+    var series = dataConfig.series[seriesId];
 
-    dataConfig.series[seriesId].chartTypeObj = getAvailableChartTypes(dataConfig.series[seriesId].chartType);
+    if (!series) {
+        series = { chartType: 'line' };
+        dataConfig.series[seriesId] = series;
+    }
+
+
+    series.chartTypeObj = getAvailableChartTypes(series.chartType);
 
     // Set the dimensions of the canvas / graph
     if (!dataConfig.margin) {
@@ -168,60 +214,71 @@ function getConfiguration(chartData, dataConfig, seriesId, width, height) {
 
     if (!dataConfig.yAxis) dataConfig.yAxis = {};
 
-    dataConfig.parseDate = d3.time.format(dataConfig.xAxis.parseFormat).parse;
-    dataConfig.formatDate = d3.time.format("%d-%b");
-    dataConfig.bisectDate = d3.bisector(function(d) { return d.date; }).left;
-    dataConfig.formatHighlightDate = d3.time.format("%a %e %b");
+    if (!dataConfig.parseDate) dataConfig.parseDate = d3.time.format(dataConfig.xAxis.parseFormat).parse;
+    if (!dataConfig.formatDate) dataConfig.formatDate = d3.time.format("%d-%b");
+    if (!dataConfig.bisectDate) dataConfig.bisectDate = d3.bisector(function(d) { return d.date; }).left;
+    if (!dataConfig.formatHighlightDate) dataConfig.formatHighlightDate = d3.time.format("%a %e %b");
 
-    chartData.forEach(function(d) {
+    if (seriesId === 0) {
+        datasets.merged.forEach(function(d) {
+            d.date = dataConfig.parseDate(d.date);
+            // d.value = isNaN(d.value) ? 0 : d.value;
+            // d.value = +d.value;
+        });
+    }
+
+    datasets[seriesId].forEach(function(d) {
         d.date = dataConfig.parseDate(d.date);
         // d.value = isNaN(d.value) ? 0 : d.value;
         d.value = +d.value;
     });
 
-    if (dataConfig.series[seriesId].chartTypeObj.xSeriesType === 'arc') {
-        dataConfig.radius = Math.min(dataConfig.width, dataConfig.height) / 2;
+    if (series.chartTypeObj.xSeriesType === 'arc') {
+        series.radius = Math.min(dataConfig.width, dataConfig.height) / 2;
 
-        dataConfig.color = d3.scale.ordinal()
+        series.color = d3.scale.ordinal()
             .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
 
-        dataConfig.arc = d3.svg.arc()
+        series.arc = d3.svg.arc()
             .outerRadius(dataConfig.radius - 10)
             .innerRadius(0);
 
-        dataConfig.pie = d3.layout.pie()
+        series.pie = d3.layout.pie()
             .sort(null)
             .value(function(d) { return d.value; });
 
     } else {
 
-        if (dataConfig.series[seriesId].chartTypeObj.xSeriesType === 'discrete') {
-            dataConfig.x = d3.scale.ordinal()
-                .domain(chartData.map(function(d) { return d.date; }));
+        if (series.chartTypeObj.xSeriesType === 'discrete') {
+            series.x = d3.scale.ordinal()
+                .domain(datasets.merged.map(function(d) { console.log('d',d); return d.date; }));
         } else {
-            dataConfig.x = d3.time.scale()
-                .domain(d3.extent(chartData, function(d) {
+            series.x = d3.time.scale()
+                .domain(d3.extent(datasets.merged, function(d) {
+                    // console.log('data point', d, d.date);
                     return d.date;
                 }));
         }
 
-        setRange(dataConfig.x, 'x', dataConfig, seriesId);
+        setRange(series.x, 'x', dataConfig, seriesId);
 
-        dataConfig.y = d3.scale.linear()
-            .domain([0, d3.max(chartData, function(d) {
-                return d.value;
+        series.y = d3.scale.linear()
+            .domain([0, d3.max(datasets.merged, function(d) {
+                return d.maxValue;
             })]);
 
-        setRange(dataConfig.y, 'y', dataConfig, seriesId);
+        setRange(series.y, 'y', dataConfig, seriesId);
 
         // setup x 
-        dataConfig.xMap = function(d) {
-            return dataConfig.x(d.date);
+        series.xMap = function(d) {
+            console.log(series.lineColour, 'xmap', series.x(d.date));
+            return series.x(d.date);
         }; // data -> display
 
         // setup y
-        dataConfig.yMap = function(d) {
-            return dataConfig.y(d.value);
+        series.yMap = function(d) {
+            console.log(series.lineColour, 'ymap', series.y(d.value), d);
+            return series.y(d.value);
         }; // data -> display        
     }
 
@@ -259,8 +316,10 @@ function createSvg(dataConfig, targetElementSelector) {
 }
 
 function drawXAxis(dataConfig, svg, seriesId) {
+    var series = dataConfig.series[seriesId];
+
     dataConfig.xAxis.fn = d3.svg.axis()
-        .scale(dataConfig.x)
+        .scale(series.x)
         .orient("bottom");
 
     dataConfig.xAxis.fn.tickFormat(function (d) {
@@ -276,7 +335,7 @@ function drawXAxis(dataConfig, svg, seriesId) {
     dataConfig.margin.bottom += dataConfig.xAxis.height;
     dataConfig.height -= dataConfig.xAxis.height;
 
-    setRange(dataConfig.y, 'y', dataConfig, seriesId);
+    setRange(series.y, 'y', dataConfig, seriesId);
 
     g.attr("transform", "translate(0," + dataConfig.height + ")");
 
@@ -284,8 +343,10 @@ function drawXAxis(dataConfig, svg, seriesId) {
 }
 
 function drawYAxis(dataConfig, svg, xElem, seriesId) {
+    var series = dataConfig.series[seriesId];
+
     dataConfig.yAxis.fn = d3.svg.axis()
-        .scale(dataConfig.y)
+        .scale(series.y)
         .orient("left")
         .ticks(10);
 
@@ -299,7 +360,7 @@ function drawYAxis(dataConfig, svg, xElem, seriesId) {
     dataConfig.margin.left += dataConfig.yAxis.width;
     dataConfig.width -= dataConfig.yAxis.width;
 
-    setRange(dataConfig.x, 'x', dataConfig, seriesId);
+    setRange(series.x, 'x', dataConfig, seriesId);
 
     // console.log(dataConfig);
 
@@ -321,45 +382,52 @@ function appendYAxisLabel(yElem, dataConfig) {
 }
 
 function drawLine(chartData, dataConfig, seriesId, svg) {
+    var series = dataConfig.series[seriesId];
 
     var line = d3.svg.line()
-        .x(dataConfig.xMap)
-        .y(dataConfig.yMap);
+        // .interpolate('basis')
+        .x(series.xMap)
+        .y(series.yMap);
 
 
     svg.append("path")
         .datum(chartData)
         .attr("class", "line")
-        .style("stroke", dataConfig.series[seriesId].lineColour)
+        .style("stroke", series.lineColour)
         .style("fill", "none")
         .attr("d", line);
 }
 
 function drawMatchSticks(chartData, dataConfig, seriesId, svg) {
+    var series = dataConfig.series[seriesId];
+    console.log(chartData);
 
-    svg.selectAll(".match-stick")
+    console.log(series);
+
+    svg.selectAll(".match-stick-" + seriesId)
         .data(chartData)
         .enter().append("line")
         .attr("class", "match-stick")
-        .style("stroke", dataConfig.series[seriesId].lineColour )
+        .style("stroke", series.lineColour )
         .attr("y1", dataConfig.height)
-        .attr("y2", dataConfig.yMap)
-        .attr("x1", dataConfig.xMap)
-        .attr("x2", dataConfig.xMap);
+        .attr("y2", series.yMap)
+        .attr("x1", series.xMap)
+        .attr("x2", series.xMap);
 
     // draw dots
-    svg.selectAll(".dot")
+    svg.selectAll(".dot-" + seriesId)
         .data(chartData)
         .enter().append("ellipse")
         .attr("class", "dot")
         .attr("rx", 3.5)
         .attr("ry", 3.5)
-        .attr("cx", dataConfig.xMap)
-        .attr("cy", dataConfig.yMap)
-        .style("fill", dataConfig.series[seriesId].lineColour );
+        .attr("cx", series.xMap)
+        .attr("cy", series.yMap)
+        .style("fill", series.lineColour );
 }
 
 function drawSparkColumn(chartData, dataConfig, seriesId, svg) {
+    var series = dataConfig.series[seriesId];
 
     var container = svg.append("g");
 
@@ -367,15 +435,16 @@ function drawSparkColumn(chartData, dataConfig, seriesId, svg) {
         .data(chartData)
         .enter().append("line")
         .attr("class", "histogram-spark")
-        .style("stroke", dataConfig.series[seriesId].lineColour)
+        .style("stroke", series.lineColour)
         .attr("y1", dataConfig.height)
-        .attr("y2", dataConfig.yMap)
-        .attr("x1", dataConfig.xMap)
-        .attr("x2", dataConfig.xMap);
+        .attr("y2", series.yMap)
+        .attr("x1", series.xMap)
+        .attr("x2", series.xMap);
 
 }
 
 function drawColumn(chartData, dataConfig, seriesId, svg) {
+    var series = dataConfig.series[seriesId];
 
     var container = svg.append("g");
 
@@ -383,26 +452,27 @@ function drawColumn(chartData, dataConfig, seriesId, svg) {
         .data(chartData)
         .enter().append("rect")
         .attr("class", "column")
-        .style("fill", dataConfig.series[seriesId].lineColour)
-        .attr("x", dataConfig.xMap)
-        .attr("width", dataConfig.x.rangeBand())
-        .attr("y", dataConfig.yMap)
-        .attr("height", function(d) { return dataConfig.height - dataConfig.y(d.value); });
+        .style("fill", series.lineColour)
+        .attr("x", series.xMap)
+        .attr("width", series.x.rangeBand())
+        .attr("y", series.yMap)
+        .attr("height", function(d) { return dataConfig.height - series.y(d.value); });
 }
 
-function drawPie(chartData, dataConfig, svg) {
+function drawPie(chartData, dataConfig, seriesId, svg) {
+    var series = dataConfig.series[seriesId];
 
     var g = svg.selectAll(".arc")
-        .data(dataConfig.pie(chartData))
+        .data(series.pie(chartData))
     .enter().append("g")
         .attr("class", "arc");
 
     g.append("path")
-        .attr("d", dataConfig.arc)
-        .style("fill", function(d) { return dataConfig.color(d.data.date); });
+        .attr("d", series.arc)
+        .style("fill", function(d) { return series.color(d.data.date); });
 
     g.append("text")
-        .attr("transform", function(d) { return "translate(" + dataConfig.arc.centroid(d) + ")"; })
+        .attr("transform", function(d) { return "translate(" + series.arc.centroid(d) + ")"; })
         .attr("dy", ".35em")
         .style("text-anchor", "middle")
         .text(function(d) { return dataConfig.formatDate(d.data.date); });
@@ -428,4 +498,15 @@ function getAvailableChartTypes(chartType) {
             }
         }
     }
+}
+
+function filterChartTypesBySeriesType(xSeriesType) {
+    var allTypes = getAvailableChartTypes();
+    var returnArray = [];
+    for (var i = 0; i < allTypes.length; i++) {
+        if (allTypes[i].xSeriesType === xSeriesType) {
+            returnArray.push(allTypes[i]);
+        }
+    }
+    return returnArray;
 }
