@@ -64,13 +64,10 @@ var getAccessToken = function(req, res, next){
 
 	logger.silly('requesting access_token');
 
-	// MXNlbGY6c3RhZ2luZy0xc2VsZg==
-
 	request.post({
 		url: url,
-		headers: { authorization: 'Basic MXNlbGY6c3RhZ2luZy0xc2VsZg==' },
 		form: form,
-		// auth: auth,
+		auth: auth,
 		json: true
 	}, function(error, httpResponse, body){
 		if(error){
