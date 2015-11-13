@@ -25,10 +25,10 @@ function drawChart(datasets, dataConfig, $targetElement) {
                 }
 
                 dataConfig = getConfiguration(datasets, dataConfig, i, width, height);
-
+                
                 // Adds the svg canvas
                 if (i === 0) {
-                    svg = createSvg(dataConfig, selector);
+                    svg = createSvg(dataConfig, selector, i);
 
                     var xAxisElem;
                     var yAxisElem;
@@ -240,7 +240,7 @@ function getConfiguration(datasets, dataConfig, seriesId, width, height) {
             .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
 
         series.arc = d3.svg.arc()
-            .outerRadius(dataConfig.radius - 10)
+            .outerRadius(series.radius - 10)
             .innerRadius(0);
 
         series.pie = d3.layout.pie()
@@ -299,14 +299,14 @@ function setRange(objectToRange, xOrY, dataConfig, seriesId) {
     }
 }
 
-function createSvg(dataConfig, targetElementSelector) {
+function createSvg(dataConfig, targetElementSelector, seriesId) {
     var svg = d3.select(targetElementSelector)
         .append("svg")
         .attr("width", dataConfig.width + dataConfig.margin.left + dataConfig.margin.right)
         .attr("height", dataConfig.height + dataConfig.margin.top + dataConfig.margin.bottom)
         .append("g");
 
-    if (dataConfig.chartType === 'pie') {
+    if (dataConfig.series[seriesId].chartType === 'pie') {
         svg.attr("transform", "translate(" + dataConfig.width / 2 + "," + dataConfig.height / 2 + ")");
     } else {
         svg.attr("transform", "translate(" + dataConfig.margin.left + "," + dataConfig.margin.top + ")");
@@ -462,8 +462,10 @@ function drawColumn(chartData, dataConfig, seriesId, svg) {
 function drawPie(chartData, dataConfig, seriesId, svg) {
     var series = dataConfig.series[seriesId];
 
+    var data = series.pie(chartData);
+
     var g = svg.selectAll(".arc")
-        .data(series.pie(chartData))
+        .data(data)
     .enter().append("g")
         .attr("class", "arc");
 
@@ -472,7 +474,7 @@ function drawPie(chartData, dataConfig, seriesId, svg) {
         .style("fill", function(d) { return series.color(d.data.date); });
 
     g.append("text")
-        .attr("transform", function(d) { return "translate(" + series.arc.centroid(d) + ")"; })
+        .attr("transform", function(d, i) { console.log(d, i, series.arc.centroid(d, i)); return "translate(" + series.arc.centroid(d, i) + ")"; })
         .attr("dy", ".35em")
         .style("text-anchor", "middle")
         .text(function(d) { return dataConfig.formatDate(d.data.date); });
