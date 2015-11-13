@@ -288,12 +288,21 @@ function renderSparkBar($targetElement, dataUrl) {
 
 	var onGotData = function(dataset) {
 		var dataConfig = {
-			chartType: 'spark-histogram',
-			xAxis: { parseFormat: "%m/%d/%Y" },
-			lineColour: '#00B597',
+			series: [{
+				chartType: 'spark-histogram',
+				lineColour: '#00B597'
+			}],
+			// chartType: 'spark-histogram',
+			xAxis: { parseFormat: "%m/%d/%Y", showAxis: false },
+			// lineColour: '#00B597',
 			margin: { top: 0, right: 0, bottom: 0, left: 0 }
 		};
-		drawChart(dataset, dataConfig, $targetElement);
+
+			// 		dataConfig.series[seriesId].chartType = chartParams.series[seriesId].chartType;
+			// dataConfig.series[seriesId].lineColour = seriesId === 0 ? '#00B597' : '#ff0000';
+			// dataConfig.series[seriesId].dataLabel = getYAxisLabel(chartParams.series[seriesId].aggregator);
+
+		drawChart([dataset], dataConfig, $targetElement);
 	};
 	console.log('dataUrl: ', dataUrl);
 	getData(dataUrl, onGotData);
