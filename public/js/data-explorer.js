@@ -90,15 +90,14 @@ function addVersusSection() {
 }
 
 function buildSelectionSections(chartParams, userActivities, aggregateOnTypes) {
-	for (var i = 0; i < chartParams.series.length; i++) {
-		var $appendTo = $('.aggregation-options.aggregation-options-' + i);
+	var $aggregationSections = $('.aggregation-sections');
+	$aggregationSections.empty();
 
-		if ($appendTo.length === 0) {
-			$appendTo = $('.aggregation-options.aggregation-options-0').clone();
-			$appendTo.removeClass('aggregation-options-0');
-			$appendTo.addClass('aggregation-options-' + i);
-			$('.aggregation-sections').append($appendTo);
-		}
+	for (var i = 0; i < chartParams.series.length; i++) {
+		var $appendTo = $('.aggregation-options.template').clone();
+		$appendTo.removeClass('template');
+		$appendTo.addClass('aggregation-options-' + i);
+		$aggregationSections.append($appendTo);
 
 		if (chartParams.activeSeries === i) {
 			$appendTo.addClass('expanded');
@@ -563,7 +562,7 @@ function createChartParams(paramsArray, queryString) {
 	}
 
 	if (queryString !== undefined && queryString !== '') {
-		activeSeries = getQSParamFromQS(queryString).activeSeries;
+		activeSeries = getQSParamFromQS('?' + queryString).activeSeries;
 	} else {
 		activeSeries = getQSParam().activeSeries;
 	}

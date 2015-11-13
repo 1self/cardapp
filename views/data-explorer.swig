@@ -100,13 +100,21 @@
         <div class="background"></div>
 
         <div class="main-content">
-          <div class="header-row"></div>
           <div class="chart-row">
             <div class="chart"></div>
           </div>
           <div class="chart-options-row">
             <div class="aggregation-sections clear">
-              <div class="aggregation-options aggregation-options-0 expanded">
+
+            </div>
+            <div class="versus-button-section hide">
+              <div class="standard-button add-versus"><div>Add versus</div></div>
+            </div>
+          </div>
+        </div>
+    </main>
+
+              <div class="aggregation-options template">
                 <div class="aggregation-header"></div>
                 <div class="action-tags"></div>
                 <div class="aggregators"></div>
@@ -116,13 +124,6 @@
                 </div>
                 <div class="chart-types"></div>
               </div>
-            </div>
-            <div class="versus-button-section hide">
-              <div class="standard-button add-versus"><div>Add versus</div></div>
-            </div>
-          </div>
-        </div>
-    </main>
 
     <div class="standard-button no-icon template"><div></div></div>
     <div class="standard-button icon-times selected template"><div><span></span>&nbsp;<i class="fa fa-times"></i></div></div>

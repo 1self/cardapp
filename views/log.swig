@@ -42,9 +42,11 @@
 
     <script>
 
-      var registeredOn;
-      var username;
+      var username = '{{profile.username}}';
+      var registeredOn = "{{profile.registeredOn}}";
       var newActivityState = '{{newActivityState}}';
+
+      console.log('uname is: ', username);
     
     </script>
     <!--[if lt IE 9]> <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script> <![endif]-->
@@ -58,10 +60,12 @@
         <div class="navigation-container">
             <div class="navigation-content">
                 <div>
-                    <div class="navigation-item" href="/card-stack">Card stack</div>
-                    <div class="navigation-item" href="/integrations">Integrations</div>
+                    <div class="navigation-item hide logged-out" href="https://app-staging.1self.co/signup">Join 1self</div>
+                    <div class="navigation-item hide logged-out" href="https://app-staging.1self.co/login">Log in</div>
+                    <div class="navigation-item hide logged-in" href="/card-stack">Card stack</div>
+                    <div class="navigation-item hide logged-in" href="/integrations">Integrations</div>
                     <div class="navigation-item hide dashboard-nav" href="/dashboard">Dashboard</div>
-                    <div class="navigation-item" href="/profile">Profile</div>
+                    <div class="navigation-item hide logged-in" href="/profile">Profile</div>
                     <hr class="navigation-spacer">
                     <div class="navigation-item" href="http://blog.1self.co">1self blog</div>
                     <div class="navigation-item" href="http://1self.uservoice.com">Support &amp; feedback</div>

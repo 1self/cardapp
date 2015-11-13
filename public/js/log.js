@@ -13,6 +13,7 @@ function executeOnLoadTasks() {
 	var continueLoad = checkUrlValidity();
 
 	if (continueLoad) {
+		setUpMenu();
 		setUpUserActivities();
 		setUpUserProperties();
 	    setUpEventHandlers();
@@ -157,6 +158,14 @@ function setUpEventHandlers() {
     });
 
 
+}
+
+function setUpMenu() {
+	if (username !== undefined && username !== '') {
+		$('.navigation-content .navigation-item.logged-in').removeClass('hide');
+	} else {
+		$('.navigation-content .navigation-item.logged-out').removeClass('hide');
+	}
 }
 
 function renderNewState(newState) {

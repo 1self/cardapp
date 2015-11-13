@@ -102,7 +102,7 @@ var renderPrivacy = function(req, res, next) {
 };
 
 var renderLog = function(req, res, next) {
-	res.render('log', { newActivityState: req.params.newActivityState });
+	res.render('log', { profile: req.session.profile, newActivityState: req.params.newActivityState });
 };
 
 var renderDataExplorer = function(req, res, next) {

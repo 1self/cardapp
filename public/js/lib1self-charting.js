@@ -251,11 +251,10 @@ function getConfiguration(datasets, dataConfig, seriesId, width, height) {
 
         if (series.chartTypeObj.xSeriesType === 'discrete') {
             series.x = d3.scale.ordinal()
-                .domain(datasets.merged.map(function(d) { console.log('d',d); return d.date; }));
+                .domain(datasets.merged.map(function(d) { return d.date; }));
         } else {
             series.x = d3.time.scale()
                 .domain(d3.extent(datasets.merged, function(d) {
-                    // console.log('data point', d, d.date);
                     return d.date;
                 }));
         }
@@ -271,13 +270,11 @@ function getConfiguration(datasets, dataConfig, seriesId, width, height) {
 
         // setup x 
         series.xMap = function(d) {
-            console.log(series.lineColour, 'xmap', series.x(d.date));
             return series.x(d.date);
         }; // data -> display
 
         // setup y
         series.yMap = function(d) {
-            console.log(series.lineColour, 'ymap', series.y(d.value), d);
             return series.y(d.value);
         }; // data -> display        
     }
@@ -390,19 +387,19 @@ function drawLine(chartData, dataConfig, seriesId, svg) {
         .y(series.yMap);
 
 
-    svg.append("path")
+    var path = svg.append("path")
         .datum(chartData)
         .attr("class", "line")
         .style("stroke", series.lineColour)
         .style("fill", "none")
         .attr("d", line);
+
+    if (seriesId !== 0)
+        path.style("stroke-dasharray", ("3,3"));
 }
 
 function drawMatchSticks(chartData, dataConfig, seriesId, svg) {
     var series = dataConfig.series[seriesId];
-    console.log(chartData);
-
-    console.log(series);
 
     svg.selectAll(".match-stick-" + seriesId)
         .data(chartData)
@@ -474,7 +471,7 @@ function drawPie(chartData, dataConfig, seriesId, svg) {
         .style("fill", function(d) { return series.color(d.data.date); });
 
     g.append("text")
-        .attr("transform", function(d, i) { console.log(d, i, series.arc.centroid(d, i)); return "translate(" + series.arc.centroid(d, i) + ")"; })
+        .attr("transform", function(d, i) { return "translate(" + series.arc.centroid(d, i) + ")"; })
         .attr("dy", ".35em")
         .style("text-anchor", "middle")
         .text(function(d) { return dataConfig.formatDate(d.data.date); });
