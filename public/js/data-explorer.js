@@ -240,20 +240,25 @@ function onAggregatorClick(e) {
 	var aggFn = $(this).find('div').text();
 
 	var seriesId = getSeriesIdFromButton($(this));
+	var aggregator = gChartParams.series[seriesId].aggregator;
 
-	gChartParams.series[seriesId].aggregator.fn = aggFn;
+	aggregator.fn = aggFn;
 
-	if (aggFn !== 'count' && gChartParams.series[seriesId].aggregator.vars.length === 0) {
+	var aggTypeObj = getAggTypeObj(aggFn);
+
+	if (aggTypeObj.requiresVar && aggregator.vars.length === 0) {
 		var $aggregateOns = $('.aggregate-ons .standard-button.selected');
 		if ($aggregateOns.length === 0) {
 			$aggregateOns = $('.aggregate-ons .standard-button');
 			var $button = $($aggregateOns[0]);
 			$button.toggleClass('selected sub-button');
-			gChartParams.series[seriesId].aggregator.vars.push(formatTag($button.find('div').text()));
+			aggregator.vars.push(formatTag($button.find('div').text()));
 		}
+	} else if (!aggTypeObj.requiresVar) {
+		aggregator.vars = [];
 	}
 	
-	gChartParams.series[seriesId].aggregator.text = buildAggregatorText(gChartParams.series[seriesId].aggregator);
+	aggregator.text = buildAggregatorText(aggregator);
 
 	renderPage(gChartParams, true);
 }
@@ -396,27 +401,6 @@ function getUserActivities() {
 	return storedUserActivities;
 }
 
-// [{"activityCategory":"Drink","activityName":"Coffee"},{"activityCategory":"Drink","activityName":"Tea"},{"activityCategory":"Drink","activityName":"Water","properties":["Volume"]},{"activityCategory":"Exercise","activityName":"Press ups","properties":["Quantity"]},{"activityCategory":"Exercise","activityName":"Chin ups","properties":["Quantity"]},{"activityCategory":"Exercise","properties":["Duration"]},{"activityCategory":"Work","activityName":"Meeting","properties":["Duration"]},{"activityCategory":"Work","activityName":"Pomodoro"},{"activityCategory":"test spaces cat","activityName":"mre test spaces","properties":["here too ?"]},{"activityCategory":"Exercise","activityName":"Stretching","properties":["Note"]}]
-
-// function isVisible(classId) {
-// 	return !$(classId).hasClass('hide');
-// }
-
-// function show(classId) {
-// 	$(classId).removeClass('hide');
-// }
-
-// function hide(classId) {
-// 	$(classId).addClass('hide');
-// }
-
-// function constructActionTags(activity) {
-// 	var actionTags = [];
-// 	actionTags.push(formatTag(activity.activityCategory));
-// 	if (activity.activityName) actionTags.push(formatTag(activity.activityName));
-// 	return actionTags;
-// }
-
 function renderChart(chartParams) {
 	var seriesCount = 0;
 	var cloneCount = 0;
@@ -429,7 +413,7 @@ function renderChart(chartParams) {
 				series: [],
 				// chartType: chartParams.series[seriesId].chartType,
 				xAxis: { parseFormat: "%m/%d/%Y", showAxis: true },
-				yAxis: { showAxis: true, label: getYAxisLabel(chartParams.series[0].aggregator) },
+				yAxis: { showAxis: true, label: getYAxisLabel(chartParams.series[0].actionTags, chartParams.series[0].aggregator) },
 				// lineColour: '#00B597',
 				margin: { top: 10, right: 10, bottom: 10, left: 10 }
 			};
@@ -443,7 +427,7 @@ function renderChart(chartParams) {
 
 			dataConfig.series[seriesId].chartType = chartParams.series[seriesId].chartType;
 			dataConfig.series[seriesId].lineColour = seriesId === 0 ? '#00B597' : '#ff0000';
-			dataConfig.series[seriesId].dataLabel = getYAxisLabel(chartParams.series[seriesId].aggregator);
+			dataConfig.series[seriesId].dataLabel = getYAxisLabel(chartParams.series[0].actionTags, chartParams.series[0].aggregator);
 
 			datasets[seriesId] = dataset;
 
@@ -468,8 +452,8 @@ function renderChart(chartParams) {
 	}
 }
 
-function getYAxisLabel(aggregator) {
-	var label = aggregator.text;
+function getYAxisLabel(actionTags, aggregator) {
+	var label = actionTags.join(', ').trim() + ': ' + aggregator.fn;
 	if (aggregator.vars.length > 0)
 		label += ' of ' + aggregator.vars.join(', ');
 	else
@@ -479,10 +463,11 @@ function getYAxisLabel(aggregator) {
 
 function setSectionHeader(chartParams, seriesId) {
 	var headerText;
+	var series = chartParams.series[seriesId];
 	var $sectionHeader = $('.aggregation-options-' + seriesId + ' .aggregation-header');
 
 	if (chartParams.activeSeries === seriesId) {
-		headerText = getYAxisLabel(chartParams.series[seriesId].aggregator);
+		headerText = getYAxisLabel(series.actionTags, series.aggregator);
 		headerText += ' by day';		
 	} else {
 		headerText = '...';
@@ -596,7 +581,10 @@ function splitAggregator(strAggregator) {
 }
 
 function buildAggregatorText(aggregator) {
-	return aggregator.fn + '(' + aggregator.vars.join(',') + ')';
+	if (aggregator.vars.length > 0)
+		return aggregator.fn + '(' + aggregator.vars.join(',') + ')';
+	else
+		return aggregator.fn;
 }
 
 function getExplorePageUrl(chartParams) {
@@ -661,6 +649,14 @@ function formatTag(tag) {
 	var regex = new RegExp(' ', 'g');
 	tag = tag.replace(regex, '-');
 	return tag;
+}
+
+function getAggTypeObj(aggregationFunction) {
+	for (var i = 0; i < aggregationTypes.length; i++) {
+		if (aggregationTypes[i].typeName === aggregationFunction) {
+			return	aggregationTypes[i];
+		}
+	}
 }
 
 // var createEventToLog = function(actionTags, properties) {
