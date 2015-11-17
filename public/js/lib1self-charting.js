@@ -28,6 +28,10 @@ function drawChart(datasets, dataConfig, $targetElement) {
                 
                 // Adds the svg canvas
                 if (i === 0) {
+                    if (dataConfig.yAxis.showAxis) {
+                        createLegend(dataConfig, selector);
+                    }
+                    
                     svg = createSvg(dataConfig, selector, i);
 
                     var xAxisElem;
@@ -294,6 +298,26 @@ function setRange(objectToRange, xOrY, dataConfig, seriesId) {
     } else {
         objectToRange.range([dataConfig.height, 0]);
     }
+}
+
+function createLegend(dataConfig, targetElementSelector) {
+    var legend = d3.select(targetElementSelector).append("div")
+        .attr("class", "chart-legend")
+        .style("position", "absolute")
+        .style("top", "60px")
+        // .style("width", "30px")
+        // .style("height", "30px")
+        .style("border", '1px solid green')
+        .style("left", (dataConfig.width + dataConfig.margin.left - 200) + "px");
+
+    var legendHtml = '';
+    for (var i = 0; i < dataConfig.series.length; i++) {
+        var series = dataConfig.series[i];
+        legendHtml += series.dataLabel;
+        legendHtml += '<br>';
+    }
+
+    legend.html(legendHtml);
 }
 
 function createSvg(dataConfig, targetElementSelector, seriesId) {

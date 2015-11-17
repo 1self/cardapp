@@ -25,7 +25,7 @@ function getDataSource (cardData) {
             return 'sublime';
         }
             
-        else if (cardData.objectTags[0] === "tweets") {
+        else if (cardData.objectTags[0] === "tweets" || cardData.objectTags.indexOf('twitter') >= 0) {
             return 'twitter';
         }
             
@@ -55,6 +55,9 @@ function setDataSource(cardData) {
         } else if (cardData.source === 'last.fm') {
             cardData.identifier = 'lastfm';
             cardData.serviceName = 'Last.fm';
+        } else if (cardData.source === '1self-twitter') {
+            cardData.identifier = 'twitter';
+            cardData.serviceName = 'Twitter';
         } else {
         	cardData.identifier = 'unknown-data-source';
         	cardData.serviceName = '';

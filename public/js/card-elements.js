@@ -110,13 +110,11 @@ function createCardText(cardData) {
 
         cardText.comparitor = ("Your {{comparitor}} in {{eventPeriod}} {{comparisonPeriod}}").supplant(supplantObject);
 
-// https://github.com/strttn?tab=contributions&from=2015-09-02
-
         if (cardData.actionTags[0] === "commit" || cardData.actionTags[1] === "push") {
             if (cardData.properties.sum.__count__) {
                 supplantObject.action_pl = displayTags(pluralise(cardData.actionTags, propertiesObj.value));
                 cardText.description = template1.supplant(supplantObject);
-                // console.log("template1");
+
             } else {
                 if (propertiesObj.actionOverride)
                     supplantObject.action_pp = propertiesObj.actionOverride;
@@ -124,31 +122,31 @@ function createCardText(cardData) {
                     supplantObject.action_pp = displayTags(pastParticiple(cardData.actionTags));
                 supplantObject.property = propertiesObj.propertiesText;
                 cardText.description = template2.supplant(supplantObject);
-                // console.log("template2", cardData.actionTags);
+
             }
         } else if (cardData.actionTags[0] === "push") {
             if (cardData.properties.sum.__count__) {
                 supplantObject.action_pl = displayTags(pluralise(cardData.actionTags,propertiesObj.value));
                 supplantObject.objects = customFormatObjTags(displayTags(cardData.objectTags));
                 cardText.description = template4.supplant(supplantObject);
-                // console.log("template1");
+
             } else {
                 supplantObject.action_pp = displayTags(pastParticiple(cardData.actionTags));
                 supplantObject.property = propertiesObj.propertiesText;
                 cardText.description = template2.supplant(supplantObject);
-                // console.log("template2", cardData.actionTags);
+
             }
         } else if (cardData.actionTags[0] === "listen") {
             if (cardData.properties.sum.__count__) {
                 supplantObject.action_pl = customFormatActionTags(displayTags(cardData.actionTags));
                 supplantObject.objects = customFormatObjTags(displayTags(cardData.objectTags));
                 cardText.description = template3.supplant(supplantObject);
-                // console.log("template3");
+
             } else {
                 supplantObject.action_pl = displayTags(pluralise(cardData.actionTags, propertiesObj.value));
                 supplantObject.property = propertiesObj.propertiesText;
                 cardText.description = template6.supplant(supplantObject);
-                // console.log("template6");
+
             }
         } else if (cardData.actionTags[0] === "use") {
             if (cardData.properties.sum && cardData.properties.sum['total-duration']) {
@@ -189,13 +187,30 @@ function createCardText(cardData) {
                     cardText.description = template8.supplant(supplantObject);
                 }
             }
-            // console.log("template8");
 
         } else if (cardData.actionTags[0] === "browse" && cardData.chart.indexOf('times-visited') > 0) {
             supplantObject.property = propertiesObj.propertiesText;
             supplantObject.objects = customFormatObjTags(displayTags(cardData.objectTags));
             cardText.description = template9.supplant(supplantObject);
-            // console.log("template9");
+
+        } else if (cardData.actionTags[0] === "sample" && cardData.objectTags.indexOf('twitter') >= 0) {
+            if (cardData.objectTags.indexOf('follower') >= 0) {
+                supplantObject.action_pl = 'followers';
+            } else if (cardData.objectTags.indexOf('following') >= 0) {
+                supplantObject.action_pl = 'following';
+            }
+            cardText.description = template1.supplant(supplantObject);
+            cardText.comparitor = ("Your {{comparitor}}").supplant(supplantObject);
+        } else if (cardData.actionTags[0] === "publish" && cardData.objectTags.indexOf('twitter') >= 0) {
+            if (cardData.properties.sum.__count__) {
+                supplantObject.action_pl = 'tweets';
+            } else if (cardData.properties.sum.retweets) {
+                supplantObject.action_pl = "retweets of your tweets";
+            } else if (cardData.properties.sum.favorites) {
+                supplantObject.action_pl = "likes of your tweets";
+            }
+            cardText.description = template1.supplant(supplantObject);
+            // cardText.comparitor = ("Your {{comparitor}}").supplant(supplantObject);
         }
 
         if (!cardText.description) {
@@ -203,10 +218,7 @@ function createCardText(cardData) {
             supplantObject.action_pp = displayTags(pastParticiple(cardData.actionTags));
             supplantObject.objects = displayTags(cardData.objectTags);
             cardText.description = templateDefault.supplant(supplantObject);
-            // console.log("templateDefault");
         } 
-
-        // cardText = cardText.supplant(supplantObject);
 
         cardData.cardText = cardText;
     }
