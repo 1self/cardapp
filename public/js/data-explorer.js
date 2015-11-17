@@ -427,7 +427,7 @@ function renderChart(chartParams) {
 
 			dataConfig.series[seriesId].chartType = chartParams.series[seriesId].chartType;
 			dataConfig.series[seriesId].lineColour = seriesId === 0 ? '#00B597' : '#ff0000';
-			dataConfig.series[seriesId].dataLabel = getYAxisLabel(chartParams.series[0].actionTags, chartParams.series[0].aggregator);
+			dataConfig.series[seriesId].dataLabel = getYAxisLabel(chartParams.series[seriesId].actionTags, chartParams.series[seriesId].aggregator);
 
 			datasets[seriesId] = dataset;
 

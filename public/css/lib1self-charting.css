@@ -14,3 +14,28 @@
 .x.axis path {
   display: none;
 }
+
+.chart-legend {
+	border: 1px solid #000;
+	font-size: 0.6em;
+	padding: 3px 3px 3px 3px;
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	width: 300px;
+}
+
+.chart-legend .chart-legend-row {
+	width: 100%;
+}
+
+.chart-legend .chart-legend-row .row-left {
+	width: 10%;
+	float: left;
+}
+
+.chart-legend .chart-legend-row .row-right {
+	width: 90%;
+	padding-left: 5%;
+	float: left;
+}

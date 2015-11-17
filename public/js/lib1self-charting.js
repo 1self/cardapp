@@ -302,22 +302,32 @@ function setRange(objectToRange, xOrY, dataConfig, seriesId) {
 
 function createLegend(dataConfig, targetElementSelector) {
     var legend = d3.select(targetElementSelector).append("div")
-        .attr("class", "chart-legend")
-        .style("position", "absolute")
-        .style("top", "60px")
-        // .style("width", "30px")
-        // .style("height", "30px")
-        .style("border", '1px solid green')
-        .style("left", (dataConfig.width + dataConfig.margin.left - 200) + "px");
+        .attr("class", "chart-legend");
 
     var legendHtml = '';
     for (var i = 0; i < dataConfig.series.length; i++) {
-        var series = dataConfig.series[i];
-        legendHtml += series.dataLabel;
-        legendHtml += '<br>';
-    }
 
-    legend.html(legendHtml);
+        var series = dataConfig.series[i];
+        var row = legend.append('div')
+            .attr("class", "chart-legend-row");
+
+        var rowLeft = row.append('div')
+            .attr("class", "row-left");
+
+        var rowRight = row.append('div')
+            .attr("class", "row-right");
+
+        rowRight.append('div')
+            .attr("class", "row-right-item")
+            .html(series.dataLabel);
+
+        rowLeft.append('div')
+            .attr("class", "row-left-item")
+            .style("background-color", series.lineColour)
+            .style('height', '100%')
+            .style('width', '100%')
+            .html('&nbsp;');
+    }
 }
 
 function createSvg(dataConfig, targetElementSelector, seriesId) {
