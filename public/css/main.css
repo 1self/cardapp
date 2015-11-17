@@ -2629,12 +2629,6 @@ footer:before {
     background-size: contain;
 }
 
-.summary-item-logo.visitcounter {
-    background: url(../img/service-strava.svg);
-    background-repeat: no-repeat;
-    background-size: contain;
-}
-
 .card-menu.strava .more span {
     border: solid 1px rgb(242,97,34);
     color: rgb(242,97,34);
@@ -2681,12 +2675,6 @@ footer:before {
 }
 
 .headline.visitcounter .service {
-    background: url(../img/service-visitcounter.svg);
-    background-repeat: no-repeat;
-    background-size: contain;
-}
-
-.summary-item-logo.visitcounter {
     background: url(../img/service-visitcounter.svg);
     background-repeat: no-repeat;
     background-size: contain;
@@ -3534,7 +3522,7 @@ footer:before {
     background-size: contain;
 }
 
-.admin .service.visitcounter, .integrations .service.visitcounter {
+.admin .service.visitcounter, .integrations .service.visitCounter {
     background: url(../img/service-visitcounter.png);
     background-repeat: no-repeat;
     background-size: contain;

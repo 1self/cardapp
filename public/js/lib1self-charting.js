@@ -331,6 +331,7 @@ function createLegend(dataConfig, targetElementSelector) {
 }
 
 function createSvg(dataConfig, targetElementSelector, seriesId) {
+    console.log(dataConfig);
     var svg = d3.select(targetElementSelector)
         .append("svg")
         .attr("width", dataConfig.width + dataConfig.margin.left + dataConfig.margin.right)
