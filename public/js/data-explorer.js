@@ -19,8 +19,8 @@ function executeOnLoadTasks() {
 	var continueLoad = checkUrlValidity();
 
 	if (continueLoad) {
+		setUpMenu();
 	    setUpEventHandlers();
-	    setUp1selfLogger();
 
 		gChartParams = createChartParams();
 
@@ -37,9 +37,6 @@ function checkUrlValidity() {
 	// 	return false;
 	// }
 }
-
-// https://api-staging.1self.co/v1/streams/MVIBQAXRNFXHIYQR/events/exercise/self/count/daily/type/json?readToken=5577db06e6b0fa0ed1f24b56b40e64431dd691d6d252&bgColor=&from=undefined&to=undefined
-
 
 function setUpEventHandlers() {
 
@@ -60,6 +57,14 @@ function setUpEventHandlers() {
     	return false;
     });
 
+}
+
+function setUpMenu() {
+	if (username !== undefined && username !== '') {
+		$('.navigation-content .navigation-item.logged-in').removeClass('hide');
+	} else {
+		$('.navigation-content .navigation-item.logged-out').removeClass('hide');
+	}
 }
 
 function renderPage(chartParams, doPushState) {
@@ -452,6 +457,25 @@ function renderChart(chartParams) {
 	}
 }
 
+function getChartData(chartParams, seriesId, callback) {
+
+	var chartDataUrl = getChartDataUrl(chartParams, seriesId);
+
+    $.getJSON(chartDataUrl,
+            function() {
+                console.log("accessed api for chart data");
+            })
+        .done(function(data) {
+
+            console.log('chart data', seriesId, data);
+            callback(data, seriesId, false);
+        })
+        .fail(function(data) {
+            console.log('error getting chart data', seriesId, data);
+
+        });
+}
+
 function getYAxisLabel(actionTags, aggregator) {
 	var label = actionTags.join(', ').trim() + ': ' + aggregator.fn;
 	if (aggregator.vars.length > 0)
@@ -479,24 +503,17 @@ function setSectionHeader(chartParams, seriesId) {
 		$sectionHeader.css('background-color', '#ff0000');
 }
 
-function setUp1selfLogger() {
-	config = {
-        appId: "app-id-weblogae4feb02fh3hfy37c83c4k74gy",
-        appSecret: "app-secret",
-        "appName": "co.1self.web-log",
-        "appVersion": "0.0.1"
-    };
-    lib1self = new Lib1selfClient(config, "staging");
-    lib1self.fetchStream(function(err, response) {
-        stream = response;
-    });	
-}
-
 function createChartParams(paramsArray, queryString) {
 	var chartParams = { series: [] };
 	var activeSeries;
+	var readToken;
 
 	if (paramsArray !== undefined) {
+		if (paramsArray[0] === 'user')
+			chartUsernameParam = paramsArray[1];
+		else
+			streamIdParam = paramsArray[1];
+
 		objectTagsParam = paramsArray[2];
 		actionTagsParam = paramsArray[3];
 		aggregatorParam = paramsArray[4];
@@ -515,11 +532,9 @@ function createChartParams(paramsArray, queryString) {
 
 	var aggregator = splitAggregator(aggregatorParam);
 
-	// chartParams.objectTags = decodeURIComponent(objectTagsParam).split(',');
-	// chartParams.actionTags = decodeURIComponent(actionTagsParam).split(',');
-	// chartParams.aggregator = aggregator;
+	chartParams.chartUsername = chartUsernameParam;
+	chartParams.streamId = streamIdParam;
 	chartParams.aggregatePeriod = aggregatePeriodParam;
-	// chartParams.chartType = chartTypeParam;
 	chartParams.fromDate = decodeURIComponent(fromDateParam);
 	chartParams.toDate = decodeURIComponent(toDateParam);
 
@@ -548,14 +563,18 @@ function createChartParams(paramsArray, queryString) {
 
 	if (queryString !== undefined && queryString !== '') {
 		activeSeries = getQSParamFromQS('?' + queryString).activeSeries;
+		readToken = getQSParamFromQS('?' + queryString).readToken;
 	} else {
 		activeSeries = getQSParam().activeSeries;
+		readToken = getQSParam().readToken;
 	}
 
 	if (!isNaN(activeSeries) && activeSeries < chartParams.series.length && activeSeries >= 0)
 		chartParams.activeSeries = +activeSeries;
 	else
 		chartParams.activeSeries = 0;
+
+	chartParams.readToken = readToken;
 
 	console.log('chartParams', chartParams);
 
@@ -589,8 +608,14 @@ function buildAggregatorText(aggregator) {
 
 function getExplorePageUrl(chartParams) {
 
-	var url = '/explore/chart/streams';
-	url += '/' + stream.streamid();
+	var url = '/explore/chart/';
+
+	if (chartParams.chartUsername !== undefined && chartParams.chartUsername !== '') {
+		url += 'user/' + chartParams.chartUsername;
+	} else {
+		url += 'streams/' + chartParams.streamId;
+	}
+	
 	url += '/' + encodeURIComponent(chartParams.series[0].objectTags.join(','));
 	url += '/' + encodeURIComponent(chartParams.series[0].actionTags.join(','));
 	url += '/' + chartParams.series[0].aggregator.text;
@@ -609,6 +634,9 @@ function getExplorePageUrl(chartParams) {
 
 	url += '?activeSeries=' + chartParams.activeSeries;
 
+	if (chartParams.readToken !== undefined && chartParams.readToken !== '')
+		url += '&readToken=' + chartParams.readToken;
+
 	return url;
 	// /explore/chart/streams/:streamId/:objectTags/:actionTags/:aggregator/:aggregatePeriod/:chartType/:fromDate/:toDate/vs/:objectTags1/:actionTags1/:aggregator1/:chartType1
 }
@@ -623,23 +651,42 @@ function getChartDataUrl(chartParams, seriesId) {
 
 	var series = chartParams.series[seriesId];
 
-    var url = lib1self
-        .objectTags(series.objectTags)
-        .actionTags(series.actionTags);
+	var url = '/data';
 
-    if (series.aggregator.fn === 'count') 
-    	url = url.count();
-    else if (series.aggregator.fn === 'sum')
-    	url = url.sum(series.aggregator.vars.join(','));
-    else if (series.aggregator.fn === 'mean')
-    	url = url.mean(series.aggregator.vars.join(','));
+	if (chartParams.chartUsername !== undefined && chartParams.chartUsername !== '') {
+		url += '/user/' + chartParams.chartUsername;
+	} else {
+		url += '/streams/' + chartParams.streamId;
+	}
+	
+	url += '/' + encodeURIComponent(chartParams.series[0].objectTags.join(','));
+	url += '/' + encodeURIComponent(chartParams.series[0].actionTags.join(','));
+	url += '/' + chartParams.series[0].aggregator.text;
+	url += '/' + chartParams.aggregatePeriod;
+	url += '/' + chartParams.series[0].chartType;
+	url += '/' + encodeURIComponent(chartParams.fromDate);
+	url += '/' + encodeURIComponent(chartParams.toDate);
 
-    url = url
-    	.json()
-        .url(stream);
+	if (chartParams.readToken !== undefined && chartParams.readToken !== '')
+		url += '?readToken=' + chartParams.readToken;
 
-    url += '&from=' + chartParams.fromDate;
-    url += '&to=' + chartParams.toDate;
+    // var url = lib1self
+    //     .objectTags(series.objectTags)
+    //     .actionTags(series.actionTags);
+
+    // if (series.aggregator.fn === 'count') 
+    // 	url = url.count();
+    // else if (series.aggregator.fn === 'sum')
+    // 	url = url.sum(series.aggregator.vars.join(','));
+    // else if (series.aggregator.fn === 'mean')
+    // 	url = url.mean(series.aggregator.vars.join(','));
+
+    // url = url
+    // 	.json()
+    //     .url(stream);
+
+    // url += '&from=' + chartParams.fromDate;
+    // url += '&to=' + chartParams.toDate;
 
     return url;
 }

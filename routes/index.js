@@ -107,8 +107,15 @@ var renderLog = function(req, res, next) {
 
 var renderDataExplorer = function(req, res, next) {
 //	/explore/chart/streams/:streamId/:objectTags/:actionTags/:aggregator/:aggregatePeriod/:chartType/:fromDate/:toDate
+	var username = '';
+
+	if (req.session !== undefined && req.session.profile !== undefined)
+		username = req.session.profile.username;
+
 	res.render('data-explorer', 
 		{
+			loggedInUsername: username,
+			chartUsername: req.params.chartUsername,
 			streamId: req.params.streamId,
 			objectTags: req.params.objectTags,
 			actionTags: req.params.actionTags,
@@ -123,8 +130,15 @@ var renderDataExplorer = function(req, res, next) {
 
 var renderDataExplorerVs = function(req, res, next) {
 //	/explore/chart/streams/:streamId/:objectTags/:actionTags/:aggregator/:aggregatePeriod/:chartType/:fromDate/:toDate
+	var username = '';
+
+	if (req.session !== undefined && req.session.profile !== undefined)
+		username = req.session.profile.username;
+
 	res.render('data-explorer', 
 		{
+			loggedInUsername: username,
+			chartUsername: req.params.chartUsername,
 			streamId: req.params.streamId,
 			objectTags: req.params.objectTags,
 			actionTags: req.params.actionTags,
@@ -151,6 +165,28 @@ var checkForSession = function(req, res, next) {
 	else {
 		next();
 	}
+};
+
+var streamBelongsToUser = function(streamId, username) {
+	return true;
+};
+
+var getExploreSession = function(req, res, next) {
+	if(req.session.signedIn === undefined || req.session.signedIn === false){
+		next();
+	} else {
+		if (streamBelongsToUser(req.params.streamId, req.session.profile.username)) {
+			var userExploreUrl;
+			var urlParts = req.url.toLowerCase().split('/streams/');
+			var urlEnd = urlParts[1].split('/');
+			urlEnd.splice(0, 1);
+			urlEnd = urlEnd.join('/');
+			userExploreUrl = urlParts[0] + '/user/' + req.session.profile.username + '/' + urlEnd;
+			res.redirect(userExploreUrl);			
+		} else {
+			next();
+		}
+	}	
 };
 
 var getOfflineData = function(req, res, next) {
@@ -245,6 +281,79 @@ var getIntegrationsData = function(req, res, next) {
 	        	res.status(500).send('internal server error');
 	        }
 	    });
+};
+
+var buildChartDataUrl = function(req) {
+	var url = req.app.locals.APP_URL;
+
+// https://app.1self.co/v1/users/m/events/1self/browse/sum(times-visited)/daily/barchart?shareToken=da9cd22ea279c13d88fab71959ad58cd9472856e8728ce3b2eafa83bac75febd&bgColor=00a2d4&from=2015-11-12T00:00:00.000Z&to=2015-11-18T23:59:59.999Z
+
+	if (req.params.chartUsername !== undefined && req.params.chartUsername !== '') {
+		url += '/users/' + req.params.chartUsername;
+	} else if (req.params.streamId !== undefined && req.params.streamId !== '') {
+		url += '/streams/' + req.params.streamId;
+	} else {
+		url = 'invalid-params';
+	}
+
+	if (url !== 'invalid-params') {
+		url += '/events';
+		url += '/' + req.params.objectTags;
+		url += '/' + req.params.actionTags;
+		url += '/' + req.params.aggregator;
+		url += '/' + req.params.aggregatePeriod;
+		url += '/type/json';
+		url += '?from=' + req.params.fromDate;
+		url += '&to=' + req.params.toDate;
+
+		if (req.query.readToken !== undefined && req.query.readToken !== '') {
+			url += '&readToken=' + req.query.readToken;
+		}
+	}
+
+	return url;
+};
+
+var getChartData = function(req, res, next) {
+
+// https://api-staging.1self.co/v1/streams/MVIBQAXRNFXHIYQR/events/self/exercise/count/daily/type/json?readToken=5577db06e6b0fa0ed1f24b56b40e64431dd691d6d252&bgColor=&from=2015-10-19t23:00:00.000z&to=2015-11-19t00:00:00.000z
+	
+	var url = buildChartDataUrl(req);
+
+	console.log('getting chart data', url);
+
+	var requestOptions = {
+		 url: url
+	};
+
+	if (req.session !== undefined) {
+		requestOptions.headers = {
+			'Authorization': 'Bearer ' + req.session.token
+		}
+	}
+
+	request(requestOptions,
+		function (error, httpResponse, body) {
+	        if (!error) {
+	        	if (httpResponse.statusCode === 200) {
+	        		req.chartData = body;
+	        		next();
+	        	} else if (httpResponse.statusCode === 401) {
+	        		req.app.locals.logger.error('Error trying to get card data from API', httpResponse.statusCode, body);
+	        		res.status(401).send('unauthorised');
+	        	} else {
+					req.app.locals.logger.error('Error trying to get card data from API', httpResponse.statusCode, body);
+	        		res.status(500).send('internal server error');
+				}
+	        } else {
+				req.app.locals.logger.error('500 Error trying to get card data from API', error);
+	        	res.status(500).send('internal server error');
+	        }
+	    });
+};
+
+var sendChartData = function(req, res, next) {
+	res.status(200).send(req.chartData);	
 };
 
 var sendCardData = function(req, res, next) {
@@ -454,11 +563,31 @@ router.get('/data/integrations',
 	sendIntegrationsData
 );
 
+router.get('/data/streams/:streamId/:objectTags/:actionTags/:aggregator/:aggregatePeriod/:chartType/:fromDate/:toDate', 
+	getChartData, 
+	sendChartData
+);
+
+router.get('/data/user/:chartUsername/:objectTags/:actionTags/:aggregator/:aggregatePeriod/:chartType/:fromDate/:toDate', 
+	getChartData, 
+	sendChartData
+);
+
 router.get('/explore/chart/streams/:streamId/:objectTags/:actionTags/:aggregator/:aggregatePeriod/:chartType/:fromDate/:toDate',
+	getExploreSession,
 	renderDataExplorer
 );
 
 router.get('/explore/chart/streams/:streamId/:objectTags/:actionTags/:aggregator/:aggregatePeriod/:chartType/:fromDate/:toDate/vs/:objectTags1/:actionTags1/:aggregator1/:chartType1',
+	getExploreSession,
+	renderDataExplorerVs
+);
+
+router.get('/explore/chart/user/:chartUsername/:objectTags/:actionTags/:aggregator/:aggregatePeriod/:chartType/:fromDate/:toDate',
+	renderDataExplorer
+);
+
+router.get('/explore/chart/user/:chartUsername/:objectTags/:actionTags/:aggregator/:aggregatePeriod/:chartType/:fromDate/:toDate/vs/:objectTags1/:actionTags1/:aggregator1/:chartType1',
 	renderDataExplorerVs
 );
 

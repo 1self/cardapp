@@ -57,6 +57,9 @@ function drawChart(datasets, dataConfig, $targetElement) {
 
                 } else if (dataConfig.series[i].chartType === 'match-sticks') {
                     drawMatchSticks(data, dataConfig, i, svg);
+
+                } else if (dataConfig.series[i].chartType === 'scatter') {
+                    drawScatter(data, dataConfig, i, svg);
                     
                 } else if (dataConfig.series[i].chartType === 'pie') {
                     drawPie(data, dataConfig, i, svg);
@@ -254,13 +257,13 @@ function getConfiguration(datasets, dataConfig, seriesId, width, height) {
     } else {
 
         if (series.chartTypeObj.xSeriesType === 'discrete') {
+            series.xDomain = datasets.merged.map(function(d) { return d.date; });
             series.x = d3.scale.ordinal()
-                .domain(datasets.merged.map(function(d) { return d.date; }));
+                .domain(series.xDomain);
         } else {
+            series.xDomain = d3.extent(datasets.merged, function(d) { return d.date; });
             series.x = d3.time.scale()
-                .domain(d3.extent(datasets.merged, function(d) {
-                    return d.date;
-                }));
+                .domain(series.xDomain);
         }
 
         setRange(series.x, 'x', dataConfig, seriesId);
@@ -417,7 +420,7 @@ function drawLine(chartData, dataConfig, seriesId, svg) {
     var series = dataConfig.series[seriesId];
 
     var line = d3.svg.line()
-        // .interpolate('basis')
+        .interpolate('basis')
         .x(series.xMap)
         .y(series.yMap);
 
@@ -445,6 +448,21 @@ function drawMatchSticks(chartData, dataConfig, seriesId, svg) {
         .attr("y2", series.yMap)
         .attr("x1", series.xMap)
         .attr("x2", series.xMap);
+
+    // draw dots
+    svg.selectAll(".dot-" + seriesId)
+        .data(chartData)
+        .enter().append("ellipse")
+        .attr("class", "dot")
+        .attr("rx", 3.5)
+        .attr("ry", 3.5)
+        .attr("cx", series.xMap)
+        .attr("cy", series.yMap)
+        .style("fill", series.lineColour );
+}
+
+function drawScatter(chartData, dataConfig, seriesId, svg) {
+    var series = dataConfig.series[seriesId];
 
     // draw dots
     svg.selectAll(".dot-" + seriesId)
@@ -512,6 +530,58 @@ function drawPie(chartData, dataConfig, seriesId, svg) {
         .text(function(d) { return dataConfig.formatDate(d.data.date); });
 }
 
+function drawTrendline(dataConfig, seriesId) {
+    var series = dataConfig.series[seriesId];
+
+    // get the x and y values for least squares
+    var xSeries = d3.range(1, series.xDomain.length + 1);
+    var ySeries = data.map(function(d) { return parseFloat(d['rate']); });
+    
+    var leastSquaresCoeff = leastSquares(xSeries, ySeries);
+    
+    // apply the reults of the least squares regression
+    var x1 = xLabels[0];
+    var y1 = leastSquaresCoeff[0] + leastSquaresCoeff[1];
+    var x2 = xLabels[xLabels.length - 1];
+    var y2 = leastSquaresCoeff[0] * xSeries.length + leastSquaresCoeff[1];
+    var trendData = [[x1,y1,x2,y2]];
+    
+    var trendline = svg.selectAll(".trendline")
+        .data(trendData);
+        
+    trendline.enter()
+        .append("line")
+        .attr("class", "trendline")
+        .attr("x1", function(d) { return series.x(d[0]); })
+        .attr("y1", function(d) { return series.y(d[1]); })
+        .attr("x2", function(d) { return series.x(d[2]); })
+        .attr("y2", function(d) { return series.y(d[3]); })
+        .attr("stroke", "black")
+        .attr("stroke-width", 1);
+}
+
+function leastSquares(xSeries, ySeries) {
+    var reduceSumFunc = function(prev, cur) { return prev + cur; };
+    
+    var xBar = xSeries.reduce(reduceSumFunc) * 1.0 / xSeries.length;
+    var yBar = ySeries.reduce(reduceSumFunc) * 1.0 / ySeries.length;
+
+    var ssXX = xSeries.map(function(d) { return Math.pow(d - xBar, 2); })
+        .reduce(reduceSumFunc);
+    
+    var ssYY = ySeries.map(function(d) { return Math.pow(d - yBar, 2); })
+        .reduce(reduceSumFunc);
+        
+    var ssXY = xSeries.map(function(d, i) { return (d - xBar) * (ySeries[i] - yBar); })
+        .reduce(reduceSumFunc);
+        
+    var slope = ssXY / ssXX;
+    var intercept = yBar - (xBar * slope);
+    var rSquare = Math.pow(ssXY, 2) / (ssXX * ssYY);
+    
+    return [slope, intercept, rSquare];
+}
+
 
 
 function getAvailableChartTypes(chartType) {
@@ -520,7 +590,8 @@ function getAvailableChartTypes(chartType) {
         { name: 'Line', identifier: 'line', displayType: 'any', xSeriesType: 'continuous' }, 
         { name: 'Column', identifier: 'column', displayType: 'large', xSeriesType: 'discrete' },
         { name: 'Pie', identifier: 'pie', displayType: 'large', xSeriesType: 'arc' },
-        { name: 'Match sticks', identifier: 'match-sticks', displayType: 'large', xSeriesType: 'continuous' }
+        { name: 'Match sticks', identifier: 'match-sticks', displayType: 'large', xSeriesType: 'continuous' },
+        { name: 'Scatter', identifier: 'scatter', displayType: 'large', xSeriesType: 'continuous' }
     ];
 
     if (chartType === undefined) {

@@ -193,7 +193,7 @@ function createCardText(cardData) {
             supplantObject.objects = customFormatObjTags(displayTags(cardData.objectTags));
             cardText.description = template9.supplant(supplantObject);
 
-        } else if (cardData.actionTags[0] === "sample" && cardData.objectTags.indexOf('twitter') >= 0) {
+        } else if (cardData.actionTags[0] === "sample" && (cardData.objectTags.indexOf('twitter') >= 0 || cardData.objectTags.indexOf('instagram') >= 0)) {
             if (cardData.objectTags.indexOf('follower') >= 0) {
                 supplantObject.action_pl = 'followers';
             } else if (cardData.objectTags.indexOf('following') >= 0) {
@@ -210,7 +210,15 @@ function createCardText(cardData) {
                 supplantObject.action_pl = "likes of your tweets";
             }
             cardText.description = template1.supplant(supplantObject);
-            // cardText.comparitor = ("Your {{comparitor}}").supplant(supplantObject);
+        } else if (cardData.actionTags[0] === "publish" && cardData.objectTags.indexOf('instagram') >= 0) {
+            if (cardData.properties.sum.__count__) {
+                supplantObject.action_pl = 'instagrams';
+            } else if (cardData.properties.sum.comments) {
+                supplantObject.action_pl = "comments on your photos";
+            } else if (cardData.properties.sum.likes) {
+                supplantObject.action_pl = "likes of your photos";
+            }
+            cardText.description = template1.supplant(supplantObject);
         }
 
         if (!cardText.description) {

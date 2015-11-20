@@ -29,6 +29,10 @@ function getDataSource (cardData) {
             return 'twitter';
         }
             
+        else if (cardData.objectTags.indexOf('instagram') >= 0) {
+            return 'instagram';
+        }
+            
         else if (cardData.objectTags.indexOf("github") >= 0 || cardData.actionTags.indexOf("github") >= 0) {
             return 'github';
         }
@@ -58,6 +62,9 @@ function setDataSource(cardData) {
         } else if (cardData.source === '1self-twitter') {
             cardData.identifier = 'twitter';
             cardData.serviceName = 'Twitter';
+        } else if (cardData.source === '1self-instagram') {
+            cardData.identifier = 'instagram';
+            cardData.serviceName = 'Instagram';
         } else {
         	cardData.identifier = 'unknown-data-source';
         	cardData.serviceName = '';

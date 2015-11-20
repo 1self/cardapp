@@ -825,6 +825,8 @@ function getExplorePageUrl(activity) {
 	url += '/' + encodeURIComponent(fromDate);
 	url += '/' + encodeURIComponent(toDate);
 
+	url += '?readToken=' + stream.readToken();
+
 	return url;
 
 // https://api-staging.1self.co/v1/streams/MVIBQAXRNFXHIYQR/events/self/work,meeting/count/daily/type/json?readToken=5577db06e6b0fa0ed1f24b56b40e64431dd691d6d252&bgColor=&from=2015-10-05T23:00:00.000Z&to=2015-11-05T00:00:00.000Z
