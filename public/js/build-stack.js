@@ -433,6 +433,14 @@ function executeOnLoadTasks() {
         throwInPrevious(stack);
 	});
 
+    $("#replayToday").click(function(e){
+        markTodaysCardsUnread(username);
+    });
+
+    $("#replayWeek").click(function(e){
+        markLastWeeksCardsUnread(username);
+    });
+
 	buildStack(stack);
 
 }

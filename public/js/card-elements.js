@@ -58,6 +58,37 @@ function markCardRead(username, cardElem, cardReloadCount) {
     }
 }
 
+function markCardsAsRead(username, readSettings){
+    if (!offline) {
+        $.ajax({
+            url: apiUrl,
+            data: JSON.stringify(dataBody),
+            type: "PATCH",
+            contentType: "application/json"
+        })
+        .done(function (data) {
+            console.log('markTodaysCardsUnread: done', username, data);
+        })
+        .fail(function (data) {
+            console.log('ERROR markCardRead', username, cardId, data);
+        });
+    }
+}
+
+function markTodaysCardsUnread(username){
+    console.log("markTodaysCardsUnread: marking todays cards as unread url:", apiUrl);
+    var apiUrl = "/cards";
+    var dataBody = { "read": false, "filter": "today" };
+    markCardsAsRead(username, dataBody);
+}
+
+function markLastWeeksCardsUnread(username){
+    console.log("markLastWeeksCardsUnread: marking last week''s cards as unread url:", apiUrl);
+    var apiUrl = "/cards";
+    var dataBody = { "read": false, "filter": "lastWeek" };
+    markCardsAsRead(username, dataBody);
+}
+
 function getSeenIntroCards() {
     var seenIntroCards = tryParseJSON(localStorage.introCards);
     if (!seenIntroCards || !seenIntroCards.seen)

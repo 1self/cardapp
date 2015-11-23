@@ -388,7 +388,7 @@ function setUp1selfLogger() {
         "appName": "co.1self.web-log",
         "appVersion": "0.0.1"
     };
-    lib1self = new Lib1selfClient(config, "staging");
+    lib1self = new Lib1selfClient(config, "dev");
     lib1self.fetchStream(function(err, response) {
         stream = response;
     });	

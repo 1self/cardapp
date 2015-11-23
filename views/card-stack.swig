@@ -83,7 +83,12 @@
                     <i class="fa fa-circle-o-notch fa-spin"></i><span> Loading your cards...</span>
                 </div>
                 <div class="no-cards-div-bottom hide">
-                    <span>No cards right now</span>
+                    <div>
+                        <span>No cards right now</span>
+                    </div>
+                    <div>
+                        <span ><a href="" id="replayToday">Show me today's cards again</a><br>no, wait<br><a href="" id="replayWeek">show me this last week's</a></span>
+                    </div>
                 </div>
                 <div class="no-more-cards-div-bottom hide">
                     <i class="fa fa-flag-checkered"></i><br><span><large>Great flipping effort!</large><br>You've finished all of your cards.<br>Why not <a href="/integrations">add more integrations</a> for more cards next time?</span>

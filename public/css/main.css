@@ -289,9 +289,40 @@ h5 {
 }
 
 p {
-    margin: 5px 0 5px;
+    margin: 1.8% 0 1.5%;
     font-family: 'Raleway', sans-serif;
     font-size: 1em
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
 
 p.small {
@@ -2284,7 +2315,7 @@ footer:before {
     font-size: 3.3vh;
     line-height: 3.3vh;
     font-family: sans-serif;
-/*    float: left;*/
+    /*    float: left;*/
 }
 
 .headline-text .infoLink {
@@ -2295,11 +2326,13 @@ footer:before {
 /*    float: left;
     width: 80%;*/
     font-size: 2.5vh;
-}
+font-variant: small-caps;}
 
 .headline-comparitor {
     font-size: 2.5vh;
-/*    float: left;*/
+    font-style: italic;
+    /*    float: left;*/
+    /* margin-top: 3%; */
 }
 
 .headline-info {
@@ -2448,6 +2481,7 @@ footer:before {
 .card-menu.github .more span {
     border: solid 1px #000000;
     color: #000000;
+    /* background-color: black; */
 }
 
 .headline.googlefit, .pending-card .card-content.googlefit {

@@ -76,7 +76,7 @@ function addCardDetail(cardData, $dateSection) {
 
     createCardText(cardData);
 
-    $cardRow.find('.card-text').html(cardData.cardText.description);
+    $cardRow.find('.card-text').html(cardData.cardText ? cardData.cardText.description : "no description");
     $cardRow.find('.card-comparitor').html(cardData.cardText.comparitor);
 
     $cardsDiv = $dateSection.find('.cards-for-date');

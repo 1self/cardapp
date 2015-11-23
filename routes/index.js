@@ -290,9 +290,26 @@ var patchCard = function(req, res, next){
 		 body: req.body
 	};
 
-	var rollupRequest = proxyRequest.create(requestOptions);
-	rollupRequest.pipe(res);
+	var patchRequest = proxyRequest.create(requestOptions);
+	patchRequest.pipe(res);
+};
 
+var patchCards = function(req, res, next){
+	var url = req.app.locals.API_URL + 
+		'/me/cards';
+
+	var requestOptions = {
+		 url: url,
+		 method: 'PATCH',
+		 headers: {
+		   'Authorization': 'Bearer ' + req.session.token
+		 },
+		 json: true,
+		 body: req.body
+	};
+
+	var patchRequest = proxyRequest.create(requestOptions);
+	patchRequest.pipe(res);
 };
 
 var getIntegrationDetails = function(req, res, next){
@@ -459,6 +476,10 @@ router.get('/v1/users/:username/rollups/day/:objectTags/:actionTags/:property/:r
 router.patch('/cards/:cardId',
 	checkForSession,
 	patchCard);
+
+router.patch('/cards',
+	checkForSession,
+	patchCards);
 
 // check for username match
 
