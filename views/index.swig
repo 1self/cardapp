@@ -283,7 +283,7 @@ Use 1self to weave your data into a story of the remarkable things that you do. 
             </p>-->
             <p>Your data will be securely stored and private to you. We&apos;ll never sell or share your data (unless you choose to).
             </p>
-            <p class="more-info"><a class="button" href="/no-exploit">More info</a></p>
+            <p class="more-info"><a class="button" href="/info/no-exploit">More info</a></p>
             <!--<p>We want a completely transparent value exchange, so 1self will operate on a &quot;freemium&quot; basis. There will always be a free version available but we hope you&apos;ll be tempted to part with a small yearly fee in exchange for lots of extra sweet data goodness.
             </p>-->
           </div>

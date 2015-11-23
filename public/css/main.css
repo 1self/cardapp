@@ -1177,9 +1177,31 @@ footer:before {
     margin-bottom: 5px;
 }
 
+.log .log-item-button .log-button {
+    width: 25%;
+    max-width: 75px;
+    font-size: 0.9em;
+    text-align: center;
+}
+
+.log .log-item-button .log-button div {
+    width: 75px;
+}
+
 /*.log .new-activity-content input[type="text"] {
     width: 75%;
 }*/
+
+.log .input-header-text {
+    margin-bottom: 5px;
+    margin-top: 20px;
+    font-weight: bold;
+    font-size: 0.9em;
+}
+
+.log .input-header-text:first-of-type {
+    margin-top: 0px;
+}
 
 .log .property-type-text {
     font-size: 0.8em;
@@ -1187,6 +1209,32 @@ footer:before {
 
 .log .activity-property-log .property-log-row {
     margin-bottom: 15px;
+}
+
+.log .spark-histogram-box {
+    height: 100%;
+    width: 22%;
+    max-width: 90px;
+    margin-right: 2%;
+    border: 1px solid lightgray;
+    background-color: #fff;
+    padding: 2px;
+    position: relative;
+}
+
+.log .spark-histogram-container {
+    height: 100%;
+    width: 100%;
+}
+
+.log .spark-histogram-container-cover {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    cursor: pointer;
+    background-color: transparent;
 }
 
 /* Nav hamburger to close button -------------------- */
@@ -2408,7 +2456,7 @@ font-variant: small-caps;}
 }
 
 .intro-card .card-menu .more span {
-    border: solid 1px #00Bb97;
+    border: solid 1px #00B597;
     color: #00B597;
     background-color: #fff;
 }
@@ -2615,12 +2663,6 @@ font-variant: small-caps;}
     background-size: contain;
 }
 
-.summary-item-logo.visitcounter {
-    background: url(../img/service-strava.svg);
-    background-repeat: no-repeat;
-    background-size: contain;
-}
-
 .card-menu.strava .more span {
     border: solid 1px rgb(242,97,34);
     color: rgb(242,97,34);
@@ -2667,12 +2709,6 @@ font-variant: small-caps;}
 }
 
 .headline.visitcounter .service {
-    background: url(../img/service-visitcounter.svg);
-    background-repeat: no-repeat;
-    background-size: contain;
-}
-
-.summary-item-logo.visitcounter {
     background: url(../img/service-visitcounter.svg);
     background-repeat: no-repeat;
     background-size: contain;
@@ -2843,7 +2879,7 @@ font-variant: small-caps;}
     box-shadow: 1px 1px 5px #CCC;
 }
 
-.integrations main, .profile main, .admin main, .log main {
+.integrations main, .profile main, .admin main, .log main, .data-explorer main {
     padding-top: 0px;
     height: 70%;
 }
@@ -3061,7 +3097,7 @@ font-variant: small-caps;}
     padding: 20px;
 }
 
-.log .log-content {
+.log .log-content, .data-explorer .main-content {
     position: absolute;
     top: 0px;
     height: 100%;
@@ -3135,7 +3171,7 @@ font-variant: small-caps;}
 
 .log .log-item-name {
     height: 100%;
-    width: 80%;
+    width: 50%;
     display: table;
 }
 
@@ -3146,7 +3182,7 @@ font-variant: small-caps;}
 
 .log .log-item-button {
     height: 30px;
-    width: 30px;
+    width: 75px;
     display: table;
     background-color: #00B597;
     border-radius: 15px;
@@ -3157,6 +3193,73 @@ font-variant: small-caps;}
     text-align: center;
     vertical-align: middle;
     color: #fff;
+}
+
+.data-explorer .header-row {
+    padding: 10px;
+    height: 10%;
+    width: 100%;
+}
+
+.data-explorer .chart-row {
+    height: 60%;
+    width: 100%;
+    padding: 10px;
+}
+
+.data-explorer .chart-options-row {
+    height: 40%;
+    width: 100%;
+    padding: 10px;
+    overflow-y: auto;
+    font-size: 0.8em;
+}
+
+.data-explorer .aggregation-sections {
+    width: 80%;
+    float: left;
+}
+
+.data-explorer .versus-button-section {
+    width: 19%;
+    margin-left: 1%;
+    float: left;
+}
+
+.data-explorer .aggregation-options {
+    height: 100%;
+    float: left;
+}
+
+.data-explorer .aggregation-options.expanded {
+    width: 75%;
+    overflow-x: auto;
+}
+
+.data-explorer .aggregation-options.collapsed {
+    width: 25%;
+    overflow-x: auto;
+}
+
+.data-explorer .aggregation-options .aggregation-header {
+    background-color: #00B597;
+    color: #fff;
+}
+
+.data-explorer .aggregation-options>div {
+    width: 100%;
+    height: auto;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    padding-left: 5px;
+    padding-right: 5px;
+    clear: both;
+}
+
+.data-explorer .chart {
+    height: 100%;
+    width: 100%;
+    padding: 10px;
 }
 
 .integrations .integration-card .service, .integrations .integration-detail .service {
@@ -3323,6 +3426,11 @@ font-variant: small-caps;}
     padding-right: 10px;
 }
 
+.standard-button.icon-times i, .standard-button.icon-dot i {
+    font-size: 0.6em;
+    font-weight: lighter;
+}
+
 .sub-button {
     color: #000;
     border: solid 1px #00B597;
@@ -3448,7 +3556,7 @@ font-variant: small-caps;}
     background-size: contain;
 }
 
-.admin .service.visitCounter, .integrations .service.visitCounter {
+.admin .service.visitcounter, .integrations .service.visitCounter {
     background: url(../img/service-visitcounter.png);
     background-repeat: no-repeat;
     background-size: contain;
@@ -3456,6 +3564,12 @@ font-variant: small-caps;}
 
 .admin .service.visualStudioExtension, .integrations .service.visualStudioExtension {
     background: url(../img/service-visualstudio.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.admin .service.unknown-data-source {
+    background: url(../img/service-unknown-data-source.svg);
     background-repeat: no-repeat;
     background-size: contain;
 }

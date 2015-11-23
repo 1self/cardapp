@@ -1,4 +1,286 @@
-[{
+[
+{
+    "userId" : "53c3a6363c88f90200823407",
+    "type" : "top10",
+    "outOf" : 10,
+    "thumbnailMedia" : "chart.html",
+    "startRange" : "2015-06-02",
+    "endRange" : "2015-06-02",
+    "objectTags" : [ 
+        "instagram", 
+        "internet", 
+        "media", 
+        "photo", 
+        "social-network"
+    ],
+    "actionTags" : [ 
+        "publish", 
+        "share"
+    ],
+    "position" : 0,
+    "properties" : {
+        "sum" : {
+            "__count__" : 14
+        }
+    },
+    "propertyName" : "__count__.sum",
+    "stdDev" : 0.9105442927671937,
+    "correctedStdDev" : 1.0117158808524376,
+    "sampleStdDev" : 5.5910614468161031,
+    "sampleCorrectedStdDev" : 5.0319553021344925,
+    "mean" : 8.9090909090909083,
+    "variance" : 5.0909090909090917,
+    "value" : 14,
+    "sortingValue" : -14,
+    "cardDate" : "2015-06-02",
+    "generatedDate" : "2015-11-20T00:22:29.544Z",
+    "chart" : "/v1/users/m/rollups/day/instagram,internet,media,photo,social-network/publish,share/sum.__count__/.json",
+    "id" : "53c3a6363c88f90200823407"
+},
+{
+    "userId" : "53c3a6363c88f90200823407",
+    "type" : "top10",
+    "outOf" : 10,
+    "thumbnailMedia" : "chart.html",
+    "startRange" : "2015-06-02",
+    "endRange" : "2015-06-02",
+    "objectTags" : [ 
+        "instagram", 
+        "internet", 
+        "media", 
+        "photo", 
+        "social-network"
+    ],
+    "actionTags" : [ 
+        "publish", 
+        "share"
+    ],
+    "position" : 1,
+    "properties" : {
+        "sum" : {
+            "comments" : 8
+        }
+    },
+    "propertyName" : "comments.sum",
+    "stdDev" : 0.5908391567007971,
+    "correctedStdDev" : 0.6564879518897746,
+    "sampleStdDev" : 5.2313883666216414,
+    "sampleCorrectedStdDev" : 4.7082495299594767,
+    "mean" : 4.9090909090909092,
+    "variance" : 3.0909090909090908,
+    "value" : 8,
+    "sortingValue" : -8,
+    "cardDate" : "2015-06-02",
+    "generatedDate" : "2015-11-20T00:22:29.551Z",
+    "chart" : "/v1/users/m/rollups/day/instagram,internet,media,photo,social-network/publish,share/sum.comments/.json",
+    "published" : true
+},
+{
+"userId": "53c3a6363c88f90200823407",
+"type": "top10",
+"outOf": 10,
+"thumbnailMedia": "chart.html",
+"startRange": "2015-11-18",
+"endRange": "2015-11-18",
+"objectTags": [
+"following",
+"inbound",
+"instagram",
+"internet",
+"social-graph",
+"social-network"
+],
+"actionTags": [
+"sample"
+],
+"position": 0,
+"properties": {
+"sum": {
+"count": 190
+}
+},
+"propertyName": "count.sum",
+"stdDev": 17.69196016685134,
+"correctedStdDev": 19.657733518723713,
+"sampleStdDev": 6.746772841331784,
+"sampleCorrectedStdDev": 6.072095557198605,
+"mean": 70.63636363636364,
+"variance": 119.36363636363636,
+"value": 190,
+"sortingValue": -190,
+"cardDate": "2015-11-18",
+"generatedDate": "2015-11-20T00:22:33.238Z",
+"chart": "/v1/users/m/rollups/day/follower,inbound,instagram,internet,social-graph,social-network/sample/sum.count/.json",
+"published": true,
+"weight": 0.486603062087823,
+"depth": 2,
+"id": "564e67c99b63209b2350d170"
+},
+{
+"userId": "56162050fc09d0e758bebf64",
+"type": "top10",
+"outOf": 4,
+"thumbnailMedia": "chart.html",
+"startRange": "2015-02-27",
+"endRange": "2015-02-27",
+"objectTags": [
+"internet",
+"social-network",
+"tweet",
+"twitter"
+],
+"actionTags": [
+"publish"
+],
+"position": 0,
+"properties": {
+"sum": {
+"retweets": 35
+}
+},
+"propertyName": "retweets.sum",
+"stdDev": 7.494998332221296,
+"correctedStdDev": 9.993331109628395,
+"sampleStdDev": 3.5757179404277832,
+"sampleCorrectedStdDev": 2.681788455320837,
+"mean": 8.2,
+"variance": 26.8,
+"value": 35,
+"sortingValue": -35,
+"cardDate": "2015-02-27",
+"generatedDate": "2015-11-17T11:46:29.189Z",
+"chart": "/v1/users/m/rollups/day/internet,social-network,tweet,twitter/publish/sum.retweets/.json",
+"published": true,
+"weight": 0.03539011930777956,
+"depth": 2,
+"id": "564b13950e92b96405c0c667"
+},
+{
+"userId": "56162050fc09d0e758bebf64",
+"type": "top10",
+"outOf": 1,
+"thumbnailMedia": "chart.html",
+"startRange": "2015-02-21",
+"endRange": "2015-02-21",
+"objectTags": [
+"internet",
+"social-network",
+"tweet",
+"twitter"
+],
+"actionTags": [
+"publish"
+],
+"position": 0,
+"properties": {
+"sum": {
+"favorites": 1
+}
+},
+"propertyName": "favorites.sum",
+"stdDev": 0.7071067811865476,
+"correctedStdDev": 0.7071067811865476,
+"sampleStdDev": 0.7071067811865475,
+"sampleCorrectedStdDev": 0.7071067811865475,
+"mean": 0.5,
+"variance": 0.5,
+"value": 1,
+"sortingValue": -1,
+"cardDate": "2015-02-21",
+"generatedDate": "2015-11-17T11:46:28.979Z",
+"chart": "/v1/users/m/rollups/day/internet,social-network,tweet,twitter/publish/sum.favorites/.json",
+"published": true,
+"weight": 0.033319094813207516,
+"depth": 2,
+"id": "564b13940e92b96405c0c663"
+},
+{
+"type": "date",
+"cardDate": "2015-02-25"
+},
+{
+"userId": "56162050fc09d0e758bebf64",
+"type": "top10",
+"outOf": 2,
+"thumbnailMedia": "chart.html",
+"startRange": "2015-02-25",
+"endRange": "2015-02-25",
+"objectTags": [
+"internet",
+"social-network",
+"tweet",
+"twitter"
+],
+"actionTags": [
+"publish"
+],
+"position": 0,
+"properties": {
+"sum": {
+"__count__": 3
+}
+},
+"propertyName": "__count__.sum",
+"stdDev": 0.816496580927726,
+"correctedStdDev": 1.632993161855452,
+"sampleStdDev": 1.632993161855452,
+"sampleCorrectedStdDev": 0.816496580927726,
+"mean": 1.6666666666666667,
+"variance": 1.3333333333333333,
+"value": 3,
+"sortingValue": -3,
+"cardDate": "2015-02-25",
+"generatedDate": "2015-11-17T11:46:29.080Z",
+"chart": "/v1/users/m/rollups/day/internet,social-network,tweet,twitter/publish/sum.__count__/.json",
+"published": true,
+"weight": 0.03468585593355475,
+"depth": 2,
+"id": "564b13950e92b96405c0c665"
+},
+{
+"userId": "53c3a6363c88f90200823407",
+"type": "top10",
+"outOf": 10,
+"thumbnailMedia": "chart.html",
+"startRange": "2015-10-10",
+"endRange": "2015-10-10",
+"objectTags": [
+"follower",
+"inbound",
+"internet",
+"social-graph",
+"social-network",
+"twitter"
+],
+"actionTags": [
+"sample"
+],
+"position": 2,
+"properties": {
+"sum": {
+"latest-count": 217
+}
+},
+"propertyName": "latest-count.sum",
+"stdDev": 0.3837612894400987,
+"correctedStdDev": 0.4264014327112208,
+"sampleStdDev": 3.7902349574331087,
+"sampleCorrectedStdDev": 3.4112114616897977,
+"mean": 215.54545454545453,
+"variance": 1.4545454545454675,
+"value": 217,
+"sortingValue": -217,
+"cardDate": "2015-10-10",
+"generatedDate": "2015-11-16T16:52:15.386Z",
+"chart": "/v1/users/m/rollups/day/follower,inbound,internet,social-graph,social-network,twitter/sample/sum.latest-count/.json",
+"published": true,
+"archive": false,
+"read": false,
+"weight": 0.3397388171253549,
+"depth": 2,
+"id": "564a09bf44f544d252b6620a"
+},
+{
     "_id": "5627a8b9349ecbe54909d859",
     "userId": "5622400d0585baac6cb83bea",
     "type": "cardsgenerating",

@@ -12,7 +12,7 @@
 <head>
     <meta charset="utf-8">
     <!-- <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> within htacess-->
-    <title>1self</title>
+    <title>1self - Your Integrations</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <!--icons -->
@@ -107,6 +107,7 @@
             <div class="integration-loading"><i class="fa fa-circle-o-notch fa-spin"></i>&nbsp;&nbsp;Loading - just a tic</div>
 
             <div class="integrations-section template">
+                <a class="section-header-anchor">
                 <div class="section-header">
                     Productivity
                 </div>

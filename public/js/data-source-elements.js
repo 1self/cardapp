@@ -25,8 +25,12 @@ function getDataSource (cardData) {
             return 'sublime';
         }
             
-        else if (cardData.objectTags[0] === "tweets") {
+        else if (cardData.objectTags[0] === "tweets" || cardData.objectTags.indexOf('twitter') >= 0) {
             return 'twitter';
+        }
+            
+        else if (cardData.objectTags.indexOf('instagram') >= 0) {
+            return 'instagram';
         }
             
         else if (cardData.objectTags.indexOf("github") >= 0 || cardData.actionTags.indexOf("github") >= 0) {
@@ -34,10 +38,6 @@ function getDataSource (cardData) {
         }
         else {
             return 'unknown-data-source';
-        }
-    } else if (cardData.source) {
-    	if (cardData.source === '1self-GitHub') {
-            return 'github';
         }
     }
 }
@@ -59,6 +59,12 @@ function setDataSource(cardData) {
         } else if (cardData.source === 'last.fm') {
             cardData.identifier = 'lastfm';
             cardData.serviceName = 'Last.fm';
+        } else if (cardData.source === '1self-twitter') {
+            cardData.identifier = 'twitter';
+            cardData.serviceName = 'Twitter';
+        } else if (cardData.source === '1self-instagram') {
+            cardData.identifier = 'instagram';
+            cardData.serviceName = 'Instagram';
         } else {
         	cardData.identifier = 'unknown-data-source';
         	cardData.serviceName = '';

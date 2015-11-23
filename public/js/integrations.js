@@ -6,7 +6,14 @@ function executeOnLoadTasks() {
 
     var onGotData = function(integrationsJSON) {
         renderIntegrationsList(integrationsJSON);
+
+        renderSectionExpansion();
     };
+
+    window.addEventListener("popstate", function(e) {
+        console.log('popstate', location.pathname, e);
+        renderSectionExpansion();
+    });
 
     getIntegrationsInCategories(onGotData);
 
@@ -43,20 +50,13 @@ function renderIntegrationsList(integrationsJSON) {
 
         $categorySection.click(function() {
             var $clickedSection = $(this);
-            // console.log($clickedSection);
-            $clickedSection.find('.section-content-collapse').slideToggle();
-            $clickedSection.find('.section-content-expand').slideToggle();
+            var headerText = $clickedSection.find('.section-header').text();
+            var newHash = formatHash(headerText);
 
-            var sections = $('.integrations-section');
-
-            for (var i = 0; i < sections.length; i++) {
-                var $section = $(sections[i]);
-                if ($section.find('.section-header').text() !== $clickedSection.find('.section-header').text()) {
-                    $section.find('.section-content-collapse').slideDown();
-                    $section.find('.section-content-expand').slideUp();
-                }
-            }
-
+            if (window.location.hash === '#' + newHash)
+                renderSectionExpansion();
+            else
+                window.location.hash = newHash;
         });
     });
 
@@ -64,11 +64,46 @@ function renderIntegrationsList(integrationsJSON) {
     $('.integration-loading').addClass('hide');
 }
 
+function renderSectionExpansion() {
+    var $scrollToSection;
+    var expandedSection;
+
+    if (window.location.hash !== undefined && window.location.hash !== '') {
+        expandedSection = window.location.hash;
+        expandedSection = expandedSection.split('#');
+        expandedSection = expandedSection[1];
+        expandedSection = unFormatHash(expandedSection);
+    }
+
+    var sections = $('.integrations-section');
+
+    for (var i = 0; i < sections.length; i++) {
+        var $section = $(sections[i]);
+        if (expandedSection === undefined || $section.find('.section-header').text().toLowerCase() !== expandedSection) {
+            if ($section.find('.section-content-expand').is(':visible')) {
+                $section.find('.section-content-collapse').slideDown();
+                $section.find('.section-content-expand').slideUp();                
+            }
+        } else if (expandedSection !== undefined && $section.find('.section-header').text().toLowerCase() === expandedSection) {
+            $section.find('.section-content-collapse').slideToggle();
+            $section.find('.section-content-expand').slideToggle();
+            $scrollToSection = $section;
+        }
+    }
+
+    if ($scrollToSection !== undefined) {
+        $('.integrations-content').animate({
+            scrollTop: $scrollToSection.offset().top - 30
+        }, 500);
+    }
+}
+
 function buildCategorySection(category, $sectionTemplate, $smallServiceTemplate, $integrationCardTemplate) {
     var $section = $sectionTemplate.clone();
     $section.removeClass('template');
 
     $section.find('.section-header').text(category.categoryName);
+    $section.find('.section-header-anchor').prop('name', formatHash(category.categoryName));
 
     category.integrations.forEach(function (integration) {
         var $collapseItem = buildServiceCollapseItem(integration, $smallServiceTemplate);
@@ -78,6 +113,18 @@ function buildCategorySection(category, $sectionTemplate, $smallServiceTemplate,
     });
 
     return $section;
+}
+
+function formatHash(toFormat) {
+    toFormat = toFormat.replace(' ', '-').toLowerCase();
+    toFormat = encodeURIComponent(toFormat);
+    return toFormat;
+}
+
+function unFormatHash(toUnFormat) {
+    toUnFormat = decodeURIComponent(toUnFormat);
+    toUnFormat = toUnFormat.replace('-', ' ').toLowerCase();
+    return toUnFormat;
 }
 
 function buildServiceCollapseItem(integration, $smallServiceTemplate) {

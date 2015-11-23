@@ -35,15 +35,19 @@
     <!--icons -->
     <!--Android address bar styling -->
     <meta name="theme-color" content="#ffffff">
-    <script src="js/modernizr.custom.19789.js"></script>
-    <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
-    <script src="js/utils.js"></script>
+    <script src="/js/modernizr.custom.19789.js"></script>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+    <script src="/js/utils.js"></script>
 
     <script>
 
-      var registeredOn;
-      var username;
+      var username = '{{profile.username}}';
+      var registeredOn = "{{profile.registeredOn}}";
+      var newActivityState = '{{newActivityState}}';
+
+      console.log('uname is: ', username);
+    
     </script>
     <!--[if lt IE 9]> <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script> <![endif]-->
 </head>
@@ -56,10 +60,12 @@
         <div class="navigation-container">
             <div class="navigation-content">
                 <div>
-                    <div class="navigation-item" href="/card-stack">Card stack</div>
-                    <div class="navigation-item" href="/integrations">Integrations</div>
+                    <div class="navigation-item hide logged-out" href="https://app-staging.1self.co/signup">Join 1self</div>
+                    <div class="navigation-item hide logged-out" href="https://app-staging.1self.co/login">Log in</div>
+                    <div class="navigation-item hide logged-in" href="/card-stack">Card stack</div>
+                    <div class="navigation-item hide logged-in" href="/integrations">Integrations</div>
                     <div class="navigation-item hide dashboard-nav" href="/dashboard">Dashboard</div>
-                    <div class="navigation-item" href="/profile">Profile</div>
+                    <div class="navigation-item hide logged-in" href="/profile">Profile</div>
                     <hr class="navigation-spacer">
                     <div class="navigation-item" href="http://blog.1self.co">1self blog</div>
                     <div class="navigation-item" href="http://1self.uservoice.com">Support &amp; feedback</div>
@@ -100,6 +106,7 @@
           <div class="new-activity-section activity-category-new hide">
             <div class="new-activity-sub-header">Enter category name</div>
             <div class="new-activity-content">
+              <div class="activity-category-error error-text"></div>
               <input type="text" maxlength="25" placeholder="E.g. Health">
               <div class="button-row">
                 <div class="standard-button new-category-save">
@@ -141,17 +148,28 @@
             <div class="new-activity-sub-header">Enter activity name</div>
             <div class="new-activity-content">
               <div class="new-activity-sub-header activity-category-text"></div>
+              <div class="activity-name-error error-text"></div>
               <input type="text" maxlength="25" size="25" placeholder="E.g. 'sit-up' or 'coffee'">
               <div class="button-row">
-                <div class="standard-button new-name-save">
-                  <div>
-                    <i class="fa fa-check"></i>&nbsp;&nbsp;Save
+                <div class="left">
+                  <div class="standard-button new-name-save">
+                    <div>
+                      <i class="fa fa-check"></i>&nbsp;&nbsp;Save
+                    </div>
+                  </div>
+                </div>
+                <div class="left">
+                  <div class="standard-button sub-button activity-name-skip">
+                    <div>
+                      <i class="fa fa-fast-forward"></i>&nbsp;&nbsp;Skip this
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
           <div class="new-activity-section activity-property hide">
+            <div class="new-activity-sub-header activity-text"></div>
             <div class="new-activity-sub-header">Select extra properties</div>
             <div class="new-activity-sub-header-note">Optional - choose none, one or some. These can be used to add extra information when you log an activity.</div>
             <div class="new-activity-content">
@@ -177,12 +195,13 @@
             </div>
           </div>
           <div class="new-activity-section activity-property-new hide">
-            <div class="new-activity-sub-header">Enter property name</div>
+            <div class="new-activity-sub-header">New property for </div>
             <div class="new-activity-content">
-              <input type="text" maxlength="25" placeholder="E.g. 'quantity' or 'volume'">
-            </div>
-            <div class="new-activity-sub-header">Select property type</div>
-            <div class="new-activity-content">
+              <div class="input-header-text">Enter property name</div>
+              <div class="property-name-error error-text"></div>
+              <input type="text" maxlength="25" placeholder="E.g. 'quantity'">
+              <div class="input-header-text">Select property type</div>
+              <div class="property-type-error error-text"></div>
               <div class="radio-input">
                 <input type="radio" name="property-name" value="numeric">
                 <span>Numeric</span>
@@ -192,13 +211,18 @@
                 <span>Text</span>
               </div>
               <div class="radio-input">
-              <input type="radio" name="property-name" value="text">
+              <input type="radio" name="property-name" value="timespan">
                 <span>Timespan</span>
               </div>
               <div class="button-row">
-                <div class="standard-button new-property-save">
+                <div class="standard-button new-property-save left">
                   <div>
                     <i class="fa fa-check"></i>&nbsp;&nbsp;Save
+                  </div>
+                </div>
+                <div class="standard-button sub-button new-property-cancel left">
+                  <div>
+                    <i class="fa fa-times"></i>&nbsp;&nbsp;Cancel
                   </div>
                 </div>
               </div>
@@ -267,11 +291,11 @@
                 <div class="bottom-menu">
                     <div class="previous hide">
                     </div>
-                    <!-- <div class="standard-button add-new-log-item">
+                    <div class="standard-button add-new-log-item">
                       <div>
                         <i class="fa fa-plus"></i>&nbsp;&nbsp;Add new activity
                       </div>
-                    </div> -->
+                    </div>
                 </div>
             </div>
         </div>
@@ -293,6 +317,16 @@
           <div class="log-row template">
             <input type="hidden" class="activity-data">
             <div class="log-item-name left"><div></div></div>
+            <div class="log-item-button right">
+              <div>
+                <div class="standard-button log-button"><div></div></div>
+              </div>
+            </div>
+            <div class="spark-histogram-box right">
+              <div class="spark-histogram-container"></div>
+              <div class="spark-histogram-container-cover"></div>
+            </div>
+            <div class="clear"></div>
           </div>
 
 
@@ -339,13 +373,16 @@
         ga('send', 'pageview');
     </script>
     
-    <script src="js/jquery-2.1.4.min.js"></script>
+    <script src="/js/jquery-2.1.4.min.js"></script>
     <script>
-    window.jQuery || document.write('<script src="js/jquery-2.1.4.min.js"><\/script>')
+    window.jQuery || document.write('<script src="/js/jquery-2.1.4.min.js"><\/script>')
     </script>
-    <script src="js/lib1self-client.js"></script>
-    <script src="js/main.js"></script>
-    <script src="js/log.js"></script>
+    <script src="/js/d3.min.js"></script>
+    <script src="/js/xdate.js"></script>
+    <script src="/js/lib1self-client.js"></script>
+    <script src="/js/lib1self-charting.js"></script>
+    <script src="/js/main.js"></script>
+    <script src="/js/log.js"></script>
    
 </body>
 
