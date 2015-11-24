@@ -436,12 +436,12 @@ function executeOnLoadTasks() {
 	});
 
     $("#replayToday").click(function(e){
-        markTodaysCardsUnread(username);
+        replayToday(username);
     });
 
-    $("#replayWeek").click(function(e){
-        markLastWeeksCardsUnread(username);
-    });
+    // $("#replayWeek").click(function(e){
+    //     markLastWeeksCardsUnread(username);
+    // });
 
 	buildStack(stack);
 

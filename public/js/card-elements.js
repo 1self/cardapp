@@ -58,12 +58,12 @@ function markCardRead(username, cardElem, cardReloadCount) {
     }
 }
 
-function markCardsAsRead(username, readSettings){
+function replayToday(username, readSettings){
     if (!offline) {
         $.ajax({
-            url: apiUrl,
-            data: JSON.stringify(dataBody),
-            type: "PATCH",
+            url: "/cards/replay",
+            data: JSON.stringify({}),
+            type: "POST",
             contentType: "application/json"
         })
         .done(function (data) {
@@ -75,10 +75,10 @@ function markCardsAsRead(username, readSettings){
     }
 }
 
-function markTodaysCardsUnread(username){
-    console.log("markTodaysCardsUnread: marking todays cards as unread url:", apiUrl);
+function replayCards(username){
+    console.log("replayCards: marking todays cards as unread url:", apiUrl);
     var apiUrl = "/cards";
-    var dataBody = { "read": false, "filter": "today" };
+    var dataBody = {  };
     markCardsAsRead(username, dataBody);
 }
 

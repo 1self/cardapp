@@ -329,7 +329,7 @@ var getChartData = function(req, res, next) {
 	if (req.session !== undefined) {
 		requestOptions.headers = {
 			'Authorization': 'Bearer ' + req.session.token
-		}
+		};
 	}
 
 	request(requestOptions,
@@ -439,13 +439,13 @@ var patchCard = function(req, res, next){
 	patchRequest.pipe(res);
 };
 
-var patchCards = function(req, res, next){
+var replayCards = function(req, res, next){
 	var url = req.app.locals.API_URL + 
-		'/me/cards';
+		'/me/cards/replay';
 
 	var requestOptions = {
 		 url: url,
-		 method: 'PATCH',
+		 method: 'POST',
 		 headers: {
 		   'Authorization': 'Bearer ' + req.session.token
 		 },
@@ -654,9 +654,9 @@ router.patch('/cards/:cardId',
 	checkForSession,
 	patchCard);
 
-router.patch('/cards',
+router.post('/cards/replay',
 	checkForSession,
-	patchCards);
+	replayCards);
 
 // check for username match
 
