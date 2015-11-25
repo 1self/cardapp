@@ -346,6 +346,10 @@ function executeOnLoadTasks() {
             $('.stack').prepend($loadingDivTop);
             $('.stack').append($noMoreCardsDiv);
             $('.no-more-cards-div-bottom').removeClass('hide');
+            $('.no-more-cards-div-bottom .replayToday').click(function(e){
+                replayToday(username);
+            });
+
             hideFlickButtons('nextOnly');
         }
         
@@ -435,7 +439,7 @@ function executeOnLoadTasks() {
         throwInPrevious(stack);
 	});
 
-    $("#replayToday").click(function(e){
+    $(".replayToday").click(function(e){
         replayToday(username);
     });
 

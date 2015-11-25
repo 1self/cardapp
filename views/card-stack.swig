@@ -87,11 +87,12 @@
                         <span>No cards right now</span>
                     </div>
                     <div>
-                        <span ><a href="" id="replayToday">Show me today's cards again</a><br>no, wait<br><a href="" id="replayWeek">show me this last week's</a></span>
+                        <span ><a href="" class="replayToday">Show me today's cards again</a></span>
                     </div>
                 </div>
                 <div class="no-more-cards-div-bottom hide">
-                    <i class="fa fa-flag-checkered"></i><br><span><large>Great flipping effort!</large><br>You've finished all of your cards.<br>Why not <a href="/integrations">add more integrations</a> for more cards next time?</span>
+                    <i class="fa fa-flag-checkered"></i><br><span><large>Great flipping effort!</large><br>You've finished all of your cards.<br>Why not <a href="/integrations">add more integrations</a> for more cards next time?</span><br><br>
+                    <span ><a href="" class="replayToday">Show me today's cards again</a></span>
                 </div>
             </ul>
         </div>
