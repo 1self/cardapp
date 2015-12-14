@@ -18,6 +18,11 @@ var signedInRoute = function(req, res, next){
 			req.session.shouldRegisterStream = true;
 			req.session.streamRegistered = false;
 		}
+
+		if(req.query.email){
+			getAuthCode(req, res, next);
+			return;
+		}
 		
 		res.render('index');
 	}
