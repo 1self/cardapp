@@ -50,6 +50,12 @@ function renderIntegrationDetail(integrationJSON) {
     var errorInstall = getQSParam().error;
     var showResult = false;
 
+    var gaEvent = {};
+    gaEvent.eventCategory = 'integrations/' + integrationJSON.serviceName;
+    gaEvent.eventAction = 'load';
+    gaEvent.eventLabel = 'page-load';
+    ga('send', 'event', gaEvent);
+
     $('.page-title').text('Connect ' + integrationJSON.serviceName);
 
     $integrationDetail.addClass(integrationJSON.identifier);

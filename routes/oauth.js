@@ -105,6 +105,10 @@ var getAuthCode = function(req, res, next){
 		'&response_type=code' + 
 		'&state=' + state;
 
+	if(req.query.trackingId){
+		authCodeUrl += '&trackingId=' + encodeURIComponent(req.query.trackingId);
+	}
+
 	req.session.state = '' + state;
 
 	res.redirect(authCodeUrl);

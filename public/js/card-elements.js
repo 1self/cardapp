@@ -59,6 +59,8 @@ function markCardRead(username, cardElem, cardReloadCount) {
 }
 
 function replayToday(username, readSettings){
+    sendGAEvent('replay-today', '', '');
+
     if (!offline) {
         $.ajax({
             url: "/cards/replay",

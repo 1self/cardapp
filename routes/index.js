@@ -124,7 +124,8 @@ var renderDataExplorer = function(req, res, next) {
 			chartType: req.params.chartType,
 			fromDate: req.params.fromDate,
 			toDate: req.params.toDate,
-			readToken: req.params.readToken
+			readToken: req.params.readToken,
+			trackingId: req.session.profile.encodedUsername
 		});
 };
 
@@ -151,7 +152,8 @@ var renderDataExplorerVs = function(req, res, next) {
 			actionTags1: req.params.actionTags1,
 			aggregator1: req.params.aggregator1,
 			chartType1: req.params.chartType1,
-			readToken: req.params.readToken
+			readToken: req.params.readToken,
+			trackingId: req.session.profile.encodedUsername
 		});
 };
 

@@ -357,7 +357,7 @@
    m.parentNode.insertBefore(a, m)
  })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
 
- ga('create', 'UA-54838479-1', 'auto');
+ ga('create', 'UA-54838479-1', {userId: {{profile.trackingId}}});
  ga('send', 'pageview');
  $('.join_email_btn').on('click', function() {
    ga('send', 'event', 'invite_button', 'invite_button_click');

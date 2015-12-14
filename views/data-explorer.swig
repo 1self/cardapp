@@ -61,6 +61,7 @@
       var aggregatorParam1 = '{{aggregator1}}';
       var chartTypeParam1 = '{{chartType1}}';
       var readTokenParam = '{{readToken}}';
+      var trackingId = '{{trackingId}}'
 
       console.log(streamIdParam);
       console.log(readTokenParam);
@@ -172,7 +173,8 @@
             a.src = g;
             m.parentNode.insertBefore(a, m)
         })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
-        ga('create', 'UA-54838479-1', 'auto');
+        ga('create', 'UA-54838479-1',  {userId: '{{trackingId}}'});
+        ga('set', 'dimension1', '{{trackingId}}');
         ga('send', 'pageview');
     </script>
     

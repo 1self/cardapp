@@ -18,7 +18,7 @@ function buildStack (stack) {
         var introCards = getUnseenIntroCards(numberOfIntroCards);
         cardsArray = introCards.concat(cardsArray);
 
-        sendGAEvent('cards-loaded', username, cardsArray.length);
+        sendGAEvent('cards-loaded', trackingId, cardsArray.length);
 
     	globalCardsArray = cardsArray;
 
@@ -173,13 +173,13 @@ function assignCardHandlers ($li) {
     $li.find(".more-back").click(function() {
         showFlickButtons();
         $li.find(".front .chart-container").show();
-        sendGAEvent('flipped-to-front', username + "#" + $li.attr('cardId'), $li.attr('cardIndex'));
+        sendGAEvent('flipped-to-front', trackingId + "#" + $li.attr('cardId'), $li.attr('cardIndex'));
      });
 
     $li.find(".more").click(function() {
         hideFlickButtons();
         $li.find(".front .chart-container").hide();
-        sendGAEvent('flipped-to-back',  username + "#" + $li.attr('cardId'), $li.attr('cardIndex'));
+        sendGAEvent('flipped-to-back',  trackingId + "#" + $li.attr('cardId'), $li.attr('cardIndex'));
      });
 }
 
@@ -287,6 +287,21 @@ function createCard (cardData) {
 	return $card;
 }
 
+var getCardData = function(cardElem){
+    var cardData = cardElem.find('.cardData');
+    cardData = decodeURIComponent(cardData.val());
+    cardData = JSON.parse(cardData);
+    return cardData;
+};
+
+var getEventLabel = function(cardData){
+    var result = cardData.type + '/';
+    if(cardData.objectTags){
+        result += cardData.objectTags + '/' + cardData.actionTags + '/';
+    }
+
+    return result;
+}
 
 function executeOnLoadTasks() { 
 
@@ -353,7 +368,9 @@ function executeOnLoadTasks() {
             hideFlickButtons('nextOnly');
         }
         
-        sendGAEvent('thrown-out', username + "#" + e.target.getAttribute('cardId'), e.target.getAttribute('cardIndex'));
+        var targetCardData = getCardData($target);
+        var eventLabel = getEventLabel(targetCardData);
+        sendGAEvent('thrown-out', eventLabel, e.target.getAttribute('cardIndex'));
 
         var cardReloadCount = 0;
         markCardRead(username, e.target, cardReloadCount); // username is declared globally in index.html
@@ -421,7 +438,9 @@ function executeOnLoadTasks() {
                 hideFlickButtons('previousOnly');
             }
 
-            sendGAEvent('thrown-in', username + "#" + e.target.getAttribute('cardId'), e.target.getAttribute('cardIndex'));
+            var targetCardData = getCardData($target);
+            var eventLabel = getEventLabel(targetCardData);
+            sendGAEvent('thrown-in', eventLabel, e.target.getAttribute('cardIndex'));
         }
 
 // http://stackoverflow.com/questions/2087510/callback-on-css-transition
@@ -467,7 +486,9 @@ function throwInPrevious(stack){
 	if (cardLi) {
 		var card = stack.getCard(cardLi);
 		card.throwIn(cardLi.thrownX, cardLi.thrownY);
-        sendGAEvent('button-thrown-in', username + "#" + cardLi.getAttribute('cardId'), cardLi.getAttribute('cardIndex')); 
+        var targetCardData = getCardData($cardToThrow);
+        var eventLabel = getEventLabel(targetCardData);
+        sendGAEvent('button-thrown-in', eventLabel, e.target.getAttribute('cardIndex'));
 	}
 }
 
@@ -480,6 +501,8 @@ function throwOutNext(stack){
 	    cardLi.thrownY = getRandomInt(-100, 100);
 	    cardLi.thrownX = 1;
 	    card.throwOut(cardLi.thrownX, cardLi.thrownY);
-	    sendGAEvent('button-thrown-out', username + "#" + cardLi.getAttribute('cardId'), cardLi.getAttribute('cardIndex'));            
+        var targetCardData = getCardData($cardToThrow);
+        var eventLabel = getEventLabel(targetCardData);
+        sendGAEvent('button-thrown-out', eventLabel, e.target.getAttribute('cardIndex'));
 	}
 }

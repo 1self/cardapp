@@ -199,7 +199,9 @@
             a.src = g;
             m.parentNode.insertBefore(a, m)
         })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
-        ga('create', 'UA-54838479-1', 'auto');
+        ga('create', 'UA-54838479-1',  {userId: '{{profile.encodedUsername}}'});
+        ga('set', 'dimension1', '{{profile.encodedUsername}}');
+        ga('send', 'event', gaEvent);
         ga('send', 'pageview');
     </script>
     

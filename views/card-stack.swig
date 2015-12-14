@@ -45,6 +45,7 @@
 
         var offline = false;
         var username = '{{profile.username}}';
+        var trackingId = '{{profile.encodedUsername}}';
         var registeredOn = "{{profile.registeredOn}}";
         registeredOn = new Date(registeredOn);
 
@@ -329,9 +330,11 @@
 <!-- ---------------------------- End templates ---------------------------- -->
 
     <!-- Analytics -->
+
     <script>
+        /* jshint ignore:start */
         (function(i, s, o, g, r, a, m) {
-            i['GoogleAnalyticsObject'] = r;
+           i['GoogleAnalyticsObject'] = r;
             i[r] = i[r] || function() {
                 (i[r].q = i[r].q || []).push(arguments)
             }, i[r].l = 1 * new Date();
@@ -341,13 +344,22 @@
             a.src = g;
             m.parentNode.insertBefore(a, m)
         })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
-        ga('create', 'UA-54838479-1', 'auto');
+        ga('create', 'UA-54838479-1',  {userId: '{{profile.encodedUsername}}'});
+        ga('set', 'dimension1', '{{profile.encodedUsername}}');
         ga('send', 'pageview');
+        var gaEvent = {};
+        gaEvent.eventCategory = 'card-stack';
+        gaEvent.eventAction = 'load';
+        gaEvent.eventLabel = 'page-load';
+        ga('send', 'event', gaEvent);
+        /* jshint ignore:end */
     </script>
     
     <script src="js/jquery-2.1.4.min.js"></script>
     <script>
+    /* jshint ignore:start */
     window.jQuery || document.write('<script src="js/jquery-2.1.4.min.js"><\/script>')
+    /* jshint ignore:end */
     </script>
     <script src="js/swing.min.js"></script>
     <script src="js/classList.js"></script>
