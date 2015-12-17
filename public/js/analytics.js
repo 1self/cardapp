@@ -13,8 +13,8 @@
 /* jshint ignore:end */
 
 var Analytics = function(trackingId){
-    ga('create', 'UA-54838479-1',  {userId: '{{profile.encodedUsername}}'});
-    ga('set', 'dimension1', '{{profile.encodedUsername}}');
+    ga('create', 'UA-54838479-1',  {userId: trackingId});
+    ga('set', 'dimension1', trackingId);
 
     function formatLocalDate() {
         var now = new Date(),
@@ -30,13 +30,22 @@ var Analytics = function(trackingId){
             'T' + pad(now.getHours()) + 
             ':' + pad(now.getMinutes())  + 
             ':' + pad(now.getSeconds())  + 
+            ':' + pad(now.getMilliseconds()) + 
             dif + pad(tzo / 60)  + 
             ':' + pad(tzo % 60);
         }
 
     var send = function(analyticsType, payload){
         ga('send', analyticsType, payload);
+
+        if(typeof payload !== 'object'){
+            payload = {
+                payload: payload
+            };
+        }
+
         payload.dateTime = formatLocalDate();
+        payload.url = window.location.toString();
         var url = '/analytics';
         payload.trackingId = trackingId;
         $.post(url, payload);

@@ -521,7 +521,7 @@ var sendAnalytics = function(req, res, next) {
 	};
 
 	request(requestOptions, function(error, httpResponse, body){
-		next();
+		res.send(200);
 	});
 };
 
