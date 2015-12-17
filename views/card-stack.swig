@@ -330,32 +330,19 @@
 <!-- ---------------------------- End templates ---------------------------- -->
 
     <!-- Analytics -->
-
+    <script src="js/jquery-2.1.4.min.js"></script>
+    <script src="js/analytics.js"></script>
     <script>
-        /* jshint ignore:start */
-        (function(i, s, o, g, r, a, m) {
-           i['GoogleAnalyticsObject'] = r;
-            i[r] = i[r] || function() {
-                (i[r].q = i[r].q || []).push(arguments)
-            }, i[r].l = 1 * new Date();
-            a = s.createElement(o),
-                m = s.getElementsByTagName(o)[0];
-            a.async = 1;
-            a.src = g;
-            m.parentNode.insertBefore(a, m)
-        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
-        ga('create', 'UA-54838479-1',  {userId: '{{profile.encodedUsername}}'});
-        ga('set', 'dimension1', '{{profile.encodedUsername}}');
-        ga('send', 'pageview');
-        var gaEvent = {};
-        gaEvent.eventCategory = 'card-stack';
-        gaEvent.eventAction = 'load';
-        gaEvent.eventLabel = 'page-load';
-        ga('send', 'event', gaEvent);
-        /* jshint ignore:end */
+        var analytics = new Analytics('{{profile.encodedUsername}}');
+        analytics.send('send', 'pageview');
+        var ev = {};
+        ev.eventCategory = 'card-stack';
+        ev.eventAction = 'load';
+        ev.eventLabel = 'page-load';
+        analytics.send( 'event', ev);
     </script>
     
-    <script src="js/jquery-2.1.4.min.js"></script>
+    
     <script>
     /* jshint ignore:start */
     window.jQuery || document.write('<script src="js/jquery-2.1.4.min.js"><\/script>')

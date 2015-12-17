@@ -503,8 +503,26 @@ var redirectToIntegration = function(req, res, next) {
 };
 
 var redirectToOldDashboard = function(req, res, next) {
-	console.log(req.app.locals);
 	res.redirect(req.app.locals.DASHBOARD_URL);
+};
+
+var sendAnalytics = function(req, res, next) {
+	var url = req.app.locals.API_URL + 
+		'/me/activity';
+
+	var requestOptions = {
+		 url: url,
+		 method: 'POST',
+		 json: true,
+		 headers: {
+		   'Authorization': 'Bearer ' + req.session.token
+		 },
+		 body: req.body
+	};
+
+	request(requestOptions, function(error, httpResponse, body){
+		next();
+	});
 };
 
 router.get('/',
@@ -659,6 +677,10 @@ router.patch('/cards/:cardId',
 router.post('/cards/replay',
 	checkForSession,
 	replayCards);
+
+router.post('/analytics',
+	checkForSession,
+	sendAnalytics);
 
 // check for username match
 
