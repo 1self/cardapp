@@ -23,8 +23,27 @@
   });   
 // Menu
 
+
 (function() {
   showDashboardNav();
+
+  var getCardData = function(cardElem){
+      var cardData = cardElem.find('.cardData');
+      cardData = decodeURIComponent(cardData.val());
+      cardData = JSON.parse(cardData);
+      return cardData;
+  };
+
+  var getEventLabel = function(cardData, index){
+      var result = cardData.type + '/';
+      result += cardData.cardDate + '/';
+      if(cardData.objectTags){
+          result += cardData.objectTags + '/' + cardData.actionTags + '/';
+      }
+      result += (index - globalCardsArray.length);
+
+      return result;
+  };
 
   $(".flyout-btn").click(function() {
     console.log('click 1');
@@ -34,7 +53,12 @@
     $('.nav-icon').toggleClass('open');
 
     $li = $('.topOfMain');
-    sendGAEvent('menu-button-click', username + "#" + $li.attr('cardId'), $li.attr('cardIndex'));
+    var menuEvent = {
+      eventCategory: 'navigation',
+      eventAction: 'menu-button-click',
+      eventLabel: getEventLabel(getCardData($li), $li.attr('cardIndex') )
+    };
+    analytics.send('event', menuEvent);
 
     return $(".flyout").removeClass("flyout-init fade").toggleClass("expand");
   });
