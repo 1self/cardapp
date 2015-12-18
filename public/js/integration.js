@@ -3,8 +3,23 @@ $(document).ready(function() {
 });
 
 function executeOnLoadTasks() { 
-
-    // var service = getQSParam().service;
+    $('.integration-button div').click(function(){
+            var smallButtonEvent = {
+                eventCategory: 'integration' + '/' + service,
+                eventAction: 'connect',
+                eventLabel: 'integration/connect/small-button-click'
+            };
+            analytics.send('event', smallButtonEvent);
+        });
+    
+    $('.large-connect-button div').click(function(){
+        var largeButtonEvent = {
+            eventCategory: 'integration' + '/' + service,
+            eventAction: 'connect',
+            eventLabel: 'integration/connect/large-button-click'
+        };
+        analytics.send('event', largeButtonEvent);
+    });
 
     if (!service || service === "") {
         window.location.href = '/integrations';
@@ -41,6 +56,7 @@ function executeOnLoadTasks() {
         return false;
     });
 
+
 }
 
 function renderIntegrationDetail(integrationJSON) {
@@ -74,7 +90,7 @@ function renderIntegrationDetail(integrationJSON) {
 
         $buttons.text(integrationJSON.integrationAction);
 
-        $buttons.click(function() {
+        $buttons.click(function(e) {
 
             $integrationDetail.find('.integration-button').hide();
             $integrationDetail.find('.large-connect-button').hide();

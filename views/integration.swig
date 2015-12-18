@@ -187,28 +187,40 @@
     </footer>
 
     <!-- Analytics -->
-    <script>
-        (function(i, s, o, g, r, a, m) {
-            i['GoogleAnalyticsObject'] = r;
-            i[r] = i[r] || function() {
-                (i[r].q = i[r].q || []).push(arguments)
-            }, i[r].l = 1 * new Date();
-            a = s.createElement(o),
-                m = s.getElementsByTagName(o)[0];
-            a.async = 1;
-            a.src = g;
-            m.parentNode.insertBefore(a, m)
-        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
-        ga('create', 'UA-54838479-1',  {userId: '{{profile.encodedUsername}}'});
-        ga('set', 'dimension1', '{{profile.encodedUsername}}');
-        ga('send', 'event', gaEvent);
-        ga('send', 'pageview');
-    </script>
-    
     <script src="/js/jquery-2.1.4.min.js"></script>
     <script>
-    window.jQuery || document.write('<script src="js/jquery-2.1.4.min.js"><\/script>')
+    window.jQuery || document.write('<script src="js/jquery-2.1.4.min.js"><\/script>');
     </script>
+    <script src="/js/analytics.js"></script>
+    <script>
+        var analytics = new Analytics('{{profile.encodedUsername}}');
+        analytics.send('send', 'pageview');
+        var ev = {};
+        ev.eventCategory = 'integration' + '/' + service;
+        ev.eventAction = 'load';
+        ev.eventLabel = 'page-load';
+        analytics.send( 'event', ev);
+        $('.integration-button').on('click', function(){
+            var smallButtonEvent = {
+                eventCategory: 'integration' + '/' + service,
+                eventAction: 'connect',
+                eventLabel: 'integration/connect/small-button-click'
+            };
+            analytics.send('event', smallButtonEvent);
+        });
+        $('.large-connect-button').on('click', function(){
+            var largeButtonEvent = {
+                eventCategory: 'integration' + '/' + service,
+                eventAction: 'connect',
+                eventLabel: 'integration/connect/large-button-click'
+            };
+            analytics.send('event', largeButtonEvent);
+        });
+    </script>
+
+    </script>
+    
+    
     <!-- main script -->
     <script src="/js/main.js"></script>
     <script src="/js/data-load.js"></script>
