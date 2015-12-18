@@ -38,6 +38,12 @@ var Analytics = function(trackingId){
     var send = function(analyticsType, payload){
         ga('send', analyticsType, payload);
 
+        // if the user isnt logged in allow 
+        // google analytics to do the tracking
+        if(trackingId === ''){
+            return;
+        }
+
         if(typeof payload !== 'object'){
             payload = {
                 payload: payload

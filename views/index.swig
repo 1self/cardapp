@@ -248,15 +248,6 @@
             <!-- <img src="/images/united-data.svg" alt="" class="united"/> -->
           </div>
           <div class="grid-cell content">
-<!-- 
-          There's all this data and it tells your life story, and you know what? That's right, it's remarkable.
-
-Overindulging on amazon, collecting followers, reading the BBC, flapping your way to a new high score, a weekend in London.
-<these examples can be changed, think they are a nicer way to express it. >
-
-Apps, websites, devices you use, the world around you, they all capture - in little blobs of data - the threads of your story.
-
-Use 1self to weave your data into a story of the remarkable things that you do. -->
 
             <h2>Your remarkable data</h2>
             <b>Your data tells your remarkable life story.</b>
@@ -275,22 +266,10 @@ Use 1self to weave your data into a story of the remarkable things that you do. 
         <div class="grid-row">
           <div class="grid-cell empower">
             <h2>1self will never exploit your data</h2>
-            <!--<b>We&apos;re sure 1self can empower you to live a more remarkable life through insights from your personal data. </b>
-             <p>We believe we can <a href="/quest"><span class="maroon">improve humanity</span></a> by gaining collective insights from
-            that data.
-            </p> 
-            <P>We&apos;re also sure that your data is valuable and precious.
-            </p>-->
             <p>Your data will be securely stored and private to you. We&apos;ll never sell or share your data (unless you choose to).
             </p>
             <p class="more-info"><a class="button" href="/info/no-exploit">More info</a></p>
-            <!--<p>We want a completely transparent value exchange, so 1self will operate on a &quot;freemium&quot; basis. There will always be a free version available but we hope you&apos;ll be tempted to part with a small yearly fee in exchange for lots of extra sweet data goodness.
-            </p>-->
           </div>
-          <!--div class="grid-cell profit-content">
-            <h2 class="red-text">It&apos;s your data and its value is yours</h2>
-            <a class="button" href="/no-exploit">TELL ME MORE</a>
-          </div-->
         </div>
       </div>
       <div class="seperator y-dwarrow-center">
@@ -351,63 +330,49 @@ Use 1self to weave your data into a story of the remarkable things that you do. 
 </div>
 </footer>
 <script src="js/app.js" type="text/javascript"></script>
+<script src="js/jquery-2.1.4.min.js"></script>
+<script src="js/analytics.js"></script>
 <script>
-(function(i, s, o, g, r, a, m) {
-i['GoogleAnalyticsObject'] = r;
-i[r] = i[r] || function() {
-(i[r].q = i[r].q || []).push(arguments)
-}, i[r].l = 1 * new Date();
-a = s.createElement(o),
-m = s.getElementsByTagName(o)[0];
-a.async = 1;
-a.src = g;
-m.parentNode.insertBefore(a, m)
-})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
-ga('create', 'UA-54838479-1', 'auto');
-ga('send', 'pageview');
-$('.join_email_btn').on('click', function() {
-ga('send', 'event', 'invite_button', 'invite_button_click');
-});
-if(window.location.search.match(/referrer/)){
-ga('send', 'event', { eventCategory: 'Signup', eventAction: 'signup_with_referrer_code', eventLabel: 'started'});
-}
+    var analytics = new Analytics('{{profile.encodedUsername}}');
+    analytics.send('send', 'pageview');
+    var ev = {};
+    ev.eventCategory = 'card-stack';
+    ev.eventAction = 'load';
+    ev.eventLabel = 'page-load';
+    analytics.send( 'event', ev);
+    $('.join_email_btn').on('click', function() {
+        var inviteEvent = {
+          eventCategory: 'index',
+          eventAction: 'invite-button',
+          eventLabel: 'invite-button-click'
+        };
+
+        analytics.send(inviteEvent);
+    });
+    
+    if(window.location.search.match(/referrer/)){
+        var referrerEvent = {
+            eventCategory:  'index',
+            eventAction:  'signup_with_referrer_code',
+            eventLabel:  'started'
+        };
+        
+        analytics.send(referrerEvent);
+    }
 </script>
 <!-- UserVoice help tab -->
 <script>
 // Include the UserVoice JavaScript SDK (only needed once on a page)
-UserVoice=window.UserVoice||[];(function(){var uv=document.createElement('script');uv.type='text/javascript';uv.async=true;uv.src='//widget.uservoice.com/27bdjY5SdHaM9zOzGOCJQ.js';var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(uv,s)})();
-//
-// UserVoice Javascript SDK developer documentation:
-// https://www.uservoice.com/o/javascript-sdk
-//
-// Set colors
+UserVoice=window.UserVoice||[];(function(){var uv=document.createElement('script');uv.type='text/javascript';uv.async=true;uv.src='//widget.uservoice.com/27bdjY5SdHaM9zOzGOCJQ.js';var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(uv,s);})();
+
 UserVoice.push(['set', {
 accent_color: '#00ad87',
 trigger_color: '#454b54',
 trigger_background_color: '#cf4b9a'
 }]);
-// Identify the user and pass traits
-// To enable, replace sample data with actual user traits and uncomment the line
 UserVoice.push(['identify', {
-//email:      'john.doe@example.com', // User’s email address
-//name:       'John Doe', // User’s real name
-//created_at: 1364406966, // Unix timestamp for the date the user signed up
-//id:         123, // Optional: Unique id of the user (if set, this should not change)
-//type:       'Owner', // Optional: segment your users by type
-//account: {
-//  id:           123, // Optional: associate multiple users with a single account
-//  name:         'Acme, Co.', // Account name
-//  created_at:   1364406966, // Unix timestamp for the date the account was created
-//  monthly_rate: 9.99, // Decimal; monthly rate of the account
-//  ltv:          1495.00, // Decimal; lifetime value of the account
-//  plan:         'Enhanced' // Plan name for the account
-//}
 }]);
-// Add default trigger to the bottom-right corner of the window:
 UserVoice.push(['addTrigger', { mode: 'contact', trigger_position: 'bottom-right' }]);
-// Or, use your own custom trigger:
-//UserVoice.push(['addTrigger', '#id', { mode: 'contact' }]);
-// Autoprompt for Satisfaction and SmartVote (only displayed under certain conditions)
 UserVoice.push(['autoprompt', {}]);
 </script>
 </body>
