@@ -167,6 +167,15 @@ function addToStack ($liTemplate, stack, cardData, cardIndex, renderThumbnail) {
 }
 
 function assignCardHandlers ($li) {
+    $li.find('.infoLink').click(function(){
+        var flipEvent = {
+            eventCategory: 'card-stack',
+            eventAction: 'infolink-click', 
+            eventLabel:  getEventLabel(getCardData($li), $li.attr('cardIndex'))
+        };
+        analytics.send('event', flipEvent);
+    });
+
     $li.find(".more, .more-back").click(function() {
         $li.find(".card-container").toggleClass("hover");
         $li.find(".back").toggleClass("iefix");
@@ -240,7 +249,6 @@ function injectCardData (cardData, $card) {
 
         $headlineInfo.css("color", colour);
         $headlineInfo.show();
-                // <span class="infoLink" style="color:{{colour}}"><i class="fa fa-info-circle"></i> <a style="color:{{colour}}" onclick="logInfoClick(this);" href="https://www.rescuetime.com/dashboard/for/the/day/of/{{cardDate}}" target="_blank"></a></span>
     } else {
         $headlineInfo.hide();
     }
