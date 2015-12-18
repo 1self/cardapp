@@ -329,9 +329,9 @@
 <div class="copyright">Copyright © 2014 1SELF. All rights reserved.
 </div>
 </footer>
-<script src="js/app.js" type="text/javascript"></script>
-<script src="js/jquery-2.1.4.min.js"></script>
-<script src="js/analytics.js"></script>
+<script src="/js/app.js" type="text/javascript"></script>
+<script src="/js/jquery-2.1.4.min.js"></script>
+<script src="/js/analytics.js"></script>
 <script>
     var analytics = new Analytics('{{profile.encodedUsername}}');
     analytics.send('send', 'pageview');

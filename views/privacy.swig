@@ -344,34 +344,41 @@
 <script src="/js/app.js" type="text/javascript"></script>
 
 
+<script src="/js/jquery-2.1.4.min.js"></script>
+<script src="/js/analytics.js"></script>
 <script>
- (function(i, s, o, g, r, a, m) {
-   i['GoogleAnalyticsObject'] = r;
-   i[r] = i[r] || function() {
-     (i[r].q = i[r].q || []).push(arguments)
-   }, i[r].l = 1 * new Date();
-   a = s.createElement(o),
-   m = s.getElementsByTagName(o)[0];
-   a.async = 1;
-   a.src = g;
-   m.parentNode.insertBefore(a, m)
- })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+    var analytics = new Analytics('{{profile.encodedUsername}}');
+    analytics.send('send', 'pageview');
+    var ev = {};
+    ev.eventCategory = 'card-stack';
+    ev.eventAction = 'load';
+    ev.eventLabel = 'page-load';
+    analytics.send( 'event', ev);
+    $('.join_email_btn').on('click', function() {
+        var inviteEvent = {
+          eventCategory: 'privacy',
+          eventAction: 'invite-button',
+          eventLabel: 'invite-button-click'
+        };
 
- ga('create', 'UA-54838479-1', {userId: {{profile.trackingId}}});
- ga('send', 'pageview');
- $('.join_email_btn').on('click', function() {
-   ga('send', 'event', 'invite_button', 'invite_button_click');
- });
-
- if(window.location.search.match(/referrer/)){
-   ga('send', 'event', { eventCategory: 'Signup', eventAction: 'signup_with_referrer_code', eventLabel: 'started'});
- }
+        analytics.send(inviteEvent);
+    });
+    
+    if(window.location.search.match(/referrer/)){
+        var referrerEvent = {
+            eventCategory:  'privacy',
+            eventAction:  'signup_with_referrer_code',
+            eventLabel:  'started'
+        };
+        
+        analytics.send(referrerEvent);
+    }
 </script>
 
 <!-- UserVoice help tab -->
 <script>
 // Include the UserVoice JavaScript SDK (only needed once on a page)
-UserVoice=window.UserVoice||[];(function(){var uv=document.createElement('script');uv.type='text/javascript';uv.async=true;uv.src='//widget.uservoice.com/27bdjY5SdHaM9zOzGOCJQ.js';var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(uv,s)})();
+UserVoice=window.UserVoice||[];(function(){var uv=document.createElement('script');uv.type='text/javascript';uv.async=true;uv.src='//widget.uservoice.com/27bdjY5SdHaM9zOzGOCJQ.js';var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(uv,s);})();
 
 //
 // UserVoice Javascript SDK developer documentation:

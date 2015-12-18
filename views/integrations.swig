@@ -167,7 +167,7 @@
     <script>
     window.jQuery || document.write('<script src="js/jquery-2.1.4.min.js"><\/script>');
     </script>
-    <script src="js/analytics.js"></script>
+    <script src="/js/analytics.js"></script>
     <script>
         var analytics = new Analytics('{{profile.encodedUsername}}');
         analytics.send('send', 'pageview');

@@ -357,26 +357,14 @@
               </div>
 
     <!-- Analytics -->
-    <script>
-        (function(i, s, o, g, r, a, m) {
-            i['GoogleAnalyticsObject'] = r;
-            i[r] = i[r] || function() {
-                (i[r].q = i[r].q || []).push(arguments)
-            }, i[r].l = 1 * new Date();
-            a = s.createElement(o),
-                m = s.getElementsByTagName(o)[0];
-            a.async = 1;
-            a.src = g;
-            m.parentNode.insertBefore(a, m)
-        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
-        ga('create', 'UA-54838479-1',  {userId: '{{profile.encodedUsername}}'});
-        ga('set', 'dimension1', '{{profile.encodedUsername}}');
-        ga('send', 'pageview');
-    </script>
-    
     <script src="/js/jquery-2.1.4.min.js"></script>
     <script>
-    window.jQuery || document.write('<script src="/js/jquery-2.1.4.min.js"><\/script>')
+    window.jQuery || document.write('<script src="js/jquery-2.1.4.min.js"><\/script>');
+    </script>
+    <script src="/js/analytics.js"></script>
+    <script>
+        var analytics = new Analytics('{{profile.encodedUsername}}');
+        analytics.send('send', 'pageview');
     </script>
     <script src="/js/d3.min.js"></script>
     <script src="/js/xdate.js"></script>
