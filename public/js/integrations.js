@@ -51,6 +51,13 @@ function renderIntegrationsList(integrationsJSON) {
         $categorySection.click(function() {
             var $clickedSection = $(this);
             var headerText = $clickedSection.find('.section-header').text();
+
+            var ev = {};
+            ev.eventCategory = 'integrations';
+            ev.eventAction = 'explore';
+            ev.eventLabel = headerText;
+            analytics.send( 'event', ev);
+        
             var newHash = formatHash(headerText);
 
             if (window.location.hash === '#' + newHash)
