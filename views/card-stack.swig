@@ -341,13 +341,6 @@
         ev.eventLabel = 'page-load';
         analytics.send( 'event', ev);
     </script>
-    
-    
-    <script>
-    /* jshint ignore:start */
-    window.jQuery || document.write('<script src="js/jquery-2.1.4.min.js"><\/script>')
-    /* jshint ignore:end */
-    </script>
     <script src="js/swing.min.js"></script>
     <script src="js/classList.js"></script>
     <script src="js/moment.min.js"></script>

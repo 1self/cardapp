@@ -47,7 +47,7 @@
       var username = '{{loggedInUsername}}';
       var loggedInUsername = username;
 
-      var chartUsernameParam = '{{chartUsername}}'
+      var chartUsernameParam = '{{chartUsername}}';
       var streamIdParam = '{{streamId}}';
       var objectTagsParam = '{{objectTags}}';
       var actionTagsParam = '{{actionTags}}';
@@ -61,7 +61,7 @@
       var aggregatorParam1 = '{{aggregator1}}';
       var chartTypeParam1 = '{{chartType1}}';
       var readTokenParam = '{{readToken}}';
-      var trackingId = '{{trackingId}}'
+      var trackingId = '{{trackingId}}';
 
       console.log(streamIdParam);
       console.log(readTokenParam);
@@ -161,26 +161,15 @@
 
 
     <!-- Analytics -->
-    <script>
-        (function(i, s, o, g, r, a, m) {
-            i['GoogleAnalyticsObject'] = r;
-            i[r] = i[r] || function() {
-                (i[r].q = i[r].q || []).push(arguments)
-            }, i[r].l = 1 * new Date();
-            a = s.createElement(o),
-                m = s.getElementsByTagName(o)[0];
-            a.async = 1;
-            a.src = g;
-            m.parentNode.insertBefore(a, m)
-        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
-        ga('create', 'UA-54838479-1',  {userId: '{{trackingId}}'});
-        ga('set', 'dimension1', '{{trackingId}}');
-        ga('send', 'pageview');
-    </script>
-    
     <script src="/js/jquery-2.1.4.min.js"></script>
     <script>
-    window.jQuery || document.write('<script src="/js/jquery-2.1.4.min.js"><\/script>')
+        var analytics = new Analytics('{{profile.encodedUsername}}');
+        analytics.send('send', 'pageview');
+        var ev = {};
+        ev.eventCategory = 'data-explorer';
+        ev.eventAction = 'load';
+        ev.eventLabel = 'page-load';
+        analytics.send( 'event', ev);
     </script>
     <script src="/js/d3.min.js"></script>
     <script src="/js/xdate.js"></script>
