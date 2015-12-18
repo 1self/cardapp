@@ -66,12 +66,6 @@ function renderIntegrationDetail(integrationJSON) {
     var errorInstall = getQSParam().error;
     var showResult = false;
 
-    var gaEvent = {};
-    gaEvent.eventCategory = 'integrations/' + integrationJSON.serviceName;
-    gaEvent.eventAction = 'load';
-    gaEvent.eventLabel = 'page-load';
-    ga('send', 'event', gaEvent);
-
     $('.page-title').text('Connect ' + integrationJSON.serviceName);
 
     $integrationDetail.addClass(integrationJSON.identifier);
@@ -115,12 +109,28 @@ function renderIntegrationDetail(integrationJSON) {
         $('.integration-detail-success').removeClass('hide');
         showResult = true;
 
+        var successEvent = {
+            eventCategory: 'integration' + '/' + integrationJSON.serviceName,
+            eventAction: 'connect/success',
+            eventLabel: ''
+        };
+
+        analytics.send('event', successEvent);
+
     } else if (errorInstall) {
         var errorText = 'Ack. Something went wrong integrating  ' + integrationJSON.serviceName + '. Click the &ldquo;' + integrationJSON.integrationAction + '&rdquo; button above to try again. Or if you prefer, choose one of the options below.';
         $('.integration-error-description').first().html(errorText);
         $integrationDetail.find('.integration-detail-bottom').hide();
         $('.integration-detail-error').removeClass('hide');
         showResult = true;
+
+        var successError = {
+            eventCategory: 'integration' + '/' + integrationJSON.serviceName,
+            eventAction: 'connect/error',
+            eventLabel: errorText
+        };
+
+        analytics.send('event', successError);
     }
 
     $('.integration-detail-container').removeClass('hide');
