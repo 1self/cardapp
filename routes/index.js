@@ -525,6 +525,10 @@ var sendAnalytics = function(req, res, next) {
 	});
 };
 
+var sendChart = function(req, res) {
+	res.render('chart', {profile: req.session.profile});
+};
+
 router.get('/',
 	oauth.signedInRoute,
 	profile.getProfile,
@@ -575,9 +579,7 @@ router.get('/integrations/:serviceIdentifier/redirect',
 
 router.get('/chart.html', 
 	oauth.signedInRoute,
-	function(req, res) {
-  		res.render('chart', { });
-  	}
+	sendChart
 );
 
 // admin use only
