@@ -59,7 +59,12 @@ function markCardRead(username, cardElem, cardReloadCount) {
 }
 
 function replayToday(username, readSettings){
-    sendGAEvent('replay-today', '', '');
+    var replayEvent = {
+        eventCategory: 'card-stack',
+        eventAction: 'replay-today',
+        eventLabel: ''
+    };
+    analytics.send('event', replayEvent);
 
     if (!offline) {
         $.ajax({

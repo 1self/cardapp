@@ -18,7 +18,12 @@ function buildStack (stack) {
         var introCards = getUnseenIntroCards(numberOfIntroCards);
         cardsArray = introCards.concat(cardsArray);
 
-        sendGAEvent('cards-loaded', trackingId, cardsArray.length);
+        var loadedEvent = {
+            eventCategory: 'card-stack',
+            eventAction: 'loaded',
+            eventLabel: cardsArray.length
+        };
+        analytics.send('event', loadedEvent);
 
     	globalCardsArray = cardsArray;
 
@@ -173,13 +178,23 @@ function assignCardHandlers ($li) {
     $li.find(".more-back").click(function() {
         showFlickButtons();
         $li.find(".front .chart-container").show();
-        sendGAEvent('flipped-to-front', trackingId + "#" + $li.attr('cardId'), $li.attr('cardIndex'));
+        var flipEvent = {
+            eventCategory: 'card-stack',
+            eventAction: 'flipped-to-front', 
+            eventLabel:  getEventLabel(getCardData($li), $li.attr('cardIndex'))
+        };
+        analytics.send('event', flipEvent);
      });
 
     $li.find(".more").click(function() {
         hideFlickButtons();
         $li.find(".front .chart-container").hide();
-        sendGAEvent('flipped-to-back',  trackingId + "#" + $li.attr('cardId'), $li.attr('cardIndex'));
+        var flipEvent = {
+            eventCategory: 'card-stack',
+            eventAction: 'flipped-to-back', 
+            eventLabel:  getEventLabel(getCardData($li), $li.attr('cardIndex'))
+        };
+        analytics.send('event', flipEvent);
      });
 }
 
@@ -294,14 +309,16 @@ var getCardData = function(cardElem){
     return cardData;
 };
 
-var getEventLabel = function(cardData){
+var getEventLabel = function(cardData, index){
     var result = cardData.type + '/';
+    result += cardData.cardDate + '/';
     if(cardData.objectTags){
         result += cardData.objectTags + '/' + cardData.actionTags + '/';
     }
+    result += (index - globalCardsArray.length);
 
     return result;
-}
+};
 
 function executeOnLoadTasks() { 
 
@@ -369,8 +386,13 @@ function executeOnLoadTasks() {
         }
         
         var targetCardData = getCardData($target);
-        var eventLabel = getEventLabel(targetCardData);
-        sendGAEvent('thrown-out', eventLabel, e.target.getAttribute('cardIndex'));
+        var eventLabel = getEventLabel(targetCardData, $target.attr('cardIndex'));
+        var flipEvent = {
+            eventCategory: 'card-stack',
+            eventAction: 'thrown-out', 
+            eventLabel:  eventLabel
+        };
+        analytics.send('event', flipEvent);
 
         var cardReloadCount = 0;
         markCardRead(username, e.target, cardReloadCount); // username is declared globally in index.html
@@ -439,8 +461,13 @@ function executeOnLoadTasks() {
             }
 
             var targetCardData = getCardData($target);
-            var eventLabel = getEventLabel(targetCardData);
-            sendGAEvent('thrown-in', eventLabel, e.target.getAttribute('cardIndex'));
+            var eventLabel = getEventLabel(targetCardData, $target.attr('cardIndex'));
+            var flipEvent = {
+                eventCategory: 'card-stack',
+                eventAction: 'thrown-in', 
+                eventLabel:  eventLabel
+            };
+            analytics.send('event', flipEvent);
         }
 
 // http://stackoverflow.com/questions/2087510/callback-on-css-transition
@@ -487,8 +514,12 @@ function throwInPrevious(stack){
 		var card = stack.getCard(cardLi);
 		card.throwIn(cardLi.thrownX, cardLi.thrownY);
         var targetCardData = getCardData($cardToThrow);
-        var eventLabel = getEventLabel(targetCardData);
-        sendGAEvent('button-thrown-in', eventLabel, e.target.getAttribute('cardIndex'));
+        var throwEvent = {
+            eventCategory: 'card-stack',
+            eventAction: 'button-thrown-in', 
+            eventLabel:  getEventLabel(targetCardData, $cardToThrow.attr('cardIndex'))
+        };
+        analytics.send('event', throwEvent);
 	}
 }
 
@@ -502,7 +533,11 @@ function throwOutNext(stack){
 	    cardLi.thrownX = 1;
 	    card.throwOut(cardLi.thrownX, cardLi.thrownY);
         var targetCardData = getCardData($cardToThrow);
-        var eventLabel = getEventLabel(targetCardData);
-        sendGAEvent('button-thrown-out', eventLabel, e.target.getAttribute('cardIndex'));
+        var throwEvent = {
+            eventCategory: 'card-stack',
+            eventAction: 'button-thrown-in', 
+            eventLabel:  getEventLabel(targetCardData, $cardToThrow.attr('cardIndex'))
+        };
+        analytics.send('event', throwEvent);
 	}
 }
