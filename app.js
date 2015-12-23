@@ -70,6 +70,7 @@ app.use(session({
 
 app.use('/', index);
 app.use('/auth', auth);
+app.use('/analytics', require('./routes/analytics/index.js'));
 
 /// catch 404 and forward to error handler
 app.use(function(req, res, next) {

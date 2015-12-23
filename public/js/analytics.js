@@ -1,20 +1,38 @@
+
+// for testing in node, don't load google
+// if we're not in the browser.
+var window = window || undefined;
+var document = document || undefined;
+
 /* jshint ignore:start */
-(function(i, s, o, g, r, a, m) {
-   i['GoogleAnalyticsObject'] = r;
-    i[r] = i[r] || function() {
-        (i[r].q = i[r].q || []).push(arguments)
-    }, i[r].l = 1 * new Date();
-    a = s.createElement(o),
-        m = s.getElementsByTagName(o)[0];
-    a.async = 1;
-    a.src = g;
-    m.parentNode.insertBefore(a, m)
-})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+if(window){
+    (function(i, s, o, g, r, a, m) {
+       i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function() {
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+    
+}
 /* jshint ignore:end */
 
-var Analytics = function(trackingId){
-    ga('create', 'UA-54838479-1',  {userId: trackingId});
-    ga('set', 'dimension1', trackingId);
+var Analytics = function(trackingId, googleAnalytics){
+    if(googleAnalytics === undefined){
+        googleAnalytics = ga;
+    }
+
+    var clientId = '';
+   
+    googleAnalytics('create', 'UA-54838479-1',  {userId: trackingId});
+    googleAnalytics('set', 'dimension1', trackingId);
+    googleAnalytics(function(cid){
+        clientId = cid;
+    });
 
     function formatLocalDate() {
         var now = new Date(),
@@ -35,31 +53,53 @@ var Analytics = function(trackingId){
             ':' + pad(tzo % 60);
         }
 
-    var send = function(analyticsType, payload){
-        ga('send', analyticsType, payload);
-
-        // if the user isnt logged in allow 
-        // google analytics to do the tracking
-        if(trackingId === ''){
-            return;
+    var send = function(analyticsType, payload, windowLocation, post){
+        if(windowLocation === undefined){
+            windowLocation = window.location.toString();
         }
 
-        if(typeof payload !== 'object'){
-            payload = {
-                payload: payload
-            };
+        if(post === undefined){
+            post = $.post;
         }
 
-        payload.dateTime = formatLocalDate();
-        payload.url = window.location.toString();
-        var url = '/analytics';
-        payload.trackingId = trackingId;
-        $.post(url, payload);
+        googleAnalytics('send', analyticsType, payload);
+
+        var postWhenAnalyticsReady = function(tracker){
+            if(typeof payload !== 'object'){
+                payload = {
+                    payload: payload
+                };
+            }
+
+            payload.dateTime = formatLocalDate();
+            payload.url = windowLocation;
+            payload.clientId = tracker.get('clientId');
+            var url = '/analytics';
+            payload.trackingId = trackingId;
+            post(url, payload);
+        };
+
+        // we have to get the analytics library to do the
+        // post to the 1self analytics backend because the
+        // ga library isn't ready at this point
+        googleAnalytics(postWhenAnalyticsReady);
+    };
+
+    var getClientId = function(){
+        return clientId;
     };
 
     var result = {
-        send: send
+        send: send,
+        getClientId: getClientId
     };
 
     return result;
 };
+
+var module = module || undefined;
+
+if(module){
+    module.exports = {};
+    module.exports.Create = Analytics;
+}

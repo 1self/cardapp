@@ -506,25 +506,6 @@ var redirectToOldDashboard = function(req, res, next) {
 	res.redirect(req.app.locals.DASHBOARD_URL);
 };
 
-var sendAnalytics = function(req, res, next) {
-	var url = req.app.locals.API_URL + 
-		'/me/activity';
-
-	var requestOptions = {
-		 url: url,
-		 method: 'POST',
-		 json: true,
-		 headers: {
-		   'Authorization': 'Bearer ' + req.session.token
-		 },
-		 body: req.body
-	};
-
-	request(requestOptions, function(error, httpResponse, body){
-		res.send(200);
-	});
-};
-
 var sendChart = function(req, res) {
 	res.render('chart', {profile: req.session.profile});
 };
@@ -679,13 +660,5 @@ router.patch('/cards/:cardId',
 router.post('/cards/replay',
 	checkForSession,
 	replayCards);
-
-router.post('/analytics',
-	checkForSession,
-	sendAnalytics);
-
-// check for username match
-
-
 
 module.exports = router;

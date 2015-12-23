@@ -336,7 +336,7 @@
     var analytics = new Analytics('{{profile.encodedUsername}}');
     analytics.send('send', 'pageview');
     var ev = {};
-    ev.eventCategory = 'card-stack';
+    ev.eventCategory = 'index';
     ev.eventAction = 'load';
     ev.eventLabel = 'page-load';
     analytics.send( 'event', ev);
