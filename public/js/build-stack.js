@@ -266,7 +266,6 @@ function injectCardData (cardData, $card) {
 
 function injectPendingCardData(cardData, $card) {
     var cardText;
-    setDataSource(cardData);
 
     $card.find('.card-content').addClass(cardData.identifier);
     // $card.find('.pending-card-logo').addClass(dataSource);
