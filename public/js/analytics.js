@@ -25,14 +25,9 @@ var Analytics = function(trackingId, googleAnalytics){
     if(googleAnalytics === undefined){
         googleAnalytics = ga;
     }
-
-    var clientId = '';
    
     googleAnalytics('create', 'UA-54838479-1',  {userId: trackingId});
     googleAnalytics('set', 'dimension1', trackingId);
-    googleAnalytics(function(cid){
-        clientId = cid;
-    });
 
     function formatLocalDate() {
         var now = new Date(),
@@ -85,13 +80,8 @@ var Analytics = function(trackingId, googleAnalytics){
         googleAnalytics(postWhenAnalyticsReady);
     };
 
-    var getClientId = function(){
-        return clientId;
-    };
-
     var result = {
-        send: send,
-        getClientId: getClientId
+        send: send
     };
 
     return result;

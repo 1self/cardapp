@@ -4,18 +4,6 @@ var assert = require('assert');
 var analytics = require('../public/js/analytics.js');
 
 describe('analytics module', function () {
-  it('gets the google clientId', function () {
-
-  	var ga = function(callback){
-  		if(typeof callback === 'function'){
-  			callback(12345);
-  		}
-  	};
-
-    var a = new analytics.Create('12345', ga);
-    assert.equal(a.getClientId(), 12345);
-  });
-
   it('sends when the user is not logged in', function () {
 
   	var ga = function(callback){
