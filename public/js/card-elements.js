@@ -293,7 +293,7 @@ function buildPropertiesTextAndGetValue (propertiesObject) {
             isPercent = true;
         }
 
-        if (typeof propertiesObject === 'object')
+        if (typeof propertiesObject === 'object' && propertiesObject !== null)
             objectKey = Object.keys(propertiesObject)[0];
         else
             objectKey = null;
