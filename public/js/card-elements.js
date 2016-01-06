@@ -328,7 +328,7 @@ function buildPropertiesTextAndGetValue (propertiesObject) {
         returnObj.value = propertiesObject;
     }
 
-    if (returnObj.value.toString() !== '1' && returnObj.actionOverride) {
+    if (returnObj.value && returnObj.value.toString() !== '1' && returnObj.actionOverride) {
         returnObj.actionOverride += 's';
     }
 
